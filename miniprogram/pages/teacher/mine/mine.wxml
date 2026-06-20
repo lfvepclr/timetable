@@ -1,0 +1,59 @@
+<!-- pages/teacher/mine/mine.wxml -->
+<view class="page">
+  <!-- 用户信息卡片 -->
+  <view class="user-card">
+    <view class="avatar">
+      <text class="avatar-text">{{userInfo.name ? userInfo.name[0] : '师'}}</text>
+    </view>
+    <view class="user-info">
+      <text class="user-name">{{userInfo.name || '老师'}}</text>
+      <text class="user-role">授课老师</text>
+    </view>
+  </view>
+
+  <!-- 功能列表 -->
+  <view class="menu-group">
+    <view class="menu-title">排课管理</view>
+    <view class="menu-item" bindtap="goToHolidayManage" hover-class="menu-hover">
+      <view class="menu-icon" style="background: var(--color-warning-bg); color: var(--color-warning);">
+        <text class="icon-text">假</text>
+      </view>
+      <text class="menu-label">假期管理</text>
+      <text class="menu-arrow">›</text>
+    </view>
+    <view class="menu-item" bindtap="syncHolidays" hover-class="menu-hover">
+      <view class="menu-icon" style="background: var(--color-primary-bg); color: var(--color-primary);">
+        <text class="icon-text">同</text>
+      </view>
+      <text class="menu-label">同步法定节假日</text>
+      <text class="menu-arrow">›</text>
+    </view>
+  </view>
+
+  <view class="menu-group">
+    <view class="menu-title">系统设置</view>
+    <view class="menu-item" bindtap="goToSettings" hover-class="menu-hover">
+      <view class="menu-icon" style="background: var(--color-info-bg); color: var(--color-info);">
+        <text class="icon-text">置</text>
+      </view>
+      <text class="menu-label">通知设置</text>
+      <text class="menu-arrow">›</text>
+    </view>
+    <view class="menu-item" bindtap="clearCache" hover-class="menu-hover">
+      <view class="menu-icon" style="background: var(--color-danger-bg); color: var(--color-danger);">
+        <text class="icon-text">清</text>
+      </view>
+      <text class="menu-label">清除缓存</text>
+      <text class="menu-arrow">›</text>
+    </view>
+    <view class="menu-item" bindtap="showAbout" hover-class="menu-hover">
+      <view class="menu-icon" style="background: var(--color-success-bg); color: var(--color-success);">
+        <text class="icon-text">关于</text>
+      </view>
+      <text class="menu-label">关于排课助手</text>
+      <text class="menu-arrow">›</text>
+    </view>
+  </view>
+
+  <view class="version-text">v{{version}}</view>
+</view>

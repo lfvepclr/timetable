@@ -1,0 +1,143 @@
+/* components/lesson-card/index.wxss */
+.lesson-card {
+  display: flex;
+  background: #FFFFFF;
+  border-radius: 16rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.06);
+  margin-bottom: 20rpx;
+  overflow: hidden;
+}
+
+.card-hover {
+  opacity: 0.85;
+}
+
+.course-bar {
+  width: 6rpx;
+  border-radius: 3rpx;
+}
+
+.card-body {
+  flex: 1;
+  padding: 24rpx 28rpx;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.time-block {
+  display: flex;
+  align-items: baseline;
+}
+
+.start-time {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #1F2937;
+}
+
+.time-sep {
+  font-size: 24rpx;
+  color: #9CA3AF;
+  margin: 0 4rpx;
+}
+
+.end-time {
+  font-size: 26rpx;
+  color: #6B7280;
+}
+
+.course-info {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  margin-left: 24rpx;
+  min-width: 0;
+}
+
+.course-name {
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #1F2937;
+  max-width: 260rpx;
+}
+
+.course-type {
+  font-size: 20rpx;
+  color: #9CA3AF;
+  background: #F4F4F5;
+  padding: 2rpx 12rpx;
+  border-radius: 6rpx;
+  margin-left: 12rpx;
+  flex-shrink: 0;
+}
+
+.card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 16rpx;
+}
+
+.students-row {
+  display: flex;
+  flex-wrap: wrap;
+  flex: 1;
+  min-width: 0;
+}
+
+.student-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 4rpx 16rpx;
+  background: #F0F4F8;
+  border-radius: 999rpx;
+  font-size: 22rpx;
+  color: #4B5563;
+  margin-right: 12rpx;
+  margin-bottom: 4rpx;
+}
+
+.student-chip.on-leave {
+  background: #FFF3E8;
+  color: #FF9F5A;
+  text-decoration: line-through;
+}
+
+.leave-tag {
+  font-size: 18rpx;
+  margin-left: 4rpx;
+}
+
+.date-label {
+  font-size: 22rpx;
+  color: #9CA3AF;
+  flex-shrink: 0;
+  margin-left: 16rpx;
+}
+
+/* 紧凑模式 */
+.lesson-card.compact {
+  margin-bottom: 12rpx;
+}
+
+.lesson-card.compact .card-body {
+  padding: 16rpx 20rpx;
+}
+
+.compact-students {
+  display: flex;
+  align-items: center;
+  margin-top: 8rpx;
+  font-size: 24rpx;
+  color: #6B7280;
+}
+
+.more-count {
+  font-size: 22rpx;
+  color: #9CA3AF;
+  margin-left: 8rpx;
+}

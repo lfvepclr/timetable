@@ -1,0 +1,15 @@
+/* components/status-badge/index.wxss */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4rpx 16rpx;
+  border-radius: 999rpx;
+  font-size: 22rpx;
+  line-height: 1.6;
+  white-space: nowrap;
+}
+.badge-blue { background: #EAF2FB; color: #4A90D9; }
+.badge-green { background: #E8F7F1; color: #52C4A0; }
+.badge-orange { background: #FFF3E8; color: #FF9F5A; }
+.badge-red { background: #FDEAEA; color: #F56C6C; }
+.badge-gray { background: #F4F4F5; color: #909399; }

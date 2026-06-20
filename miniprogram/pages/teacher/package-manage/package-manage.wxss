@@ -1,0 +1,177 @@
+/* pages/teacher/package-manage/package-manage.wxss */
+@import '/styles/variables.wxss';
+
+.page {
+  min-height: 100vh;
+  background: var(--color-bg);
+  padding: 24rpx;
+  padding-bottom: 140rpx;
+}
+
+.pkg-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24rpx;
+}
+
+.pkg-card {
+  padding: 24rpx;
+  background: var(--color-card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+}
+
+.pkg-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20rpx;
+}
+
+.pkg-title {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+}
+
+.pkg-course {
+  font-size: var(--font-md);
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.pkg-status {
+  font-size: var(--font-xs);
+  padding: 4rpx 16rpx;
+  border-radius: var(--radius-pill);
+}
+
+.status-active {
+  background: var(--color-success-bg);
+  color: var(--color-success);
+}
+
+.status-exhausted {
+  background: var(--color-info-bg);
+  color: var(--color-info);
+}
+
+.pkg-date {
+  font-size: var(--font-xs);
+  color: var(--color-text-secondary);
+}
+
+.pkg-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 16rpx;
+}
+
+.pkg-remaining {
+  font-size: var(--font-sm);
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.pkg-consumed {
+  font-size: var(--font-xs);
+  color: var(--color-text-secondary);
+}
+
+.fab {
+  position: fixed;
+  right: 32rpx;
+  bottom: 48rpx;
+  width: 96rpx;
+  height: 96rpx;
+  border-radius: 50%;
+  background: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8rpx 24rpx rgba(74, 144, 217, 0.4);
+}
+
+.fab-icon {
+  font-size: 56rpx;
+  color: #fff;
+  line-height: 1;
+}
+
+.mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 100;
+}
+
+.dialog {
+  position: fixed;
+  left: 32rpx;
+  right: 32rpx;
+  bottom: 0;
+  background: var(--color-card);
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  padding: 32rpx;
+  padding-bottom: calc(32rpx + env(safe-area-inset-bottom));
+  padding-bottom: calc(32rpx + constant(safe-area-inset-bottom));
+  z-index: 101;
+}
+
+.dialog-title {
+  font-size: var(--font-lg);
+  font-weight: 600;
+  color: var(--color-text-primary);
+  text-align: center;
+  margin-bottom: 32rpx;
+}
+
+.dialog-body {
+  margin-bottom: 32rpx;
+}
+
+.dialog-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid var(--color-border-light);
+}
+
+.dialog-label {
+  font-size: var(--font-base);
+  color: var(--color-text-regular);
+}
+
+.dialog-picker {
+  font-size: var(--font-base);
+  color: var(--color-primary);
+}
+
+.dialog-actions {
+  display: flex;
+  gap: 24rpx;
+}
+
+.btn-cancel, .btn-confirm {
+  flex: 1;
+  height: 80rpx;
+  line-height: 80rpx;
+  border-radius: var(--radius-md);
+  font-size: var(--font-base);
+  text-align: center;
+  border: none;
+}
+
+.btn-cancel {
+  background: var(--color-info-bg);
+  color: var(--color-text-secondary);
+}
+
+.btn-confirm {
+  background: var(--color-primary);
+  color: #fff;
+}

@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "lesson-card": "/components/lesson-card/lesson-card",
+    "empty-state": "/components/empty-state/empty-state"
+  },
+  "navigationBarTitleText": "首页"
+}

@@ -1,0 +1,55 @@
+<!-- pages/teacher/bind-generate/bind-generate.wxml -->
+<view class="page">
+  <view class="student-info" wx:if="{{student}}">
+    <view class="student-avatar">{{student.name[0]}}</view>
+    <view class="student-detail">
+      <text class="student-name">{{student.name}}</text>
+      <text class="student-desc">{{student.grade}} {{student.school}}</text>
+    </view>
+  </view>
+
+  <!-- 已绑定家长列表 -->
+  <view class="section" wx:if="{{bindings.length > 0}}">
+    <view class="section-title">已绑定家长（{{bindings.length}}/2）</view>
+    <view class="binding-list">
+      <view class="binding-item" wx:for="{{bindings}}" wx:key="_id">
+        <view class="binding-avatar">家</view>
+        <view class="binding-info">
+          <text class="binding-name">家长{{index + 1}}</text>
+          <text class="binding-rel">{{item.relationship}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 绑定码区域 -->
+  <view class="code-section">
+    <view class="section-title">绑定码（24小时内有效）</view>
+    
+    <view class="code-card">
+      <view class="qr-area" wx:if="{{qrUrl}}">
+        <image class="qr-image" src="{{qrUrl}}" mode="aspectFit" />
+      </view>
+      <view class="qr-placeholder" wx:else>
+        <text class="placeholder-text">二维码加载中...</text>
+      </view>
+
+      <view class="code-display">
+        <text class="code-text">{{bindCode}}</text>
+        <view class="copy-btn" bindtap="copyCode">复制</view>
+      </view>
+
+      <text class="code-hint">家长扫码或点击分享链接即可自动绑定</text>
+    </view>
+  </view>
+
+  <!-- 操作按钮 -->
+  <view class="actions">
+    <button class="btn-refresh" bindtap="generateCode" loading="{{generating}}" disabled="{{generating}}">
+      重新生成
+    </button>
+    <button class="btn-share" open-type="share">
+      分享给家长
+    </button>
+  </view>
+</view>

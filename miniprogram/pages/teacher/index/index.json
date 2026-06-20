@@ -1,0 +1,10 @@
+{
+  "usingComponents": {
+    "lesson-card": "/components/lesson-card/index",
+    "time-fold": "/components/time-fold/index",
+    "empty-state": "/components/empty-state/index",
+    "status-badge": "/components/status-badge/index"
+  },
+  "enablePullDownRefresh": true,
+  "navigationBarTitleText": "今日课表"
+}

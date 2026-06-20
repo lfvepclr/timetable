@@ -1,0 +1,136 @@
+/* pages/teacher/lesson-detail/lesson-detail.wxss */
+.page-container {
+  padding: 24rpx 24rpx 160rpx;
+}
+
+.info-card {
+  display: flex;
+  background: #FFFFFF;
+  border-radius: 16rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+  margin-bottom: 32rpx;
+}
+
+.course-bar { width: 6rpx; }
+
+.info-body { flex: 1; padding: 32rpx; }
+
+.info-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24rpx;
+}
+
+.course-name { font-size: 34rpx; font-weight: 600; color: #1F2937; }
+
+.info-row { display: flex; align-items: center; margin-bottom: 16rpx; }
+.info-label { font-size: 26rpx; color: #9CA3AF; width: 80rpx; }
+.info-value { font-size: 26rpx; color: #4B5563; }
+
+.section { margin-bottom: 32rpx; }
+.section-title { font-size: 30rpx; font-weight: 600; color: #1F2937; margin-bottom: 20rpx; }
+
+.student-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #FFFFFF;
+  border-radius: 16rpx;
+  padding: 24rpx;
+  margin-bottom: 16rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.04);
+}
+
+.student-left { display: flex; align-items: center; }
+
+.student-avatar {
+  width: 72rpx; height: 72rpx; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  margin-right: 20rpx;
+}
+.student-avatar text { font-size: 30rpx; font-weight: 600; color: #FFFFFF; }
+
+.student-detail { display: flex; flex-direction: column; gap: 8rpx; }
+.s-name { font-size: 30rpx; font-weight: 500; color: #1F2937; }
+
+.student-actions { display: flex; gap: 12rpx; }
+
+.mini-btn {
+  padding: 8rpx 24rpx;
+  border-radius: 999rpx;
+  font-size: 24rpx;
+  background: #F0F4F8;
+  color: #4B5563;
+}
+.mini-btn.warn { background: #FFF3E8; color: #FF9F5A; }
+.mini-btn.primary { background: #EAF2FB; color: #4A90D9; }
+
+.bottom-actions {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  padding: 24rpx 32rpx;
+  padding-bottom: calc(24rpx + env(safe-area-inset-bottom));
+  background: #FFFFFF;
+  box-shadow: 0 -4rpx 16rpx rgba(0, 0, 0, 0.06);
+}
+
+.action-btn {
+  text-align: center;
+  padding: 24rpx 0;
+  border-radius: 999rpx;
+  font-size: 32rpx;
+}
+.action-btn.primary { background: #4A90D9; color: #FFFFFF; font-weight: 500; }
+.btn-hover { opacity: 0.85; }
+
+/* 弹窗 */
+.dialog-mask {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex; align-items: flex-end;
+  z-index: 1000;
+}
+
+.complete-dialog, .leave-dialog {
+  width: 100%;
+  background: #FFFFFF;
+  border-radius: 32rpx 32rpx 0 0;
+  padding: 40rpx 32rpx;
+  padding-bottom: calc(40rpx + env(safe-area-inset-bottom));
+}
+
+.dialog-title { font-size: 34rpx; font-weight: 600; color: #1F2937; text-align: center; margin-bottom: 16rpx; }
+.dialog-desc { font-size: 24rpx; color: #9CA3AF; text-align: center; margin-bottom: 24rpx; }
+
+.attend-row {
+  display: flex; align-items: center;
+  padding: 24rpx;
+  background: #F7F8FA;
+  border-radius: 12rpx;
+  margin-bottom: 12rpx;
+}
+
+.attend-row.checked { background: #EAF2FB; }
+
+.check-box {
+  width: 40rpx; height: 40rpx;
+  border: 4rpx solid #D1D5DB;
+  border-radius: 8rpx;
+  margin-right: 20rpx;
+  display: flex; align-items: center; justify-content: center;
+}
+.check-box.checked { background: #4A90D9; border-color: #4A90D9; color: #FFFFFF; font-size: 24rpx; }
+
+.attend-name { font-size: 30rpx; color: #1F2937; flex: 1; }
+.attend-status { font-size: 24rpx; color: #FF9F5A; }
+
+.form-item { margin-bottom: 24rpx; }
+.form-label { font-size: 26rpx; color: #6B7280; margin-bottom: 8rpx; display: block; }
+.form-textarea { width: 100%; background: #F7F8FA; border-radius: 12rpx; padding: 20rpx 24rpx; font-size: 28rpx; min-height: 120rpx; box-sizing: border-box; }
+
+.dialog-actions { display: flex; gap: 16rpx; margin-top: 32rpx; }
+.dialog-btn { flex: 1; text-align: center; padding: 24rpx 0; border-radius: 999rpx; font-size: 30rpx; }
+.dialog-btn.cancel { background: #F0F4F8; color: #6B7280; }
+.dialog-btn.confirm { background: #4A90D9; color: #FFFFFF; font-weight: 500; }

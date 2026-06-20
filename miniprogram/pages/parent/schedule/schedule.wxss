@@ -1,0 +1,74 @@
+/* pages/parent/schedule/schedule.wxss */
+@import '/styles/variables.wxss';
+
+.page {
+  min-height: 100vh;
+  background: var(--color-bg);
+}
+
+.week-nav {
+  display: flex;
+  align-items: center;
+  padding: 16rpx 24rpx;
+  background: var(--color-card);
+  box-shadow: var(--shadow-card);
+}
+
+.nav-btn {
+  width: 64rpx;
+  height: 64rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40rpx;
+  color: var(--color-text-secondary);
+}
+
+.week-dates {
+  flex: 1;
+  display: flex;
+  justify-content: space-around;
+}
+
+.date-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8rpx 16rpx;
+  border-radius: var(--radius-md);
+}
+
+.date-item.selected {
+  background: var(--color-primary);
+}
+
+.date-item.selected .date-weekday,
+.date-item.selected .date-day {
+  color: #fff;
+}
+
+.date-weekday {
+  font-size: var(--font-xs);
+  color: var(--color-text-secondary);
+}
+
+.date-day {
+  font-size: var(--font-md);
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-top: 4rpx;
+}
+
+.lesson-area {
+  padding: 24rpx;
+}
+
+.loading {
+  text-align: center;
+  padding: 80rpx;
+  color: var(--color-text-secondary);
+}
+
+.gap {
+  height: 16rpx;
+}

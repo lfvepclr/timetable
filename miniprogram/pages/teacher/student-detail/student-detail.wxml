@@ -1,0 +1,130 @@
+<!-- pages/teacher/student-detail/student-detail.wxml -->
+<view class="page">
+  <block wx:if="{{!loading && student}}">
+    <!-- 学生信息卡片 -->
+    <view class="info-card">
+      <view class="info-header">
+        <view class="student-avatar">{{student.name ? student.name[0] : '?'}}</view>
+        <view class="info-main">
+          <text class="student-name">{{student.name}}</text>
+          <view class="info-tags">
+            <text class="tag" wx:if="{{student.grade}}">{{student.grade}}</text>
+            <text class="tag" wx:if="{{student.school}}">{{student.school}}</text>
+            <text class="tag {{student.active ? 'tag-green' : 'tag-gray'}}">{{student.active ? '在读' : '已停'}}</text>
+          </view>
+        </view>
+        <view class="edit-btn" bindtap="startEdit" wx:if="{{!editMode}}">编辑</view>
+      </view>
+
+      <view class="info-notes" wx:if="{{student.notes && !editMode}}">
+        <text class="notes-label">备注：</text>
+        <text class="notes-text">{{student.notes}}</text>
+      </view>
+
+      <!-- 编辑模式 -->
+      <block wx:if="{{editMode}}">
+        <view class="edit-form">
+          <view class="form-item">
+            <text class="form-label">姓名</text>
+            <input class="form-input" value="{{editData.name}}" data-field="name" bindinput="onEditInput" placeholder="学生姓名" />
+          </view>
+          <view class="form-item">
+            <text class="form-label">年级</text>
+            <input class="form-input" value="{{editData.grade}}" data-field="grade" bindinput="onEditInput" placeholder="如：三年级" />
+          </view>
+          <view class="form-item">
+            <text class="form-label">学校</text>
+            <input class="form-input" value="{{editData.school}}" data-field="school" bindinput="onEditInput" placeholder="学校名称" />
+          </view>
+          <view class="form-item">
+            <text class="form-label">备注</text>
+            <textarea class="form-textarea" value="{{editData.notes}}" data-field="notes" bindinput="onEditInput" placeholder="其他信息" />
+          </view>
+          <view class="edit-actions">
+            <button class="btn-cancel" bindtap="cancelEdit">取消</button>
+            <button class="btn-save" bindtap="saveEdit">保存</button>
+          </view>
+        </view>
+      </block>
+    </view>
+
+    <!-- 快捷操作 -->
+    <view class="quick-actions" wx:if="{{!editMode}}">
+      <view class="action-item" bindtap="goToPackageManage">
+        <view class="action-icon icon-pkg">课</view>
+        <text class="action-text">课程包</text>
+      </view>
+      <view class="action-item" bindtap="goToBindGenerate">
+        <view class="action-icon icon-bind">绑</view>
+        <text class="action-text">绑定家长</text>
+      </view>
+    </view>
+
+    <!-- Tab 切换 -->
+    <view class="tab-bar" wx:if="{{!editMode}}">
+      <view class="tab-item {{activeTab === 'info' ? 'active' : ''}}" data-tab="info" bindtap="switchTab">课程包</view>
+      <view class="tab-item {{activeTab === 'lessons' ? 'active' : ''}}" data-tab="lessons" bindtap="switchTab">课程</view>
+      <view class="tab-item {{activeTab === 'feedbacks' ? 'active' : ''}}" data-tab="feedbacks" bindtap="switchTab">反馈</view>
+    </view>
+
+    <!-- 课程包列表 -->
+    <view class="tab-content" wx:if="{{activeTab === 'info' && !editMode}}">
+      <view wx:if="{{packages.length === 0}}">
+        <empty-state text="暂无课程包" />
+      </view>
+      <view class="pkg-list" wx:else>
+        <view class="pkg-card" wx:for="{{packages}}" wx:key="_id">
+          <view class="pkg-header">
+            <text class="pkg-course">{{item.course_name || '课程'}}</text>
+            <status-badge status="{{item.status === 'active' ? 'scheduled' : 'completed'}}" text="{{item.status === 'active' ? '使用中' : '已用完'}}" />
+          </view>
+          <package-bar consumed="{{item.consumed_lessons}}" total="{{item.total_lessons}}" />
+          <view class="pkg-footer">
+            <text class="pkg-date">购买日期：{{item.purchase_date}}</text>
+            <text class="pkg-remaining">剩余 {{item.remaining}}/{{item.total_lessons}} 节</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 课程列表 -->
+    <view class="tab-content" wx:if="{{activeTab === 'lessons' && !editMode}}">
+      <view wx:if="{{recentLessons.length === 0}}">
+        <empty-state text="暂无课程记录" />
+      </view>
+      <view class="lesson-list" wx:else>
+        <view class="lesson-item" wx:for="{{recentLessons}}" wx:key="_id" data-id="{{item._id}}" bindtap="goToLessonDetail" hover-class="item-hover">
+          <view class="lesson-date">
+            <text class="date-day">{{item.date}}</text>
+            <text class="date-weekday">{{item.day_of_week ? '周' + '一二三四五六日'[item.day_of_week - 1] : ''}}</text>
+          </view>
+          <view class="lesson-info">
+            <text class="lesson-name">{{item.course_name || '课程'}}</text>
+            <text class="lesson-time">{{item.start_time}} - {{item.end_time}}</text>
+          </view>
+          <status-badge status="{{item.lesson_status}}" />
+        </view>
+      </view>
+    </view>
+
+    <!-- 反馈列表 -->
+    <view class="tab-content" wx:if="{{activeTab === 'feedbacks' && !editMode}}">
+      <view wx:if="{{feedbacks.length === 0}}">
+        <empty-state text="暂无反馈记录" />
+      </view>
+      <view class="feedback-list" wx:else>
+        <view class="feedback-item" wx:for="{{feedbacks}}" wx:key="_id" data-id="{{item._id}}" bindtap="goToFeedbackDetail" hover-class="item-hover">
+          <view class="fb-header">
+            <text class="fb-date">{{item.lesson_date}}</text>
+            <text class="fb-course">{{item.course_name || ''}}</text>
+          </view>
+          <text class="fb-content">{{item.content}}</text>
+        </view>
+      </view>
+    </view>
+  </block>
+
+  <view class="loading" wx:if="{{loading}}">
+    <text>加载中...</text>
+  </view>
+</view>

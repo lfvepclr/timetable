@@ -1,0 +1,73 @@
+<!-- pages/teacher/pattern-generate/pattern-generate.wxml -->
+<view class="page-container">
+  <!-- 选择模板 -->
+  <view class="section">
+    <view class="section-title">
+      <text>选择排课模板</text>
+      <text class="add-link" bindtap="goToCreatePattern">+ 新建</text>
+    </view>
+    <block wx:if="{{patterns.length > 0}}">
+      <view wx:for="{{patterns}}" wx:key="_id" class="pattern-card {{selectedPatterns[item._id] ? 'selected' : ''}}" data-id="{{item._id}}" bindtap="togglePattern" hover-class="card-hover">
+        <view class="pattern-left">
+          <view class="pattern-color" style="background: {{item.color}};"></view>
+          <view class="pattern-info">
+            <text class="pattern-name">{{item.name}}</text>
+            <view class="pattern-meta">
+              <text>{{['','周一','周二','周三','周四','周五','周六','周日'][item.day_of_week]}}</text>
+              <text>{{item.start_time}}-{{item.end_time}}</text>
+              <text>{{item.student_names.join('、')}}</text>
+            </view>
+          </view>
+        </view>
+        <view class="check-circle {{selectedPatterns[item._id] ? 'checked' : ''}}">
+          <text wx:if="{{selectedPatterns[item._id]}}">✓</text>
+        </view>
+      </view>
+    </block>
+    <empty-state wx:else text="暂无排课模板" actionText="去创建" bind:action="goToCreatePattern" />
+  </view>
+
+  <!-- 截止日期 -->
+  <view class="section">
+    <view class="section-title"><text>排课截止日期</text></view>
+    <view class="date-card">
+      <picker mode="date" value="{{endDate}}" bindchange="onEndDateChange">
+        <view class="date-value">{{endDate}}</view>
+      </picker>
+    </view>
+  </view>
+
+  <!-- 预览结果 -->
+  <view class="section" wx:if="{{previewResult}}">
+    <view class="section-title"><text>预览结果</text></view>
+    <view class="preview-summary">
+      <view class="summary-item">
+        <text class="sum-num green">{{previewResult.summary.total}}</text>
+        <text class="sum-label">将生成</text>
+      </view>
+      <view class="summary-item">
+        <text class="sum-num orange">{{previewResult.summary.skipped}}</text>
+        <text class="sum-label">跳过</text>
+      </view>
+      <view class="summary-item">
+        <text class="sum-num red">{{previewResult.summary.conflicts}}</text>
+        <text class="sum-label">冲突</text>
+      </view>
+    </view>
+    <view class="conflict-list" wx:if="{{previewResult.conflicts.length > 0}}">
+      <text class="conflict-title">冲突详情：</text>
+      <block wx:for="{{previewResult.conflicts}}" wx:key="date">
+        <view class="conflict-item">
+          <text>{{item.date}}</text>
+          <text class="conflict-detail">{{item.conflict_lesson}}（{{item.start_time}}开始）</text>
+        </view>
+      </block>
+    </view>
+  </view>
+
+  <!-- 操作按钮 -->
+  <view class="bottom-bar">
+    <view class="action-btn outline" bindtap="preview" hover-class="btn-hover">预览</view>
+    <view class="action-btn primary" bindtap="generate" hover-class="btn-hover">确认生成</view>
+  </view>
+</view>

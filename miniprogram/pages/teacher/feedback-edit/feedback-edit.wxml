@@ -1,0 +1,89 @@
+<!-- pages/teacher/feedback-edit/feedback-edit.wxml -->
+<view class="page">
+  <!-- 课程信息 -->
+  <view class="lesson-info" wx:if="{{lesson}}">
+    <view class="lesson-bar" style="background: {{lesson.course_color || '#4A90D9'}};"></view>
+    <view class="lesson-detail">
+      <text class="lesson-name">{{lesson.course_name}}</text>
+      <text class="lesson-time">{{lesson.date}} {{lesson.start_time}}-{{lesson.end_time}}</text>
+    </view>
+  </view>
+
+  <!-- 反馈表单 -->
+  <view class="form-section">
+    <view class="form-title">
+      <text class="title-text">今日所学</text>
+      <text class="title-required">*</text>
+    </view>
+    <textarea
+      class="form-textarea"
+      value="{{feedback.content}}"
+      data-field="content"
+      bindinput="onInput"
+      placeholder="请输入本节课的教学内容..."
+      maxlength="500"
+      auto-height
+    />
+  </view>
+
+  <view class="form-section">
+    <view class="form-title">
+      <text class="title-text">课堂表现</text>
+    </view>
+    <textarea
+      class="form-textarea"
+      value="{{feedback.performance}}"
+      data-field="performance"
+      bindinput="onInput"
+      placeholder="学生的学习状态、理解程度、互动表现..."
+      maxlength="500"
+      auto-height
+    />
+  </view>
+
+  <view class="form-section">
+    <view class="form-title">
+      <text class="title-text">课后作业</text>
+    </view>
+    <textarea
+      class="form-textarea"
+      value="{{feedback.homework}}"
+      data-field="homework"
+      bindinput="onInput"
+      placeholder="布置的课后练习和作业内容..."
+      maxlength="500"
+      auto-height
+    />
+  </view>
+
+  <view class="form-section">
+    <view class="form-title">
+      <text class="title-text">老师评语</text>
+    </view>
+    <textarea
+      class="form-textarea"
+      value="{{feedback.teacher_comment}}"
+      data-field="teacher_comment"
+      bindinput="onInput"
+      placeholder="对学生的鼓励和建议..."
+      maxlength="500"
+      auto-height
+    />
+  </view>
+
+  <!-- 照片上传 -->
+  <view class="form-section">
+    <view class="form-title">
+      <text class="title-text">课堂照片</text>
+      <text class="title-hint">最多3张</text>
+    </view>
+    <photo-uploader photos="{{photos}}" max="3" bindchange="onPhotosChange" />
+  </view>
+
+  <!-- 底部操作 -->
+  <view class="bottom-bar">
+    <button class="btn-save" bindtap="handleSave" loading="{{saving}}" disabled="{{saving}}">
+      保存并生成卡片
+    </button>
+  </view>
+</view>

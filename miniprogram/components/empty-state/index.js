@@ -1,0 +1,13 @@
+// components/empty-state/index.js
+Component({
+  properties: {
+    text: { type: String, value: '暂无数据' },
+    icon: { type: String, value: 'inbox' },
+    actionText: { type: String, value: '' }
+  },
+  methods: {
+    onAction() {
+      this.triggerEvent('action')
+    }
+  }
+})

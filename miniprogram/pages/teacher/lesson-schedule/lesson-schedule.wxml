@@ -1,0 +1,61 @@
+<!-- pages/teacher/lesson-schedule/lesson-schedule.wxml -->
+<view class="page">
+  <view class="form-section">
+    <view class="section-title">选择课程</view>
+    <view class="course-list">
+      <view 
+        class="course-chip {{selectedCourseId === item._id ? 'selected' : ''}}" 
+        wx:for="{{courses}}" wx:key="_id"
+        data-id="{{item._id}}" bindtap="selectCourse"
+        style="border-color: {{selectedCourseId === item._id ? item.color : ''}};"
+      >
+        <view class="chip-color" style="background: {{item.color}};"></view>
+        <text class="chip-name">{{item.name}}</text>
+        <text class="chip-type">{{item.type}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="form-section">
+    <view class="section-title">上课时间</view>
+    <view class="form-row">
+      <text class="form-label">日期</text>
+      <picker mode="date" value="{{date}}" start="{{minDate}}" end="{{maxDate}}" bindchange="onDateChange">
+        <view class="picker-value">{{date}}</view>
+      </picker>
+    </view>
+    <view class="form-row">
+      <text class="form-label">开始</text>
+      <picker mode="time" value="{{startTime}}" start="08:00" end="21:00" bindchange="onTimeChange">
+        <view class="picker-value">{{startTime}}</view>
+      </picker>
+    </view>
+    <view class="form-row">
+      <text class="form-label">时长</text>
+      <picker mode="selector" range="{{durationOptions}}" range-key="label" bindchange="onDurationChange">
+        <view class="picker-value">{{duration == 90 ? '1.5小时' : '2小时'}}</view>
+      </picker>
+    </view>
+  </view>
+
+  <view class="form-section">
+    <view class="section-title">选择学生{{selectedCourse ? '（' + selectedCourse.type + '，最多' + (selectedCourse.type === '1v1' ? 1 : selectedCourse.type === '1v2' ? 2 : selectedCourse.type === '1v3' ? 3 : 20) + '人）' : ''}}</view>
+    <view class="student-grid">
+      <view 
+        class="student-item {{selectedStudentIds.indexOf(item._id) > -1 ? 'selected' : ''}}"
+        wx:for="{{students}}" wx:key="_id"
+        data-id="{{item._id}}" bindtap="toggleStudent"
+      >
+        <view class="student-avatar">{{item.name[0]}}</view>
+        <text class="student-name">{{item.name}}</text>
+        <view class="check-mark" wx:if="{{selectedStudentIds.indexOf(item._id) > -1}}">✓</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="bottom-bar">
+    <button class="btn-schedule" bindtap="handleSchedule" loading="{{loading}}" disabled="{{loading}}">
+      {{mode === 'makeup' ? '确认补课' : '确认排课'}}
+    </button>
+  </view>
+</view>

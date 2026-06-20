@@ -1,0 +1,63 @@
+<!-- pages/common/feedback-share/index.wxml -->
+<view class="page" wx:if="{{feedback}}">
+  <view class="header">
+    <view class="header-bg"></view>
+    <view class="header-content">
+      <text class="header-date">{{feedback.lesson_date}}</text>
+      <text class="header-course">{{feedback.course_name}}</text>
+    </view>
+  </view>
+
+  <view class="content">
+    <view class="section" wx:if="{{feedback.content}}">
+      <view class="section-icon icon-book">学</view>
+      <view class="section-body">
+        <text class="section-title">今日所学</text>
+        <text class="section-text">{{feedback.content}}</text>
+      </view>
+    </view>
+
+    <view class="section" wx:if="{{feedback.performance}}">
+      <view class="section-icon icon-star">表</view>
+      <view class="section-body">
+        <text class="section-title">课堂表现</text>
+        <text class="section-text">{{feedback.performance}}</text>
+      </view>
+    </view>
+
+    <view class="section" wx:if="{{feedback.homework}}">
+      <view class="section-icon icon-edit">作</view>
+      <view class="section-body">
+        <text class="section-title">课后作业</text>
+        <text class="section-text">{{feedback.homework}}</text>
+      </view>
+    </view>
+
+    <view class="section" wx:if="{{feedback.teacher_comment}}">
+      <view class="section-icon icon-heart">评</view>
+      <view class="section-body">
+        <text class="section-title">老师评语</text>
+        <text class="section-text">{{feedback.teacher_comment}}</text>
+      </view>
+    </view>
+
+    <view class="photos" wx:if="{{photoUrls.length > 0}}">
+      <text class="photos-title">课堂照片</text>
+      <view class="photos-grid">
+        <image 
+          wx:for="{{photoUrls}}" wx:key="*this"
+          src="{{item}}" mode="aspectFill" 
+          class="photo-item"
+          data-index="{{index}}" bindtap="previewPhoto"
+        />
+      </view>
+    </view>
+  </view>
+
+  <view class="footer">
+    <text class="footer-text">排课助手 — 课后反馈</text>
+    <button class="btn-share" open-type="share">分享</button>
+  </view>
+</view>
+
+<view class="loading" wx:if="{{loading}}">加载中...</view>

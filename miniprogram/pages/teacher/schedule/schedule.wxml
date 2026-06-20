@@ -1,0 +1,49 @@
+<!-- pages/teacher/schedule/schedule.wxml -->
+<view class="page-container">
+  <!-- 周导航 -->
+  <view class="week-nav">
+    <view class="nav-btn" bindtap="prevWeek" hover-class="nav-hover">
+      <text>‹</text>
+    </view>
+    <view class="week-label" bindtap="goToday">
+      <text>{{currentWeek.start}} ~ {{currentWeek.end}}</text>
+    </view>
+    <view class="nav-btn" bindtap="nextWeek" hover-class="nav-hover">
+      <text>›</text>
+    </view>
+  </view>
+
+  <!-- 日期选择条 -->
+  <scroll-view class="date-bar" scroll-x enhanced show-scrollbar="{{false}}">
+    <view class="date-bar-inner">
+      <block wx:for="{{weekDates}}" wx:key="*this">
+        <view class="date-cell {{activeDayIndex === index ? 'active' : ''}}" data-index="{{index}}" bindtap="selectDate" hover-class="cell-hover">
+          <text class="cell-weekday">{{['一','二','三','四','五','六','日'][index]}}</text>
+          <text class="cell-date">{{item}}</text>
+        </view>
+      </block>
+    </view>
+  </scroll-view>
+
+  <!-- 操作按钮 -->
+  <view class="action-bar">
+    <view class="action-btn" bindtap="goToSchedule" hover-class="btn-hover">
+      <text>+ 手动排课</text>
+    </view>
+    <view class="action-btn outline" bindtap="goToPattern" hover-class="btn-hover">
+      <text>周模式</text>
+    </view>
+  </view>
+
+  <!-- 日视图（时间折叠） -->
+  <view class="day-view">
+    <view class="day-header">
+      <text class="day-date">{{selectedDate}}</text>
+    </view>
+    <block wx:if="{{!loading}}">
+      <time-fold wx:if="{{daySegments.length > 0}}" segments="{{daySegments}}" bind:lessontap="onLessonTap" />
+      <empty-state wx:else text="当日无课" />
+    </block>
+    <view wx:else class="loading-text">加载中...</view>
+  </view>
+</view>

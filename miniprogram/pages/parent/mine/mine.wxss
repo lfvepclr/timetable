@@ -1,0 +1,132 @@
+/* pages/parent/mine/mine.wxss */
+@import '/styles/variables.wxss';
+
+.page {
+  min-height: 100vh;
+  background: var(--color-bg);
+  padding-bottom: 40rpx;
+}
+
+.student-card {
+  display: flex;
+  align-items: center;
+  padding: 32rpx;
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+}
+
+.avatar {
+  width: 96rpx;
+  height: 96rpx;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+  color: #fff;
+  font-size: 40rpx;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 24rpx;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+}
+
+.name {
+  font-size: var(--font-xl);
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 4rpx;
+}
+
+.desc {
+  font-size: var(--font-sm);
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.section {
+  margin: 24rpx;
+  padding: 24rpx;
+  background: var(--color-card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+}
+
+.section-title {
+  font-size: var(--font-sm);
+  color: var(--color-text-secondary);
+  margin-bottom: 20rpx;
+}
+
+.pkg-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.pkg-item {
+  display: flex;
+  align-items: center;
+  padding: 16rpx;
+  background: var(--color-bg);
+  border-radius: var(--radius-md);
+}
+
+.pkg-info {
+  flex: 1;
+}
+
+.pkg-name {
+  font-size: var(--font-base);
+  color: var(--color-text-primary);
+  margin-bottom: 8rpx;
+  display: block;
+}
+
+.pkg-remaining {
+  font-size: var(--font-md);
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+.setting-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid var(--color-border-light);
+}
+
+.setting-item:last-child {
+  border-bottom: none;
+}
+
+.setting-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.setting-label {
+  font-size: var(--font-base);
+  color: var(--color-text-primary);
+  margin-bottom: 4rpx;
+}
+
+.setting-desc {
+  font-size: var(--font-xs);
+  color: var(--color-text-secondary);
+}
+
+.tip-card {
+  margin: 0 24rpx;
+  padding: 24rpx;
+  background: var(--color-warning-bg);
+  border-radius: var(--radius-lg);
+}
+
+.tip-text {
+  font-size: var(--font-xs);
+  color: var(--color-text-regular);
+  line-height: 1.6;
+}

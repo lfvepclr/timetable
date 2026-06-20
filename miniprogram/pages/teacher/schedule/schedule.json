@@ -1,0 +1,9 @@
+{
+  "usingComponents": {
+    "lesson-card": "/components/lesson-card/index",
+    "time-fold": "/components/time-fold/index",
+    "empty-state": "/components/empty-state/index"
+  },
+  "enablePullDownRefresh": true,
+  "navigationBarTitleText": "课表"
+}

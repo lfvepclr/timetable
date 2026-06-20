@@ -1,0 +1,35 @@
+<!-- pages/parent/package/package.wxml -->
+<view class="page">
+  <view wx:if="{{loading}}" class="loading">加载中...</view>
+
+  <view wx:if="{{!loading && packages.length === 0}}">
+    <empty-state text="暂无课程包" />
+  </view>
+
+  <view class="pkg-list" wx:if="{{!loading && packages.length > 0}}">
+    <view class="pkg-card" wx:for="{{packages}}" wx:key="_id" data-pkg="{{item}}" bindtap="showRecords">
+      <view class="pkg-header">
+        <text class="pkg-course">{{item.course_name || '课程'}}</text>
+        <text class="pkg-status {{item.status === 'active' ? 'status-active' : 'status-done'}}">
+          {{item.status === 'active' ? '使用中' : '已用完'}}
+        </text>
+      </view>
+      <package-bar consumed="{{item.consumed_lessons}}" total="{{item.total_lessons}}" />
+      <view class="pkg-stats">
+        <view class="stat-item">
+          <text class="stat-num">{{item.total_lessons}}</text>
+          <text class="stat-label">总课时</text>
+        </view>
+        <view class="stat-item">
+          <text class="stat-num">{{item.consumed_lessons}}</text>
+          <text class="stat-label">已消耗</text>
+        </view>
+        <view class="stat-item">
+          <text class="stat-num">{{item.remaining}}</text>
+          <text class="stat-label">剩余</text>
+        </view>
+      </view>
+      <view class="pkg-date">购买日期：{{item.purchase_date}}</view>
+    </view>
+  </view>
+</view>

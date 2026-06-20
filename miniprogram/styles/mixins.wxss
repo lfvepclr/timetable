@@ -1,0 +1,151 @@
+/* styles/mixins.wxss - 公共样式类 */
+
+/* Flex 布局 */
+.flex { display: flex; }
+.flex-col { display: flex; flex-direction: column; }
+.flex-center { display: flex; align-items: center; justify-content: center; }
+.flex-between { display: flex; align-items: center; justify-content: space-between; }
+.flex-start { display: flex; align-items: center; justify-content: flex-start; }
+.flex-end { display: flex; align-items: center; justify-content: flex-end; }
+.flex-wrap { flex-wrap: wrap; }
+.flex-1 { flex: 1; }
+.items-center { align-items: center; }
+.items-start { align-items: flex-start; }
+.items-end { align-items: flex-end; }
+
+/* 间距工具 */
+.mt-xs { margin-top: 8rpx; }
+.mt-sm { margin-top: 16rpx; }
+.mt-md { margin-top: 24rpx; }
+.mt-lg { margin-top: 32rpx; }
+.mt-xl { margin-top: 48rpx; }
+.mb-xs { margin-bottom: 8rpx; }
+.mb-sm { margin-bottom: 16rpx; }
+.mb-md { margin-bottom: 24rpx; }
+.mb-lg { margin-bottom: 32rpx; }
+.ml-xs { margin-left: 8rpx; }
+.ml-sm { margin-left: 16rpx; }
+.ml-md { margin-left: 24rpx; }
+.mr-xs { margin-right: 8rpx; }
+.mr-sm { margin-right: 16rpx; }
+.mr-md { margin-right: 24rpx; }
+.p-sm { padding: 16rpx; }
+.p-md { padding: 24rpx; }
+.p-lg { padding: 32rpx; }
+.px-lg { padding-left: 32rpx; padding-right: 32rpx; }
+.py-md { padding-top: 24rpx; padding-bottom: 24rpx; }
+
+/* 文字 */
+.text-xs { font-size: 22rpx; }
+.text-sm { font-size: 24rpx; }
+.text-base { font-size: 28rpx; }
+.text-md { font-size: 30rpx; }
+.text-lg { font-size: 32rpx; }
+.text-xl { font-size: 36rpx; }
+.text-xxl { font-size: 44rpx; }
+.text-bold { font-weight: 600; }
+.text-primary { color: var(--color-text-primary); }
+.text-secondary { color: var(--color-text-secondary); }
+.text-placeholder { color: var(--color-text-placeholder); }
+.text-brand { color: var(--color-primary); }
+.text-success { color: var(--color-success); }
+.text-warning { color: var(--color-warning); }
+.text-danger { color: var(--color-danger); }
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+
+/* 卡片 */
+.card {
+  background: var(--color-card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: var(--space-lg);
+  margin-bottom: var(--space-md);
+}
+
+.card-tight {
+  background: var(--color-card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: var(--space-md);
+  margin-bottom: var(--space-md);
+}
+
+/* 按钮 */
+.btn-primary {
+  background: var(--color-primary);
+  color: #FFFFFF;
+  border-radius: var(--radius-pill);
+  padding: 20rpx 48rpx;
+  font-size: var(--font-md);
+  font-weight: 500;
+  text-align: center;
+  line-height: 1.5;
+}
+
+.btn-primary-hover {
+  opacity: 0.85;
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--color-primary);
+  border: 2rpx solid var(--color-primary);
+  border-radius: var(--radius-pill);
+  padding: 18rpx 46rpx;
+  font-size: var(--font-md);
+  font-weight: 500;
+  text-align: center;
+  line-height: 1.5;
+}
+
+.btn-ghost {
+  background: var(--color-primary-bg);
+  color: var(--color-primary);
+  border-radius: var(--radius-pill);
+  padding: 20rpx 48rpx;
+  font-size: var(--font-md);
+  font-weight: 500;
+  text-align: center;
+  line-height: 1.5;
+}
+
+.btn-disabled {
+  background: var(--color-border);
+  color: var(--color-text-placeholder);
+  border-radius: var(--radius-pill);
+  padding: 20rpx 48rpx;
+  font-size: var(--font-md);
+  text-align: center;
+  line-height: 1.5;
+}
+
+/* 标签/徽章 */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4rpx 16rpx;
+  border-radius: var(--radius-pill);
+  font-size: var(--font-xs);
+  line-height: 1.6;
+}
+
+.badge-blue { background: var(--color-primary-bg); color: var(--color-primary); }
+.badge-green { background: var(--color-success-bg); color: var(--color-success); }
+.badge-orange { background: var(--color-warning-bg); color: var(--color-warning); }
+.badge-red { background: var(--color-danger-bg); color: var(--color-danger); }
+.badge-gray { background: var(--color-info-bg); color: var(--color-info); }
+
+/* 分割线 */
+.divider {
+  height: 1rpx;
+  background: var(--color-divider);
+  margin: var(--space-md) 0;
+}
+
+/* 课程色条 */
+.course-bar {
+  width: 6rpx;
+  border-radius: 3rpx;
+  align-self: stretch;
+}

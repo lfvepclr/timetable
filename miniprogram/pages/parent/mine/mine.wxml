@@ -1,0 +1,55 @@
+<!-- pages/parent/mine/mine.wxml -->
+<view class="page">
+  <!-- 学生信息 -->
+  <view class="student-card" wx:if="{{student}}">
+    <view class="avatar">{{student.name[0]}}</view>
+    <view class="info">
+      <text class="name">{{student.name}}</text>
+      <text class="desc">{{student.grade || ''}} {{student.school || ''}}</text>
+    </view>
+  </view>
+
+  <!-- 课时概览 -->
+  <view class="section" wx:if="{{packages.length > 0}}">
+    <view class="section-title">课时概览</view>
+    <view class="pkg-list">
+      <view class="pkg-item" wx:for="{{packages}}" wx:key="_id" bindtap="goToPackage">
+        <view class="pkg-info">
+          <text class="pkg-name">{{item.course_name}}</text>
+          <package-bar consumed="{{item.consumed_lessons}}" total="{{item.total_lessons}}" />
+        </view>
+        <text class="pkg-remaining">{{item.remaining}}节</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 通知设置 -->
+  <view class="section">
+    <view class="section-title">通知设置</view>
+    <view class="setting-item">
+      <view class="setting-info">
+        <text class="setting-label">反馈通知</text>
+        <text class="setting-desc">老师发布反馈后通知</text>
+      </view>
+      <switch checked="{{settings.feedbackNotify}}" data-key="feedbackNotify" bindchange="onSwitchChange" color="#4A90D9" />
+    </view>
+    <view class="setting-item">
+      <view class="setting-info">
+        <text class="setting-label">排课变更</text>
+        <text class="setting-desc">课程时间调整后通知</text>
+      </view>
+      <switch checked="{{settings.scheduleChangeNotify}}" data-key="scheduleChangeNotify" bindchange="onSwitchChange" color="#4A90D9" />
+    </view>
+    <view class="setting-item">
+      <view class="setting-info">
+        <text class="setting-label">上课提醒</text>
+        <text class="setting-desc">上课前提醒</text>
+      </view>
+      <switch checked="{{settings.classReminder}}" data-key="classReminder" bindchange="onSwitchChange" color="#4A90D9" />
+    </view>
+  </view>
+
+  <view class="tip-card">
+    <text class="tip-text">订阅消息为一次性消耗，建议在关键操作前重新开启</text>
+  </view>
+</view>

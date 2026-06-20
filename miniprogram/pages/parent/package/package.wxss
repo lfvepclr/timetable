@@ -1,0 +1,88 @@
+/* pages/parent/package/package.wxss */
+@import '/styles/variables.wxss';
+
+.page {
+  min-height: 100vh;
+  background: var(--color-bg);
+  padding: 24rpx;
+}
+
+.loading {
+  text-align: center;
+  padding: 80rpx;
+  color: var(--color-text-secondary);
+}
+
+.pkg-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24rpx;
+}
+
+.pkg-card {
+  padding: 24rpx;
+  background: var(--color-card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+}
+
+.pkg-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.pkg-course {
+  font-size: var(--font-md);
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.pkg-status {
+  font-size: var(--font-xs);
+  padding: 4rpx 16rpx;
+  border-radius: var(--radius-pill);
+}
+
+.status-active {
+  background: var(--color-success-bg);
+  color: var(--color-success);
+}
+
+.status-done {
+  background: var(--color-info-bg);
+  color: var(--color-info);
+}
+
+.pkg-stats {
+  display: flex;
+  justify-content: space-around;
+  margin: 24rpx 0;
+  padding: 16rpx 0;
+  border-top: 1rpx solid var(--color-border-light);
+  border-bottom: 1rpx solid var(--color-border-light);
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stat-num {
+  font-size: var(--font-xl);
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+.stat-label {
+  font-size: var(--font-xs);
+  color: var(--color-text-secondary);
+  margin-top: 4rpx;
+}
+
+.pkg-date {
+  font-size: var(--font-xs);
+  color: var(--color-text-secondary);
+}

@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "package-bar": "/components/package-bar/package-bar",
+    "empty-state": "/components/empty-state/empty-state"
+  },
+  "navigationBarTitleText": "课程包管理"
+}

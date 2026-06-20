@@ -1,0 +1,6 @@
+{
+  "component": true,
+  "usingComponents": {
+    "lesson-card": "../lesson-card/index"
+  }
+}

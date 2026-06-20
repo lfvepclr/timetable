@@ -1,0 +1,27 @@
+<!-- components/time-fold/index.wxml -->
+<view class="time-fold-container">
+  <block wx:for="{{segments}}" wx:key="index">
+    <!-- 课程段 -->
+    <view wx:if="{{item.type === 'lesson'}}" class="segment-lesson" data-lesson="{{item.lesson}}" bindtap="onLessonTap">
+      <lesson-card lesson="{{item.lesson}}" clickable="{{false}}" />
+    </view>
+
+    <!-- 折叠条（>30分钟空闲） -->
+    <view wx:elif="{{item.type === 'fold'}}" class="segment-fold {{expandedFolds[index] ? 'expanded' : ''}}" data-index="{{index}}" bindtap="toggleFold" hover-class="fold-hover">
+      <view class="fold-line"></view>
+      <view class="fold-label">
+        <text class="fold-icon">{{expandedFolds[index] ? '▲' : '▽'}}</text>
+        <text class="fold-text">{{item.label}}</text>
+      </view>
+      <view class="fold-line"></view>
+    </view>
+
+    <!-- 小间隔（≤30分钟） -->
+    <view wx:elif="{{item.type === 'gap'}}" class="segment-gap" style="height: {{item.duration * 0.8}}rpx;"></view>
+  </block>
+
+  <!-- 空状态 -->
+  <view wx:if="{{segments.length === 0}}" class="fold-empty">
+    <text class="empty-text">今日无课</text>
+  </view>
+</view>

@@ -1,0 +1,194 @@
+/* pages/parent/index/index.wxss */
+@import '/styles/variables.wxss';
+
+.page {
+  min-height: 100vh;
+  background: var(--color-bg);
+  padding-bottom: 40rpx;
+}
+
+.loading {
+  text-align: center;
+  padding: 80rpx;
+  color: var(--color-text-secondary);
+}
+
+.student-card {
+  display: flex;
+  align-items: center;
+  padding: 32rpx;
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+}
+
+.student-avatar {
+  width: 96rpx;
+  height: 96rpx;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+  color: #fff;
+  font-size: 40rpx;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 24rpx;
+}
+
+.student-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.student-name {
+  font-size: var(--font-xl);
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 4rpx;
+}
+
+.student-desc {
+  font-size: var(--font-sm);
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.section {
+  margin: 24rpx;
+  padding: 24rpx;
+  background: var(--color-card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+}
+
+.section-title {
+  font-size: var(--font-sm);
+  color: var(--color-text-secondary);
+  margin-bottom: 20rpx;
+}
+
+.next-lesson {
+  display: flex;
+  align-items: stretch;
+}
+
+.lesson-bar {
+  width: 6rpx;
+  border-radius: 3rpx;
+  margin-right: 20rpx;
+}
+
+.lesson-content {
+  flex: 1;
+}
+
+.lesson-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8rpx;
+}
+
+.lesson-name {
+  font-size: var(--font-md);
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.lesson-date {
+  font-size: var(--font-sm);
+  color: var(--color-primary);
+}
+
+.lesson-time {
+  font-size: var(--font-xs);
+  color: var(--color-text-secondary);
+}
+
+.pkg-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.pkg-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16rpx;
+  background: var(--color-bg);
+  border-radius: var(--radius-md);
+}
+
+.pkg-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.pkg-name {
+  font-size: var(--font-base);
+  color: var(--color-text-primary);
+  margin-bottom: 4rpx;
+}
+
+.pkg-total {
+  font-size: var(--font-xs);
+  color: var(--color-text-secondary);
+}
+
+.pkg-remaining {
+  display: flex;
+  align-items: baseline;
+  gap: 4rpx;
+}
+
+.remaining-num {
+  font-size: var(--font-xxl);
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.remaining-label {
+  font-size: var(--font-xs);
+  color: var(--color-text-secondary);
+}
+
+.feedback-preview {
+  padding: 16rpx;
+  background: var(--color-bg);
+  border-radius: var(--radius-md);
+}
+
+.fb-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8rpx;
+}
+
+.fb-date {
+  font-size: var(--font-xs);
+  color: var(--color-text-secondary);
+}
+
+.fb-course {
+  font-size: var(--font-xs);
+  color: var(--color-primary);
+}
+
+.fb-content {
+  font-size: var(--font-sm);
+  color: var(--color-text-regular);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  margin-bottom: 8rpx;
+}
+
+.fb-more {
+  font-size: var(--font-xs);
+  color: var(--color-primary);
+  text-align: right;
+}
+
+.no-student {
+  padding: 80rpx 32rpx;
+}

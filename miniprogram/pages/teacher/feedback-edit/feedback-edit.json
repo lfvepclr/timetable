@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "photo-uploader": "/components/photo-uploader/photo-uploader"
+  },
+  "navigationBarTitleText": "写反馈"
+}

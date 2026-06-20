@@ -1,0 +1,9 @@
+{
+  "name": "bindStudent",
+  "version": "1.0.0",
+  "description": "家长绑定学生",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

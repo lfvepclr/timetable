@@ -1,0 +1,71 @@
+<!-- pages/parent/index/index.wxml -->
+<view class="page">
+  <view wx:if="{{loading}}" class="loading">加载中...</view>
+
+  <block wx:if="{{!loading && student}}">
+    <!-- 学生信息 -->
+    <view class="student-card">
+      <view class="student-avatar">{{student.name[0]}}</view>
+      <view class="student-info">
+        <text class="student-name">{{student.name}}</text>
+        <text class="student-desc">{{student.grade || ''}} {{student.school || ''}}</text>
+      </view>
+    </view>
+
+    <!-- 下一节课 -->
+    <view class="section" wx:if="{{nextLesson}}">
+      <view class="section-title">下一节课</view>
+      <view class="next-lesson" bindtap="goToSchedule">
+        <view class="lesson-bar" style="background: {{nextLesson.course_color || '#4A90D9'}};"></view>
+        <view class="lesson-content">
+          <view class="lesson-top">
+            <text class="lesson-name">{{nextLesson.course_name}}</text>
+            <text class="lesson-date">{{nextLesson.friendlyDate}} {{nextLesson.start_time}}</text>
+          </view>
+          <text class="lesson-time">{{nextLesson.date}} {{nextLesson.start_time}}-{{nextLesson.end_time}}</text>
+        </view>
+      </view>
+    </view>
+
+    <empty-state text="暂无即将到来的课程" wx:if="{{!nextLesson}}" />
+
+    <!-- 剩余课时 -->
+    <view class="section" wx:if="{{packages.length > 0}}">
+      <view class="section-title">剩余课时</view>
+      <view class="pkg-list">
+        <view class="pkg-item" wx:for="{{packages}}" wx:key="_id" bindtap="goToPackage">
+          <view class="pkg-info">
+            <text class="pkg-name">{{item.course_name || '课程'}}</text>
+            <text class="pkg-total">共{{item.total_lessons}}节</text>
+          </view>
+          <view class="pkg-remaining">
+            <text class="remaining-num">{{item.remaining}}</text>
+            <text class="remaining-label">节剩余</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 最新反馈 -->
+    <view class="section" wx:if="{{latestFeedback}}">
+      <view class="section-title">最新反馈</view>
+      <view class="feedback-preview" bindtap="goToFeedbackDetail">
+        <view class="fb-header">
+          <text class="fb-date">{{latestFeedback.lesson_date}}</text>
+          <text class="fb-course">{{latestFeedback.course_name}}</text>
+        </view>
+        <text class="fb-content">{{latestFeedback.content}}</text>
+        <view class="fb-more">查看详情 ›</view>
+      </view>
+    </view>
+
+    <view class="section" wx:if="{{!latestFeedback}}">
+      <view class="section-title">最新反馈</view>
+      <empty-state text="暂无反馈记录" />
+    </view>
+  </block>
+
+  <view wx:if="{{!loading && !student}}" class="no-student">
+    <empty-state text="尚未绑定学生，请联系老师分享绑定链接" />
+  </view>
+</view>

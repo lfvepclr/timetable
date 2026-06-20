@@ -1,0 +1,2 @@
+<!-- components/status-badge/index.wxml -->
+<view class="badge {{classMap[status]}}">{{labelMap[status]}}</view>

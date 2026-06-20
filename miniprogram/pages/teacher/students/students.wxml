@@ -1,0 +1,64 @@
+<!-- pages/teacher/students/students.wxml -->
+<view class="page-container">
+  <!-- 搜索栏 -->
+  <view class="search-bar">
+    <view class="search-input-wrap">
+      <text class="search-icon">🔍</text>
+      <input class="search-input" placeholder="搜索学生姓名/年级" value="{{keyword}}" bindinput="onSearch" bindconfirm="onSearchConfirm" confirm-type="search" />
+    </view>
+  </view>
+
+  <!-- 学生列表 -->
+  <view class="student-list" wx:if="{{!loading}}">
+    <block wx:for="{{students}}" wx:key="_id">
+      <view class="student-card" data-id="{{item._id}}" bindtap="goToDetail" hover-class="card-hover">
+        <view class="avatar" style="background: {{['#4A90D9','#52C4A0','#FF9F5A','#A78BFA'][index % 4]}};">
+          <text>{{item.name[0]}}</text>
+        </view>
+        <view class="student-info">
+          <view class="info-top">
+            <text class="student-name">{{item.name}}</text>
+            <text class="student-grade" wx:if="{{item.grade}}">{{item.grade}}</text>
+          </view>
+          <text class="student-school" wx:if="{{item.school}}">{{item.school}}</text>
+          <text class="student-notes" wx:if="{{item.notes}}">{{item.notes}}</text>
+        </view>
+        <text class="arrow">›</text>
+      </view>
+    </block>
+    <empty-state wx:if="{{students.length === 0}}" text="暂无学生" actionText="添加学生" bind:action="showAddDialog" />
+  </view>
+  <view wx:else class="loading-text">加载中...</view>
+
+  <!-- 添加按钮 -->
+  <view class="fab-btn" bindtap="showAddDialog" hover-class="fab-hover">
+    <text class="fab-icon">+</text>
+  </view>
+
+  <!-- 添加学生弹窗 -->
+  <view wx:if="{{showAdd}}" class="dialog-mask" bindtap="hideAddDialog">
+    <view class="add-dialog" catchtap="">
+      <view class="dialog-title">添加学生</view>
+      <view class="form-item">
+        <text class="form-label">姓名 *</text>
+        <input class="form-input" placeholder="请输入学生姓名" value="{{newStudent.name}}" data-field="name" bindinput="onInputChange" />
+      </view>
+      <view class="form-item">
+        <text class="form-label">年级</text>
+        <input class="form-input" placeholder="如：六年级" value="{{newStudent.grade}}" data-field="grade" bindinput="onInputChange" />
+      </view>
+      <view class="form-item">
+        <text class="form-label">学校</text>
+        <input class="form-input" placeholder="选填" value="{{newStudent.school}}" data-field="school" bindinput="onInputChange" />
+      </view>
+      <view class="form-item">
+        <text class="form-label">备注</text>
+        <textarea class="form-textarea" placeholder="选填，如学习情况" value="{{newStudent.notes}}" data-field="notes" bindinput="onInputChange" />
+      </view>
+      <view class="dialog-actions">
+        <view class="dialog-btn cancel" bindtap="hideAddDialog">取消</view>
+        <view class="dialog-btn confirm" bindtap="saveStudent">保存</view>
+      </view>
+    </view>
+  </view>
+</view>

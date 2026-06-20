@@ -1,0 +1,94 @@
+<!-- pages/teacher/lesson-detail/lesson-detail.wxml -->
+<view class="page-container" wx:if="{{!loading && lesson}}">
+  <!-- 课程信息卡片 -->
+  <view class="info-card">
+    <view class="course-bar" style="background: {{lesson.color || '#4A90D9'}};"></view>
+    <view class="info-body">
+      <view class="info-header">
+        <text class="course-name">{{lesson.course_name}}</text>
+        <status-badge status="{{lesson.lesson_status}}" />
+      </view>
+      <view class="info-row">
+        <text class="info-label">时间</text>
+        <text class="info-value">{{lesson.date}} {{lesson.weekday}} {{lesson.start_time}}-{{lesson.end_time}}</text>
+      </view>
+      <view class="info-row">
+        <text class="info-label">时长</text>
+        <text class="info-value">{{lesson.durationText}}</text>
+      </view>
+      <view class="info-row">
+        <text class="info-label">类型</text>
+        <text class="info-value">{{lesson.course_type}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 学生列表 -->
+  <view class="section">
+    <view class="section-title">参课学生（{{lesson.students.length}}）</view>
+    <block wx:for="{{lesson.students}}" wx:key="student_id">
+      <view class="student-row">
+        <view class="student-left">
+          <view class="student-avatar" style="background: {{['#4A90D9','#52C4A0','#FF9F5A','#A78BFA'][index % 4]}};">
+            <text>{{item.student_name[0]}}</text>
+          </view>
+          <view class="student-detail">
+            <text class="s-name">{{item.student_name}}</text>
+            <status-badge status="{{item.status}}" type="student" />
+          </view>
+        </view>
+        <view class="student-actions">
+          <!-- 待上课：可请假 -->
+          <view wx:if="{{item.status === 'scheduled'}}" class="mini-btn warn" data-sid="{{item.student_id}}" bindtap="showLeaveDialog">请假</view>
+          <!-- 已请假：可补课 -->
+          <view wx:if="{{item.status === 'on_leave'}}" class="mini-btn" data-sid="{{item.student_id}}" bindtap="goToReschedule">补课</view>
+          <!-- 已完成：可写反馈 -->
+          <view wx:if="{{item.status === 'attended'}}" class="mini-btn primary" data-sid="{{item.student_id}}" bindtap="goToFeedback">反馈</view>
+        </view>
+      </view>
+    </block>
+  </view>
+
+  <!-- 底部操作 -->
+  <view class="bottom-actions" wx:if="{{lesson.lesson_status === 'scheduled'}}">
+    <view class="action-btn primary" bindtap="showCompleteDialog" hover-class="btn-hover">
+      <text>标记下课</text>
+    </view>
+  </view>
+</view>
+
+<!-- 完成课程弹窗 -->
+<view wx:if="{{showComplete}}" class="dialog-mask" bindtap="hideCompleteDialog">
+  <view class="complete-dialog" catchtap="">
+    <view class="dialog-title">确认下课</view>
+    <view class="dialog-desc">勾选出勤学生，将消耗对应课时</view>
+    <block wx:for="{{lesson.students}}" wx:key="student_id">
+      <view class="attend-row {{attendedIds.indexOf(item.student_id) > -1 ? 'checked' : ''}}" data-sid="{{item.student_id}}" bindtap="toggleAttend">
+        <view class="check-box {{attendedIds.indexOf(item.student_id) > -1 ? 'checked' : ''}}">
+          <text wx:if="{{attendedIds.indexOf(item.student_id) > -1}}">✓</text>
+        </view>
+        <text class="attend-name">{{item.student_name}}</text>
+        <text class="attend-status" wx:if="{{item.status === 'on_leave'}}">已请假</text>
+      </view>
+    </block>
+    <view class="dialog-actions">
+      <view class="dialog-btn cancel" bindtap="hideCompleteDialog">取消</view>
+      <view class="dialog-btn confirm" bindtap="confirmComplete">确认下课</view>
+    </view>
+  </view>
+</view>
+
+<!-- 请假弹窗 -->
+<view wx:if="{{showLeaveDialog}}" class="dialog-mask" bindtap="hideLeaveDialog">
+  <view class="leave-dialog" catchtap="">
+    <view class="dialog-title">学生请假</view>
+    <view class="form-item">
+      <text class="form-label">请假原因（选填）</text>
+      <textarea class="form-textarea" placeholder="如：生病、临时有事" value="{{leaveReason}}" bindinput="onLeaveReasonInput" />
+    </view>
+    <view class="dialog-actions">
+      <view class="dialog-btn cancel" bindtap="hideLeaveDialog">取消</view>
+      <view class="dialog-btn confirm" bindtap="confirmLeave">确认请假</view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,110 @@
+/* pages/parent/feedback-list/feedback-list.wxss */
+@import '/styles/variables.wxss';
+
+.page {
+  min-height: 100vh;
+  background: var(--color-bg);
+  padding: 24rpx;
+  padding-bottom: 40rpx;
+}
+
+.loading {
+  text-align: center;
+  padding: 80rpx;
+  color: var(--color-text-secondary);
+}
+
+.feedback-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24rpx;
+}
+
+.feedback-card {
+  background: var(--color-card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24rpx 24rpx 16rpx;
+  border-bottom: 1rpx solid var(--color-border-light);
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+}
+
+.fb-date {
+  font-size: var(--font-sm);
+  color: var(--color-text-secondary);
+}
+
+.fb-course {
+  font-size: var(--font-sm);
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.fb-arrow {
+  font-size: 36rpx;
+  color: var(--color-text-placeholder);
+}
+
+.card-body {
+  padding: 16rpx 24rpx;
+}
+
+.fb-section {
+  margin-bottom: 16rpx;
+}
+
+.fb-section:last-child {
+  margin-bottom: 0;
+}
+
+.section-label {
+  display: block;
+  font-size: var(--font-xs);
+  color: var(--color-primary);
+  margin-bottom: 8rpx;
+}
+
+.section-text {
+  font-size: var(--font-sm);
+  color: var(--color-text-regular);
+  line-height: 1.6;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
+
+.card-photos {
+  display: flex;
+  gap: 12rpx;
+  padding: 0 24rpx 24rpx;
+}
+
+.photo-thumb {
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: var(--radius-md);
+}
+
+.card-hover {
+  opacity: 0.9;
+}
+
+.load-more, .no-more {
+  text-align: center;
+  font-size: var(--font-xs);
+  color: var(--color-text-placeholder);
+  padding: 24rpx;
+}

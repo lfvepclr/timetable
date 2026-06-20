@@ -1,0 +1,67 @@
+<!-- pages/teacher/index/index.wxml -->
+<view class="page-container">
+  <!-- 今日概览头部 -->
+  <view class="today-header">
+    <view class="header-bg"></view>
+    <view class="header-content">
+      <view class="header-top">
+        <view class="date-block">
+          <text class="date-text">{{today}}</text>
+          <text class="weekday-text">{{weekday}}</text>
+        </view>
+        <view class="today-count">
+          <text class="count-num">{{todayLessons.length}}</text>
+          <text class="count-label">节课</text>
+        </view>
+      </view>
+      <!-- 快捷操作 -->
+      <view class="quick-actions">
+        <view class="action-item" bindtap="goToManualSchedule" hover-class="action-hover">
+          <view class="action-icon icon-schedule"></view>
+          <text>手动排课</text>
+        </view>
+        <view class="action-item" bindtap="goToPatternGenerate" hover-class="action-hover">
+          <view class="action-icon icon-pattern"></view>
+          <text>批量生成</text>
+        </view>
+        <view class="action-item" bindtap="goToSchedule" hover-class="action-hover">
+          <view class="action-icon icon-calendar"></view>
+          <text>查看课表</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 今日课程（时间折叠） -->
+  <view class="section">
+    <view class="section-title">
+      <text>今日课程</text>
+    </view>
+    <block wx:if="{{!loading}}">
+      <time-fold wx:if="{{segments.length > 0}}" segments="{{segments}}" bind:lessontap="onLessonTap" />
+      <empty-state wx:else text="今日无课，休息一下吧" actionText="去排课" bind:action="goToSchedule" />
+    </block>
+    <view wx:else class="loading-text">加载中...</view>
+  </view>
+
+  <!-- 近期课程 -->
+  <view class="section" wx:if="{{upcomingLessons.length > 0}}">
+    <view class="section-title">
+      <text>近期课程</text>
+      <text class="more-link" bindtap="goToSchedule">全部 ></text>
+    </view>
+    <block wx:for="{{upcomingLessons}}" wx:key="date">
+      <view class="upcoming-day">
+        <view class="upcoming-date">
+          <text class="date-label">{{item.label}}</text>
+          <text class="date-full">{{item.date}}</text>
+        </view>
+        <view class="upcoming-lessons">
+          <block wx:for="{{item.lessons}}" wx:for-item="lesson" wx:key="_id">
+            <lesson-card lesson="{{lesson}}" compact="{{true}}" bind:tap="onLessonTap" data-lesson="{{lesson}}" />
+          </block>
+        </view>
+      </view>
+    </block>
+  </view>
+</view>

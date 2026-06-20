@@ -1,0 +1,74 @@
+/* styles/variables.wxss - CSS 变量定义 */
+
+page {
+  /* 品牌色 */
+  --color-primary: #4A90D9;
+  --color-primary-light: #6BA8E8;
+  --color-primary-dark: #3A7BC0;
+  --color-primary-bg: #EAF2FB;
+
+  /* 功能色 */
+  --color-success: #52C4A0;
+  --color-success-bg: #E8F7F1;
+  --color-warning: #FF9F5A;
+  --color-warning-bg: #FFF3E8;
+  --color-danger: #F56C6C;
+  --color-danger-bg: #FDEAEA;
+  --color-info: #909399;
+  --color-info-bg: #F4F4F5;
+
+  /* 中性色 */
+  --color-bg: #F7F8FA;
+  --color-card: #FFFFFF;
+  --color-text-primary: #1F2937;
+  --color-text-regular: #4B5563;
+  --color-text-secondary: #6B7280;
+  --color-text-placeholder: #9CA3AF;
+  --color-border: #E5E7EB;
+  --color-border-light: #F0F1F3;
+  --color-divider: #F0F1F3;
+
+  /* 课程预设色 */
+  --course-1: #4A90D9;
+  --course-2: #52C4A0;
+  --course-3: #FF9F5A;
+  --course-4: #A78BFA;
+  --course-5: #F56C6C;
+  --course-6: #36CFC9;
+  --course-7: #FFD666;
+  --course-8: #FF85C0;
+
+  /* 字号 */
+  --font-xs: 22rpx;
+  --font-sm: 24rpx;
+  --font-base: 28rpx;
+  --font-md: 30rpx;
+  --font-lg: 32rpx;
+  --font-xl: 36rpx;
+  --font-xxl: 44rpx;
+  --font-display: 56rpx;
+
+  /* 字重 */
+  --fw-normal: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+
+  /* 圆角 */
+  --radius-sm: 8rpx;
+  --radius-md: 12rpx;
+  --radius-lg: 16rpx;
+  --radius-xl: 24rpx;
+  --radius-pill: 999rpx;
+
+  /* 间距 */
+  --space-xs: 8rpx;
+  --space-sm: 16rpx;
+  --space-md: 24rpx;
+  --space-lg: 32rpx;
+  --space-xl: 48rpx;
+
+  /* 阴影 */
+  --shadow-card: 0 4rpx 16rpx rgba(0, 0, 0, 0.06);
+  --shadow-float: 0 8rpx 32rpx rgba(0, 0, 0, 0.1);
+}

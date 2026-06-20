@@ -1,0 +1,74 @@
+/* components/time-fold/index.wxss */
+.time-fold-container {
+  width: 100%;
+}
+
+.segment-lesson {
+  width: 100%;
+}
+
+/* 折叠条 */
+.segment-fold {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12rpx 0;
+  position: relative;
+}
+
+.fold-hover {
+  opacity: 0.6;
+}
+
+.fold-line {
+  flex: 1;
+  height: 1rpx;
+  background: #E5E7EB;
+  margin: 0 24rpx;
+}
+
+.fold-label {
+  display: flex;
+  align-items: center;
+  padding: 6rpx 20rpx;
+  background: #F7F8FA;
+  border-radius: 999rpx;
+}
+
+.fold-icon {
+  font-size: 18rpx;
+  color: #9CA3AF;
+  margin-right: 8rpx;
+}
+
+.fold-text {
+  font-size: 20rpx;
+  color: #9CA3AF;
+  white-space: nowrap;
+}
+
+.segment-fold.expanded {
+  padding: 20rpx 0;
+}
+
+.segment-fold.expanded .fold-line {
+  background: transparent;
+}
+
+/* 小间隔 */
+.segment-gap {
+  width: 100%;
+}
+
+/* 空状态 */
+.fold-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80rpx 0;
+}
+
+.empty-text {
+  font-size: 26rpx;
+  color: #9CA3AF;
+}

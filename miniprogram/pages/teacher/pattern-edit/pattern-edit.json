@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "student-tag": "/components/student-tag/index"
+  },
+  "navigationBarTitleText": "周模式编辑"
+}

@@ -1,0 +1,114 @@
+<!-- pages/teacher/holiday-manage/holiday-manage.wxml -->
+<view class="page">
+  <!-- 年份选择 -->
+  <view class="year-bar">
+    <picker mode="selector" range="{{[year - 1, year, year + 1]}}" bindchange="switchYear">
+      <view class="year-picker">{{year}}年 ›</view>
+    </picker>
+  </view>
+
+  <!-- 节假日列表 -->
+  <view class="section">
+    <view class="section-header">
+      <text class="section-title">法定节假日 / 调休</text>
+      <view class="add-btn" bindtap="showAddHoliday">+ 添加</view>
+    </view>
+
+    <view wx:if="{{holidays.length === 0 && !loading}}">
+      <empty-state text="暂无节假日数据，请同步" />
+    </view>
+
+    <view class="holiday-list" wx:else>
+      <view class="holiday-item" wx:for="{{holidays}}" wx:key="_id">
+        <view class="holiday-date">{{item.date}}</view>
+        <view class="holiday-info">
+          <text class="holiday-name">{{item.name}}</text>
+          <text class="holiday-type {{item.is_off_day ? 'type-off' : 'type-work'}}">
+            {{item.is_off_day ? '休息日' : '调休工作日'}}
+          </text>
+        </view>
+        <view class="holiday-source">{{item.source === 'builtin' ? '法定' : '手动'}}</view>
+        <view class="delete-btn" wx:if="{{item.source !== 'builtin'}}" data-id="{{item._id}}" data-source="{{item.source}}" bindtap="deleteHoliday">×</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 假期段管理 -->
+  <view class="section">
+    <view class="section-header">
+      <text class="section-title">寒暑假配置</text>
+      <view class="add-btn" bindtap="showAddVacation">+ 添加</view>
+    </view>
+
+    <view wx:if="{{vacations.length === 0}}">
+      <empty-state text="暂未配置寒暑假" />
+    </view>
+
+    <view class="vacation-list" wx:else>
+      <view class="vacation-item" wx:for="{{vacations}}" wx:key="_id">
+        <view class="vacation-icon">{{item.type === 'summer' ? '暑' : '寒'}}</view>
+        <view class="vacation-info">
+          <text class="vacation-name">{{item.type === 'summer' ? '暑假' : '寒假'}}</text>
+          <text class="vacation-range">{{item.start_date}} ~ {{item.end_date}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 添加节假日弹窗 -->
+  <view class="mask" wx:if="{{showAdd}}" bindtap="hideAddHoliday"></view>
+  <view class="dialog" wx:if="{{showAdd}}">
+    <view class="dialog-title">添加节假日</view>
+    <view class="dialog-body">
+      <view class="dialog-row">
+        <text class="dialog-label">日期</text>
+        <picker mode="date" value="{{newHoliday.date}}" bindchange="onHolidayDateChange">
+          <view class="dialog-picker">{{newHoliday.date || '请选择'}}</view>
+        </picker>
+      </view>
+      <view class="dialog-row">
+        <text class="dialog-label">名称</text>
+        <input class="dialog-input" value="{{newHoliday.name}}" bindinput="onHolidayNameInput" placeholder="如：国庆节" />
+      </view>
+      <view class="dialog-row">
+        <text class="dialog-label">类型</text>
+        <switch checked="{{newHoliday.is_off_day}}" bindchange="onHolidayTypeChange" />
+        <text class="type-label">{{newHoliday.is_off_day ? '休息日' : '调休工作日'}}</text>
+      </view>
+    </view>
+    <view class="dialog-actions">
+      <button class="btn-cancel" bindtap="hideAddHoliday">取消</button>
+      <button class="btn-confirm" bindtap="saveHoliday">确认</button>
+    </view>
+  </view>
+
+  <!-- 添加假期段弹窗 -->
+  <view class="mask" wx:if="{{showVacation}}" bindtap="hideAddVacation"></view>
+  <view class="dialog" wx:if="{{showVacation}}">
+    <view class="dialog-title">添加寒暑假</view>
+    <view class="dialog-body">
+      <view class="dialog-row">
+        <text class="dialog-label">类型</text>
+        <picker mode="selector" range="{{['暑假', '寒假']}}" bindchange="onVacationTypeChange">
+          <view class="dialog-picker">{{newVacation.type === 'summer' ? '暑假' : '寒假'}}</view>
+        </picker>
+      </view>
+      <view class="dialog-row">
+        <text class="dialog-label">开始</text>
+        <picker mode="date" value="{{newVacation.start_date}}" bindchange="onVacationStartChange">
+          <view class="dialog-picker">{{newVacation.start_date || '请选择'}}</view>
+        </picker>
+      </view>
+      <view class="dialog-row">
+        <text class="dialog-label">结束</text>
+        <picker mode="date" value="{{newVacation.end_date}}" bindchange="onVacationEndChange">
+          <view class="dialog-picker">{{newVacation.end_date || '请选择'}}</view>
+        </picker>
+      </view>
+    </view>
+    <view class="dialog-actions">
+      <button class="btn-cancel" bindtap="hideAddVacation">取消</button>
+      <button class="btn-confirm" bindtap="saveVacation">确认</button>
+    </view>
+  </view>
+</view>

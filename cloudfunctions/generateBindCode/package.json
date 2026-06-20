@@ -1,0 +1,9 @@
+{
+  "name": "generateBindCode",
+  "version": "1.0.0",
+  "description": "生成绑定码+小程序码",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

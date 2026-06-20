@@ -1,0 +1,33 @@
+<!-- pages/common/bind/index.wxml -->
+<view class="page">
+  <!-- 加载中 -->
+  <view class="center" wx:if="{{loading}}">
+    <view class="spinner"></view>
+    <text class="loading-text">正在绑定...</text>
+  </view>
+
+  <!-- 绑定成功 -->
+  <view class="center" wx:if="{{bindSuccess}}">
+    <view class="success-icon">✓</view>
+    <text class="success-title">绑定成功！</text>
+    <text class="success-desc">已绑定 {{studentName}}</text>
+    <text class="success-hint">即将进入首页...</text>
+  </view>
+
+  <!-- 绑定失败 -->
+  <view class="center" wx:if="{{!loading && !bindSuccess && errorMsg}}">
+    <view class="error-icon">×</view>
+    <text class="error-title">绑定失败</text>
+    <text class="error-desc">{{errorMsg}}</text>
+    <button class="btn-retry" bindtap="retry">重试</button>
+  </view>
+
+  <!-- 关系选择 -->
+  <view class="relation-section" wx:if="{{showRelation && !loading && !bindSuccess}}">
+    <view class="relation-title">请选择您的身份</view>
+    <picker mode="selector" range="{{['家长','父亲','母亲','爷爷','奶奶','外公','外婆','其他']}}" bindchange="onRelationChange">
+      <view class="relation-picker">{{relationship}} ›</view>
+    </picker>
+    <button class="btn-confirm" bindtap="tryBind" data-code="{{code}}">确认绑定</button>
+  </view>
+</view>

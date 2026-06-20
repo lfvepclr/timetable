@@ -1,0 +1,36 @@
+<!-- pages/parent/feedback-list/feedback-list.wxml -->
+<view class="page">
+  <view wx:if="{{loading}}" class="loading">加载中...</view>
+
+  <view wx:if="{{!loading && feedbacks.length === 0}}">
+    <empty-state text="暂无反馈记录" />
+  </view>
+
+  <view class="feedback-list" wx:if="{{!loading && feedbacks.length > 0}}">
+    <view class="feedback-card" wx:for="{{feedbacks}}" wx:key="_id" data-id="{{item._id}}" bindtap="goToDetail" hover-class="card-hover">
+      <view class="card-header">
+        <view class="header-left">
+          <text class="fb-date">{{item.lesson_date}}</text>
+          <text class="fb-course">{{item.course_name}}</text>
+        </view>
+        <text class="fb-arrow">›</text>
+      </view>
+      <view class="card-body">
+        <view class="fb-section" wx:if="{{item.content}}">
+          <text class="section-label">今日所学</text>
+          <text class="section-text">{{item.content}}</text>
+        </view>
+        <view class="fb-section" wx:if="{{item.performance}}">
+          <text class="section-label">课堂表现</text>
+          <text class="section-text">{{item.performance}}</text>
+        </view>
+      </view>
+      <view class="card-photos" wx:if="{{item.photos && item.photos.length > 0}}">
+        <image wx:for="{{item.photos}}" wx:for-item="photo" wx:key="*this" src="{{photo}}" mode="aspectFill" class="photo-thumb" />
+      </view>
+    </view>
+  </view>
+
+  <view class="load-more" wx:if="{{!loading && hasMore && feedbacks.length > 0}}">上拉加载更多</view>
+  <view class="no-more" wx:if="{{!loading && !hasMore && feedbacks.length > 0}}">没有更多了</view>
+</view>

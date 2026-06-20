@@ -1,0 +1,37 @@
+<!-- pages/parent/schedule/schedule.wxml -->
+<view class="page">
+  <!-- 周导航 -->
+  <view class="week-nav">
+    <view class="nav-btn" bindtap="prevWeek">‹</view>
+    <view class="week-dates">
+      <view 
+        class="date-item {{selectedDate === item ? 'selected' : ''}} {{item === today ? 'today' : ''}}"
+        wx:for="{{weekDates}}" wx:key="*this"
+        data-date="{{item}}" bindtap="onSelectDate"
+      >
+        <text class="date-weekday">{{['一','二','三','四','五','六','日'][index]}}</text>
+        <text class="date-day">{{item.split('-')[2]}}</text>
+      </view>
+    </view>
+    <view class="nav-btn" bindtap="nextWeek">›</view>
+  </view>
+
+  <!-- 课程列表 -->
+  <view class="lesson-area">
+    <view wx:if="{{loading}}" class="loading">加载中...</view>
+    
+    <block wx:if="{{!loading}}">
+      <view wx:if="{{selectedLessons.length === 0}}">
+        <empty-state text="今天没有课程" />
+      </view>
+      
+      <view wx:else>
+        <view wx:for="{{segments}}" wx:key="index">
+          <time-fold wx:if="{{item.type === 'fold'}}" duration="{{item.duration}}" label="{{item.label}}" />
+          <view wx:elif="{{item.type === 'gap'}}" class="gap"></view>
+          <lesson-card wx:else lesson="{{item.lesson}}" readonly="{{true}}" bindtap="onLessonTap" />
+        </view>
+      </view>
+    </block>
+  </view>
+</view>

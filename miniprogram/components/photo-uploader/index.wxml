@@ -1,0 +1,17 @@
+<!-- components/photo-uploader/index.wxml -->
+<view class="photo-uploader">
+  <view class="photo-grid">
+    <block wx:for="{{photos}}" wx:key="*this">
+      <view class="photo-item">
+        <image src="{{item}}" mode="aspectFill" class="photo-img" data-url="{{item}}" bindtap="previewPhoto" />
+        <view class="photo-delete" data-index="{{index}}" catchtap="removePhoto">
+          <text class="delete-icon">×</text>
+        </view>
+      </view>
+    </block>
+    <view wx:if="{{photos.length < maxCount}}" class="photo-add" bindtap="choosePhoto" hover-class="add-hover">
+      <view class="add-icon">+</view>
+      <text class="add-text">添加照片</text>
+    </view>
+  </view>
+</view>
