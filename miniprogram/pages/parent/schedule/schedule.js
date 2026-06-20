@@ -1,5 +1,6 @@
 // pages/parent/schedule/schedule.js - 家长课表（只读）
 const app = getApp()
+const { guardRole } = require('../../../utils/auth')
 const { db, _, query, getById } = require('../../../utils/db')
 const { formatDate, getWeekRange, getWeekdayLabel, isToday } = require('../../../utils/date')
 const { buildFoldedSchedule, groupByDate } = require('../../../utils/schedule')
@@ -16,6 +17,7 @@ Page({
   },
 
   onShow() {
+    guardRole('parent')
     if (typeof this.getTabBar === 'function' && this.getTabBar()) {
       this.getTabBar().updateSelected(1)
       this.getTabBar().updateTabs()

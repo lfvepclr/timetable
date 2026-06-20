@@ -1,5 +1,6 @@
 // pages/teacher/index/index.js - 老师今日课表
 const app = getApp()
+const { guardRole } = require('../../../utils/auth')
 const { db, _, query } = require('../../../utils/db')
 const { formatDate, friendlyDate, getDayOfWeek, getWeekdayLabel } = require('../../../utils/date')
 const { buildFoldedSchedule } = require('../../../utils/schedule')
@@ -22,6 +23,7 @@ Page({
   },
 
   onShow() {
+    guardRole('teacher')
     // 更新 TabBar 选中状态
     const tabBar = this.selectComponent('#tabBar')
     if (tabBar) {

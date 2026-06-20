@@ -1,4 +1,5 @@
 // pages/teacher/schedule/schedule.js - 老师课表视图
+const { guardRole } = require('../../../utils/auth')
 const { db, _, query } = require('../../../utils/db')
 const { formatDate, getWeekRange, getDayOfWeek, getWeekdayLabel, addDays } = require('../../../utils/date')
 const { buildFoldedSchedule, groupByDate } = require('../../../utils/schedule')
@@ -26,6 +27,7 @@ Page({
   },
 
   onShow() {
+    guardRole('teacher')
     const tabBar = this.selectComponent('#tabBar')
     if (tabBar) {
       tabBar.updateSelected(1)

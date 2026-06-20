@@ -35,9 +35,13 @@ Page({
 
   checkRole() {
     const role = app.globalData.role || wx.getStorageSync('role')
-    if (role === 'teacher') {
+    const caps = app.globalData.capabilities || wx.getStorageSync('capabilities') || { teacher: true, parent: false }
+
+    if (role === 'parent' && caps.parent) {
+      wx.reLaunch({ url: '/pages/parent/index/index' })
+    } else if (caps.teacher) {
       wx.reLaunch({ url: '/pages/teacher/index/index' })
-    } else if (role === 'parent') {
+    } else if (caps.parent) {
       wx.reLaunch({ url: '/pages/parent/index/index' })
     } else {
       this.setData({ loading: false, errorMsg: '请通过老师分享的链接进入' })
@@ -59,13 +63,13 @@ Page({
           loading: false
         })
 
-        // 更新全局角色
-        app.globalData.role = 'parent'
-        wx.setStorageSync('role', 'parent')
+        // 更新能力并切换到家长视图
+        app.globalData.capabilities = { ...app.globalData.capabilities, parent: true }
+        wx.setStorageSync('capabilities', app.globalData.capabilities)
 
         // 延迟跳转
         setTimeout(() => {
-          wx.reLaunch({ url: '/pages/parent/index/index' })
+          app.switchRole('parent')
         }, 2000)
       }
     } catch (err) {

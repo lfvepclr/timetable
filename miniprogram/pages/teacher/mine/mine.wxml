@@ -31,6 +31,17 @@
     </view>
   </view>
 
+  <view class="menu-group" wx:if="{{canSwitchParent}}">
+    <view class="menu-title">身份切换</view>
+    <view class="menu-item" bindtap="switchToParent" hover-class="menu-hover">
+      <view class="menu-icon" style="background: var(--color-primary-bg); color: var(--color-primary);">
+        <text class="icon-text">切</text>
+      </view>
+      <text class="menu-label">切换为家长</text>
+      <text class="menu-arrow">›</text>
+    </view>
+  </view>
+
   <view class="menu-group">
     <view class="menu-title">系统设置</view>
     <view class="menu-item" bindtap="goToSettings" hover-class="menu-hover">

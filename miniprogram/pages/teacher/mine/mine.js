@@ -1,19 +1,31 @@
 // pages/teacher/mine/mine.js - 老师我的页面
 const app = getApp()
+const { guardRole, getCapabilities } = require('../../../utils/auth')
 
 Page({
   data: {
     userInfo: null,
-    version: '1.0.0'
+    version: '1.0.0',
+    canSwitchParent: false
   },
 
   onShow() {
+    guardRole('teacher')
     if (typeof this.getTabBar === 'function' && this.getTabBar()) {
       this.getTabBar().updateSelected(3)
       this.getTabBar().updateTabs()
     }
     const userInfo = app.globalData.userInfo || wx.getStorageSync('userInfo')
-    this.setData({ userInfo })
+    const caps = getCapabilities()
+    this.setData({
+      userInfo,
+      canSwitchParent: caps.parent === true
+    })
+  },
+
+  // 切换为家长视图
+  switchToParent() {
+    app.switchRole('parent')
   },
 
   // 假期管理

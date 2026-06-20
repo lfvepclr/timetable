@@ -1,5 +1,6 @@
 // pages/parent/mine/mine.js - 家长我的页面
 const app = getApp()
+const { guardRole, getCapabilities } = require('../../../utils/auth')
 const { query, getById } = require('../../../utils/db')
 const { requestSubscribe } = require('../../../utils/subscribe')
 
@@ -11,15 +12,26 @@ Page({
       feedbackNotify: true,
       scheduleChangeNotify: true,
       classReminder: true
-    }
+    },
+    canSwitchTeacher: true
   },
 
   onShow() {
+    guardRole('parent')
     if (typeof this.getTabBar === 'function' && this.getTabBar()) {
       this.getTabBar().updateSelected(3)
       this.getTabBar().updateTabs()
     }
+    const caps = getCapabilities()
+    this.setData({
+      canSwitchTeacher: caps.teacher !== false
+    })
     this.loadData()
+  },
+
+  // 切换为老师视图
+  switchToTeacher() {
+    app.switchRole('teacher')
   },
 
   async loadData() {

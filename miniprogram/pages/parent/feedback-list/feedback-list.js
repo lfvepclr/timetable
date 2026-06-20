@@ -1,5 +1,6 @@
 // pages/parent/feedback-list/feedback-list.js - 家长反馈列表
 const app = getApp()
+const { guardRole } = require('../../../utils/auth')
 const { _, query, getById } = require('../../../utils/db')
 
 Page({
@@ -11,6 +12,7 @@ Page({
   },
 
   onShow() {
+    guardRole('parent')
     if (typeof this.getTabBar === 'function' && this.getTabBar()) {
       this.getTabBar().updateSelected(2)
       this.getTabBar().updateTabs()

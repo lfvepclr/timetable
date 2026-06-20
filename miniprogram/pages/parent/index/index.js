@@ -1,5 +1,6 @@
 // pages/parent/index/index.js - 家长首页
 const app = getApp()
+const { guardRole } = require('../../../utils/auth')
 const { db, _, query, getById } = require('../../../utils/db')
 const { formatDate, friendlyDate, getWeekdayLabel } = require('../../../utils/date')
 const { subscribeClassReminder } = require('../../../utils/subscribe')
@@ -14,6 +15,7 @@ Page({
   },
 
   onShow() {
+    guardRole('parent')
     if (typeof this.getTabBar === 'function' && this.getTabBar()) {
       this.getTabBar().updateSelected(0)
       this.getTabBar().updateTabs()

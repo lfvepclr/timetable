@@ -1,4 +1,5 @@
 // pages/teacher/students/students.js - 学生管理
+const { guardRole } = require('../../../utils/auth')
 const { db, _, query, add, update } = require('../../../utils/db')
 
 Page({
@@ -11,6 +12,7 @@ Page({
   },
 
   onShow() {
+    guardRole('teacher')
     if (typeof this.getTabBar === 'function' && this.getTabBar()) {
       this.getTabBar().updateSelected(2)
       this.getTabBar().updateTabs()

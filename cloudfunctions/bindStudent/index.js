@@ -79,24 +79,20 @@ exports.main = async (event, context) => {
       }
     })
 
-    // 更新用户角色（如果还不是parent）
+    // 更新用户能力：标记具备家长能力，并同步学生ID
     const userRes = await db.collection('users').where({ openid: OPENID }).get()
-    if (userRes.data.length > 0 && userRes.data[0].role !== 'parent') {
-      await db.collection('users').doc(userRes.data[0]._id).update({
-        data: {
-          role: 'parent',
-          student_ids: _.push(studentId),
-          updated_at: now
-        }
-      })
-    } else if (userRes.data.length > 0) {
-      // 已是parent，添加学生ID
-      await db.collection('users').doc(userRes.data[0]._id).update({
-        data: {
-          student_ids: _.addToSet(studentId),
-          updated_at: now
-        }
-      })
+    if (userRes.data.length > 0) {
+      const user = userRes.data[0]
+      const updateData = {
+        'capabilities.parent': true,
+        student_ids: _.addToSet(studentId),
+        updated_at: now
+      }
+      // 兼容旧 role 字段
+      if (user.role && user.role !== 'parent') {
+        updateData.role = 'parent'
+      }
+      await db.collection('users').doc(user._id).update({ data: updateData })
     }
 
     // 获取学生信息返回
