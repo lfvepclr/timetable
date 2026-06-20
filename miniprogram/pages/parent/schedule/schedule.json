@@ -1,8 +1,8 @@
 {
   "usingComponents": {
-    "lesson-card": "/components/lesson-card/lesson-card",
-    "time-fold": "/components/time-fold/time-fold",
-    "empty-state": "/components/empty-state/empty-state"
+    "lesson-card": "/components/lesson-card/index",
+    "time-fold": "/components/time-fold/index",
+    "empty-state": "/components/empty-state/index"
   },
   "navigationBarTitleText": "课表"
 }

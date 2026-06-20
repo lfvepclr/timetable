@@ -1,6 +1,6 @@
 {
   "usingComponents": {
-    "empty-state": "/components/empty-state/empty-state"
+    "empty-state": "/components/empty-state/index"
   },
   "navigationBarTitleText": "假期管理"
 }
