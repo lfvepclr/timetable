@@ -26,9 +26,10 @@ Page({
   },
 
   onShow() {
-    if (typeof this.getTabBar === 'function' && this.getTabBar()) {
-      this.getTabBar().updateSelected(1)
-      this.getTabBar().updateTabs()
+    const tabBar = this.selectComponent('#tabBar')
+    if (tabBar) {
+      tabBar.updateSelected(1)
+      tabBar.updateTabs()
     }
     this.loadWeekLessons()
   },

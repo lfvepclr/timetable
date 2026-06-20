@@ -88,12 +88,12 @@ Page({
 
   // 跳转课表
   goToSchedule() {
-    wx.switchTab({ url: '/pages/parent/schedule/schedule' })
+    wx.reLaunch({ url: '/pages/parent/schedule/schedule' })
   },
 
   // 跳转反馈列表
   goToFeedback() {
-    wx.switchTab({ url: '/pages/parent/feedback-list/feedback-list' })
+    wx.reLaunch({ url: '/pages/parent/feedback-list/feedback-list' })
   },
 
   // 跳转反馈详情

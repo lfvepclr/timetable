@@ -33,4 +33,6 @@
 
   <view class="load-more" wx:if="{{!loading && hasMore && feedbacks.length > 0}}">上拉加载更多</view>
   <view class="no-more" wx:if="{{!loading && !hasMore && feedbacks.length > 0}}">没有更多了</view>
+
+  <custom-tab-bar id="tabBar" />
 </view>

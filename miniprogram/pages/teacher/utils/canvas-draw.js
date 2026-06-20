@@ -1,4 +1,4 @@
-// utils/canvas-draw.js - Canvas 绘图工具（反馈卡片生成）
+// pages/teacher/utils/canvas-draw.js - Canvas 绘图工具（反馈卡片生成）
 
 /**
  * 文本自动换行

@@ -95,7 +95,7 @@ Component({
       if (!tab) return
 
       this.setData({ selected: index })
-      wx.switchTab({ url: tab.pagePath })
+      wx.reLaunch({ url: tab.pagePath })
     },
 
     // 由页面调用，更新选中状态

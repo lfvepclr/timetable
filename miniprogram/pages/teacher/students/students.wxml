@@ -62,4 +62,6 @@
       </view>
     </view>
   </view>
+
+  <custom-tab-bar id="tabBar" />
 </view>

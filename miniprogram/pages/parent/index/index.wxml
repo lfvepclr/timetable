@@ -69,4 +69,6 @@
   <view wx:if="{{!loading && !student}}" class="no-student">
     <empty-state text="尚未绑定学生，请联系老师分享绑定链接" />
   </view>
+
+  <custom-tab-bar id="tabBar" />
 </view>

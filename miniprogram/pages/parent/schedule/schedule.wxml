@@ -35,4 +35,6 @@
       </view>
     </block>
   </view>
+
+  <custom-tab-bar id="tabBar" />
 </view>

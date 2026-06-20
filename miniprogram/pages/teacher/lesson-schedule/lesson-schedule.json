@@ -1,7 +1,6 @@
 {
   "usingComponents": {
-    "student-tag": "/components/student-tag/index",
-    "confirm-dialog": "/components/confirm-dialog/index"
+    "student-tag": "/components/student-tag/index"
   },
   "navigationBarTitleText": "手动排课"
 }

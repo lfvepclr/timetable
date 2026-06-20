@@ -53,4 +53,6 @@
   <view class="tip-card">
     <text class="tip-text">订阅消息为一次性消耗，建议在关键操作前重新开启</text>
   </view>
+
+  <custom-tab-bar id="tabBar" />
 </view>

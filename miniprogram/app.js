@@ -20,8 +20,13 @@ App({
     })
 
     // 获取系统信息（用于安全区适配、Canvas dpr等）
-    const systemInfo = wx.getSystemInfoSync()
-    this.globalData.systemInfo = systemInfo
+    const windowInfo = wx.getWindowInfo()
+    const deviceInfo = wx.getDeviceInfo()
+    this.globalData.systemInfo = {
+      ...windowInfo,
+      ...deviceInfo,
+      pixelRatio: windowInfo.pixelRatio
+    }
 
     // 登录并判断角色
     this.login()

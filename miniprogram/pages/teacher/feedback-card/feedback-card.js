@@ -2,7 +2,7 @@
 const app = getApp()
 const { getById, update } = require('../../../utils/db')
 const { callFn, uploadFile, getTempFileURLs } = require('../../../utils/cloud')
-const canvasDraw = require('../../../utils/canvas-draw')
+const canvasDraw = require('../utils/canvas-draw')
 
 Page({
   data: {

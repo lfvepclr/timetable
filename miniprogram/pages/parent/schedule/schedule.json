@@ -2,7 +2,8 @@
   "usingComponents": {
     "lesson-card": "/components/lesson-card/index",
     "time-fold": "/components/time-fold/index",
-    "empty-state": "/components/empty-state/index"
+    "empty-state": "/components/empty-state/index",
+    "custom-tab-bar": "/custom-tab-bar/index"
   },
   "navigationBarTitleText": "课表"
 }

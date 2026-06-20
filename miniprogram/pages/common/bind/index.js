@@ -1,6 +1,6 @@
 // pages/common/bind/index.js - 绑定中转页
 const app = getApp()
-const { callFn } = require('../../utils/cloud')
+const { callFn } = require('../../../utils/cloud')
 
 Page({
   data: {
@@ -36,9 +36,9 @@ Page({
   checkRole() {
     const role = app.globalData.role || wx.getStorageSync('role')
     if (role === 'teacher') {
-      wx.switchTab({ url: '/pages/teacher/index/index' })
+      wx.reLaunch({ url: '/pages/teacher/index/index' })
     } else if (role === 'parent') {
-      wx.switchTab({ url: '/pages/parent/index/index' })
+      wx.reLaunch({ url: '/pages/parent/index/index' })
     } else {
       this.setData({ loading: false, errorMsg: '请通过老师分享的链接进入' })
     }
@@ -65,7 +65,7 @@ Page({
 
         // 延迟跳转
         setTimeout(() => {
-          wx.switchTab({ url: '/pages/parent/index/index' })
+          wx.reLaunch({ url: '/pages/parent/index/index' })
         }, 2000)
       }
     } catch (err) {

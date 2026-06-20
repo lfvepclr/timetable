@@ -38,9 +38,6 @@
       ]
     }
   ],
-  "custom": {
-    "custom-tab-bar": true
-  },
   "window": {
     "navigationBarBackgroundColor": "#FFFFFF",
     "navigationBarTextStyle": "black",
@@ -52,10 +49,5 @@
   "cloud": true,
   "sitemapLocation": "sitemap.json",
   "lazyCodeLoading": "requiredComponents",
-  "style": "v2",
-  "permission": {
-    "scope.writePhotosAlbum": {
-      "desc": "用于保存课堂反馈卡片到相册"
-    }
-  }
+  "style": "v2"
 }

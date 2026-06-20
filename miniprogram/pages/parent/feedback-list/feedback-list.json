@@ -1,6 +1,7 @@
 {
   "usingComponents": {
-    "empty-state": "/components/empty-state/index"
+    "empty-state": "/components/empty-state/index",
+    "custom-tab-bar": "/custom-tab-bar/index"
   },
   "navigationBarTitleText": "反馈记录"
 }

@@ -1,6 +1,7 @@
 {
   "usingComponents": {
-    "package-bar": "/components/package-bar/index"
+    "package-bar": "/components/package-bar/index",
+    "custom-tab-bar": "/custom-tab-bar/index"
   },
   "navigationBarTitleText": "我的"
 }

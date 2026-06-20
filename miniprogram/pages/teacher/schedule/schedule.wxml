@@ -47,4 +47,6 @@
     </block>
     <view wx:else class="loading-text">加载中...</view>
   </view>
+
+  <custom-tab-bar id="tabBar" />
 </view>

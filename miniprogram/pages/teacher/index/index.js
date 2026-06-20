@@ -23,9 +23,10 @@ Page({
 
   onShow() {
     // 更新 TabBar 选中状态
-    if (typeof this.getTabBar === 'function' && this.getTabBar()) {
-      this.getTabBar().updateSelected(0)
-      this.getTabBar().updateTabs()
+    const tabBar = this.selectComponent('#tabBar')
+    if (tabBar) {
+      tabBar.updateSelected(0)
+      tabBar.updateTabs()
     }
     this.loadTodaySchedule()
   },
@@ -100,7 +101,7 @@ Page({
 
   // 跳转排课
   goToSchedule() {
-    wx.switchTab({ url: '../schedule/schedule' })
+    wx.reLaunch({ url: '../schedule/schedule' })
   },
 
   // 手动排课
