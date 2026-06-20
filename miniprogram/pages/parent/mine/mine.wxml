@@ -1,8 +1,9 @@
 <!-- pages/parent/mine/mine.wxml -->
+<wxs src="/wxs/helpers.wxs" module="h" />
 <view class="page">
   <!-- 学生信息 -->
   <view class="student-card" wx:if="{{student}}">
-    <view class="avatar">{{student.name[0]}}</view>
+    <view class="avatar">{{h.firstChar(student.name)}}</view>
     <view class="info">
       <text class="name">{{student.name}}</text>
       <text class="desc">{{student.grade || ''}} {{student.school || ''}}</text>

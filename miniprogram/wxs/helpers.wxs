@@ -1,0 +1,58 @@
+// 共享 WXS 工具函数
+var firstChar = function (str) {
+  return str ? str.charAt(0) : '?'
+}
+
+var weekdayText = function (dayOfWeek) {
+  var days = ['', '周一', '周二', '周三', '周四', '周五', '周六', '周日']
+  return days[dayOfWeek] || ''
+}
+
+var weekdayShort = function (dayOfWeek) {
+  var days = ['', '一', '二', '三', '四', '五', '六', '日']
+  return days[dayOfWeek] || ''
+}
+
+var avatarColor = function (index) {
+  var colors = ['#4A90D9', '#52C4A0', '#FF9F5A', '#A78BFA']
+  return colors[index % 4]
+}
+
+var includes = function (arr, val) {
+  if (!arr || arr.length === 0) return false
+  for (var i = 0; i < arr.length; i++) {
+    if (arr[i] === val) return true
+  }
+  return false
+}
+
+var join = function (arr, sep) {
+  if (!arr || arr.length === 0) return ''
+  var result = '' + arr[0]
+  for (var i = 1; i < arr.length; i++) {
+    result += sep + arr[i]
+  }
+  return result
+}
+
+var weekdayInitial = function (index) {
+  var days = ['一', '二', '三', '四', '五', '六', '日']
+  return days[index] || ''
+}
+
+var dateDay = function (dateStr) {
+  if (!dateStr) return ''
+  var parts = dateStr.split('-')
+  return parts[2] || ''
+}
+
+module.exports = {
+  firstChar: firstChar,
+  weekdayText: weekdayText,
+  weekdayShort: weekdayShort,
+  avatarColor: avatarColor,
+  includes: includes,
+  join: join,
+  weekdayInitial: weekdayInitial,
+  dateDay: dateDay
+}

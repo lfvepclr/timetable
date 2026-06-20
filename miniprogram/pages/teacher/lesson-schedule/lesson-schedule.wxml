@@ -1,4 +1,5 @@
 <!-- pages/teacher/lesson-schedule/lesson-schedule.wxml -->
+<wxs src="/wxs/helpers.wxs" module="h" />
 <view class="page">
   <view class="form-section">
     <view class="section-title">选择课程</view>
@@ -42,13 +43,13 @@
     <view class="section-title">选择学生{{selectedCourse ? '（' + selectedCourse.type + '，最多' + (selectedCourse.type === '1v1' ? 1 : selectedCourse.type === '1v2' ? 2 : selectedCourse.type === '1v3' ? 3 : 20) + '人）' : ''}}</view>
     <view class="student-grid">
       <view 
-        class="student-item {{selectedStudentIds.indexOf(item._id) > -1 ? 'selected' : ''}}"
+        class="student-item {{h.includes(selectedStudentIds, item._id) ? 'selected' : ''}}"
         wx:for="{{students}}" wx:key="_id"
         data-id="{{item._id}}" bindtap="toggleStudent"
       >
-        <view class="student-avatar">{{item.name[0]}}</view>
+        <view class="student-avatar">{{h.firstChar(item.name)}}</view>
         <text class="student-name">{{item.name}}</text>
-        <view class="check-mark" wx:if="{{selectedStudentIds.indexOf(item._id) > -1}}">✓</view>
+        <view class="check-mark" wx:if="{{h.includes(selectedStudentIds, item._id)}}">✓</view>
       </view>
     </view>
   </view>

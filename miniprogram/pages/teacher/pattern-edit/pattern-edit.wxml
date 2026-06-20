@@ -1,4 +1,5 @@
 <!-- pages/teacher/pattern-edit/pattern-edit.wxml -->
+<wxs src="/wxs/helpers.wxs" module="h" />
 <view class="page-container">
   <view class="form-card">
     <view class="form-item">
@@ -89,8 +90,8 @@
     <scroll-view scroll-y class="student-scroll">
       <block wx:for="{{students}}" wx:key="_id">
         <view class="pick-row {{selectedStudents[item._id] ? 'checked' : ''}}" data-sid="{{item._id}}" data-sname="{{item.name}}" bindtap="toggleStudent">
-          <view class="pick-avatar" style="background: {{['#4A90D9','#52C4A0','#FF9F5A','#A78BFA'][index % 4]}};">
-            <text>{{item.name[0]}}</text>
+          <view class="pick-avatar" style="background: {{h.avatarColor(index)}};">
+            <text>{{h.firstChar(item.name)}}</text>
           </view>
           <text class="pick-name">{{item.name}}</text>
           <view class="pick-check {{selectedStudents[item._id] ? 'checked' : ''}}">

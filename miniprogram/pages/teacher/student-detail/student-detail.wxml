@@ -1,10 +1,11 @@
 <!-- pages/teacher/student-detail/student-detail.wxml -->
+<wxs src="/wxs/helpers.wxs" module="h" />
 <view class="page">
   <block wx:if="{{!loading && student}}">
     <!-- 学生信息卡片 -->
     <view class="info-card">
       <view class="info-header">
-        <view class="student-avatar">{{student.name ? student.name[0] : '?'}}</view>
+        <view class="student-avatar">{{h.firstChar(student.name)}}</view>
         <view class="info-main">
           <text class="student-name">{{student.name}}</text>
           <view class="info-tags">
@@ -96,7 +97,7 @@
         <view class="lesson-item" wx:for="{{recentLessons}}" wx:key="_id" data-id="{{item._id}}" bindtap="goToLessonDetail" hover-class="item-hover">
           <view class="lesson-date">
             <text class="date-day">{{item.date}}</text>
-            <text class="date-weekday">{{item.day_of_week ? '周' + '一二三四五六日'[item.day_of_week - 1] : ''}}</text>
+            <text class="date-weekday">{{item.day_of_week ? '周' + h.weekdayShort(item.day_of_week) : ''}}</text>
           </view>
           <view class="lesson-info">
             <text class="lesson-name">{{item.course_name || '课程'}}</text>

@@ -1,4 +1,5 @@
 <!-- pages/teacher/students/students.wxml -->
+<wxs src="/wxs/helpers.wxs" module="h" />
 <view class="page-container">
   <!-- 搜索栏 -->
   <view class="search-bar">
@@ -12,8 +13,8 @@
   <view class="student-list" wx:if="{{!loading}}">
     <block wx:for="{{students}}" wx:key="_id">
       <view class="student-card" data-id="{{item._id}}" bindtap="goToDetail" hover-class="card-hover">
-        <view class="avatar" style="background: {{['#4A90D9','#52C4A0','#FF9F5A','#A78BFA'][index % 4]}};">
-          <text>{{item.name[0]}}</text>
+        <view class="avatar" style="background: {{h.avatarColor(index)}};">
+          <text>{{h.firstChar(item.name)}}</text>
         </view>
         <view class="student-info">
           <view class="info-top">

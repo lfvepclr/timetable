@@ -1,9 +1,10 @@
 <!-- pages/teacher/mine/mine.wxml -->
+<wxs src="/wxs/helpers.wxs" module="h" />
 <view class="page">
   <!-- 用户信息卡片 -->
   <view class="user-card">
     <view class="avatar">
-      <text class="avatar-text">{{userInfo.name ? userInfo.name[0] : '师'}}</text>
+      <text class="avatar-text">{{userInfo.name ? h.firstChar(userInfo.name) : '师'}}</text>
     </view>
     <view class="user-info">
       <text class="user-name">{{userInfo.name || '老师'}}</text>

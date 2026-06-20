@@ -1,4 +1,5 @@
 <!-- pages/teacher/lesson-detail/lesson-detail.wxml -->
+<wxs src="/wxs/helpers.wxs" module="h" />
 <view class="page-container" wx:if="{{!loading && lesson}}">
   <!-- 课程信息卡片 -->
   <view class="info-card">
@@ -29,8 +30,8 @@
     <block wx:for="{{lesson.students}}" wx:key="student_id">
       <view class="student-row">
         <view class="student-left">
-          <view class="student-avatar" style="background: {{['#4A90D9','#52C4A0','#FF9F5A','#A78BFA'][index % 4]}};">
-            <text>{{item.student_name[0]}}</text>
+          <view class="student-avatar" style="background: {{h.avatarColor(index)}};">
+            <text>{{h.firstChar(item.student_name)}}</text>
           </view>
           <view class="student-detail">
             <text class="s-name">{{item.student_name}}</text>
@@ -63,9 +64,9 @@
     <view class="dialog-title">确认下课</view>
     <view class="dialog-desc">勾选出勤学生，将消耗对应课时</view>
     <block wx:for="{{lesson.students}}" wx:key="student_id">
-      <view class="attend-row {{attendedIds.indexOf(item.student_id) > -1 ? 'checked' : ''}}" data-sid="{{item.student_id}}" bindtap="toggleAttend">
-        <view class="check-box {{attendedIds.indexOf(item.student_id) > -1 ? 'checked' : ''}}">
-          <text wx:if="{{attendedIds.indexOf(item.student_id) > -1}}">✓</text>
+      <view class="attend-row {{h.includes(attendedIds, item.student_id) ? 'checked' : ''}}" data-sid="{{item.student_id}}" bindtap="toggleAttend">
+        <view class="check-box {{h.includes(attendedIds, item.student_id) ? 'checked' : ''}}">
+          <text wx:if="{{h.includes(attendedIds, item.student_id)}}">✓</text>
         </view>
         <text class="attend-name">{{item.student_name}}</text>
         <text class="attend-status" wx:if="{{item.status === 'on_leave'}}">已请假</text>

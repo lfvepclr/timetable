@@ -1,7 +1,8 @@
 <!-- pages/teacher/bind-generate/bind-generate.wxml -->
+<wxs src="/wxs/helpers.wxs" module="h" />
 <view class="page">
   <view class="student-info" wx:if="{{student}}">
-    <view class="student-avatar">{{student.name[0]}}</view>
+    <view class="student-avatar">{{h.firstChar(student.name)}}</view>
     <view class="student-detail">
       <text class="student-name">{{student.name}}</text>
       <text class="student-desc">{{student.grade}} {{student.school}}</text>

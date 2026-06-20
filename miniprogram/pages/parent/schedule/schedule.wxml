@@ -1,4 +1,5 @@
 <!-- pages/parent/schedule/schedule.wxml -->
+<wxs src="/wxs/helpers.wxs" module="h" />
 <view class="page">
   <!-- 周导航 -->
   <view class="week-nav">
@@ -9,8 +10,8 @@
         wx:for="{{weekDates}}" wx:key="*this"
         data-date="{{item}}" bindtap="onSelectDate"
       >
-        <text class="date-weekday">{{['一','二','三','四','五','六','日'][index]}}</text>
-        <text class="date-day">{{item.split('-')[2]}}</text>
+        <text class="date-weekday">{{h.weekdayInitial(index)}}</text>
+        <text class="date-day">{{h.dateDay(item)}}</text>
       </view>
     </view>
     <view class="nav-btn" bindtap="nextWeek">›</view>

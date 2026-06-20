@@ -1,11 +1,12 @@
 <!-- pages/parent/index/index.wxml -->
+<wxs src="/wxs/helpers.wxs" module="h" />
 <view class="page">
   <view wx:if="{{loading}}" class="loading">加载中...</view>
 
   <block wx:if="{{!loading && student}}">
     <!-- 学生信息 -->
     <view class="student-card">
-      <view class="student-avatar">{{student.name[0]}}</view>
+      <view class="student-avatar">{{h.firstChar(student.name)}}</view>
       <view class="student-info">
         <text class="student-name">{{student.name}}</text>
         <text class="student-desc">{{student.grade || ''}} {{student.school || ''}}</text>
