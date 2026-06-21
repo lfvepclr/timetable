@@ -22,6 +22,8 @@
         "package-manage/package-manage",
         "bind-generate/bind-generate",
         "holiday-manage/holiday-manage",
+        "course-list/course-list",
+        "course-edit/course-edit",
         "settings/settings"
       ]
     },

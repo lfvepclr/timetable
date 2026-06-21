@@ -27,7 +27,9 @@
 
 .info-row { display: flex; align-items: center; margin-bottom: 16rpx; }
 .info-label { font-size: 26rpx; color: #9CA3AF; width: 80rpx; }
-.info-value { font-size: 26rpx; color: #4B5563; }
+.info-value { font-size: 26rpx; color: #4B5563; flex: 1; }
+
+.edit-link { font-size: 24rpx; color: #5B7CF9; }
 
 .section { margin-bottom: 32rpx; }
 .section-title { font-size: 30rpx; font-weight: 600; color: #1F2937; margin-bottom: 20rpx; }
@@ -38,24 +40,24 @@
   justify-content: space-between;
   background: #FFFFFF;
   border-radius: 16rpx;
-  padding: 24rpx;
-  margin-bottom: 16rpx;
+  padding: 16rpx 24rpx;
+  margin-bottom: 12rpx;
   box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.04);
 }
 
-.student-left { display: flex; align-items: center; }
+.student-left { display: flex; align-items: center; gap: 16rpx; }
 
 .student-avatar {
-  width: 72rpx; height: 72rpx; border-radius: 50%;
+  width: 56rpx; height: 56rpx; border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
-  margin-right: 20rpx;
+  flex-shrink: 0;
 }
-.student-avatar text { font-size: 30rpx; font-weight: 600; color: #FFFFFF; }
+.student-avatar-text { font-size: 26rpx; font-weight: 600; color: #FFFFFF; }
 
-.student-detail { display: flex; flex-direction: column; gap: 8rpx; }
-.s-name { font-size: 30rpx; font-weight: 500; color: #1F2937; }
+.student-info { display: flex; align-items: center; gap: 12rpx; }
+.student-name { font-size: 28rpx; font-weight: 500; color: #1F2937; }
 
-.student-actions { display: flex; gap: 12rpx; }
+.student-actions { display: flex; gap: 8rpx; flex-shrink: 0; }
 
 .mini-btn {
   padding: 8rpx 24rpx;
@@ -134,3 +136,16 @@
 .dialog-btn { flex: 1; text-align: center; padding: 24rpx 0; border-radius: 999rpx; font-size: 30rpx; }
 .dialog-btn.cancel { background: #F0F4F8; color: #6B7280; }
 .dialog-btn.confirm { background: #5B7CF9; color: #FFFFFF; font-weight: 500; }
+
+/* 修改时间弹窗 */
+.edit-time-dialog {
+  width: 100%;
+  background: #FFFFFF;
+  border-radius: 32rpx 32rpx 0 0;
+  padding: 40rpx 32rpx;
+  padding-bottom: calc(40rpx + env(safe-area-inset-bottom));
+}
+.edit-row { display: flex; align-items: center; padding: 20rpx 0; border-bottom: 1rpx solid #F3F4F6; }
+.edit-label { font-size: 28rpx; color: #6B7280; width: 100rpx; }
+.edit-picker { font-size: 28rpx; color: #5B7CF9; font-weight: 500; flex: 1; text-align: right; }
+.edit-picker.disabled { color: #9CA3AF; font-weight: 400; }

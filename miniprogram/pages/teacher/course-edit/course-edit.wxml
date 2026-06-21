@@ -1,0 +1,36 @@
+<!-- pages/teacher/course-edit/course-edit.wxml -->
+<view class="page-container">
+  <view class="form-card">
+    <view class="form-item">
+      <text class="form-label">课程名称</text>
+      <input class="form-input" placeholder="请输入课程名称" value="{{form.name}}" bindinput="onNameInput" maxlength="20" />
+    </view>
+
+    <view class="form-item">
+      <text class="form-label">课程类型</text>
+      <picker mode="selector" range="{{courseTypes}}" range-key="label" bindchange="onTypeChange">
+        <view class="picker-value">{{courseTypes[selectedTypeIndex].label}}</view>
+      </picker>
+    </view>
+
+    <view class="form-item">
+      <text class="form-label">默认时长</text>
+      <picker mode="selector" range="{{durations}}" range-key="label" bindchange="onDurationChange">
+        <view class="picker-value">{{durations[selectedDurationIndex].label}}</view>
+      </picker>
+    </view>
+
+    <view class="form-item">
+      <text class="form-label">课程颜色</text>
+      <view class="color-row">
+        <block wx:for="{{colors}}" wx:key="*this">
+          <view class="color-dot {{form.color === item ? 'selected' : ''}}" style="background: {{item}};" data-color="{{item}}" bindtap="onColorChange"></view>
+        </block>
+      </view>
+    </view>
+  </view>
+
+  <view class="save-btn" bindtap="save" hover-class="btn-hover">
+    <text>{{isEdit ? '更新' : '创建'}}课程</text>
+  </view>
+</view>

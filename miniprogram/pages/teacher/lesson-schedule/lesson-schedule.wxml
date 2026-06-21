@@ -2,8 +2,15 @@
 <wxs src="/wxs/helpers.wxs" module="h" />
 <view class="page">
   <view class="form-section">
-    <view class="section-title">选择课程</view>
-    <view class="course-list">
+    <view class="section-title">
+      <text>选择课程</text>
+      <text class="add-link" bindtap="goToCreateCourse">+ 新建</text>
+    </view>
+    <view wx:if="{{courses.length === 0}}" class="empty-courses">
+      <text class="empty-text">暂无课程，请先创建</text>
+      <t-button theme="primary" size="small" bind:tap="goToCreateCourse">去创建课程</t-button>
+    </view>
+    <view wx:else class="course-list">
       <view 
         class="course-chip {{selectedCourseId === item._id ? 'selected' : ''}}" 
         wx:for="{{courses}}" wx:key="_id"
@@ -27,7 +34,7 @@
     </view>
     <view class="form-row">
       <text class="form-label">开始</text>
-      <picker mode="time" value="{{startTime}}" start="08:00" end="21:00" bindchange="onTimeChange">
+      <picker mode="selector" range="{{timeSlots}}" value="{{startTimeIndex}}" bindchange="onTimeChange">
         <view class="picker-value">{{startTime}}</view>
       </picker>
     </view>

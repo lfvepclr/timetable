@@ -98,6 +98,16 @@ const DURATION_OPTIONS = [
   { value: 120, label: '2小时' }
 ]
 
+// 时间槽（8:00~22:00，每30分钟一档）
+const TIME_SLOTS = (() => {
+  const slots = []
+  for (let h = 8; h <= 22; h++) {
+    slots.push(`${h < 10 ? '0' + h : h}:00`)
+    if (h < 22) slots.push(`${h < 10 ? '0' + h : h}:30`)
+  }
+  return slots
+})()
+
 // 状态显示配置
 const STATUS_DISPLAY = {
   // 课节状态
@@ -138,6 +148,7 @@ module.exports = {
   PACKAGE_OPTIONS,
   TIME_RANGE,
   DURATION_OPTIONS,
+  TIME_SLOTS,
   STATUS_DISPLAY,
   SUBSCRIBE_TEMPLATES,
   VACATION_TYPE

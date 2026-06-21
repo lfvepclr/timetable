@@ -38,27 +38,31 @@ const dirtyTables = new Set()
 function init() {
   if (db) return db
   db = {}
-  for (const table of TABLES) {
-    const cfg = STORAGE_MAP[table]
-    try {
-      if (cfg.type === 'storage') {
-        const raw = wx.getStorageSync(cfg.key)
-        if (cfg.field) {
-          db[table] = (raw && raw[cfg.field]) || []
-        } else {
-          db[table] = raw || []
-        }
-      } else if (cfg.type === 'file') {
-        const fs = wx.getFileSystemManager()
-        const content = fs.readFileSync(cfg.path, 'utf-8')
-        db[table] = JSON.parse(content)
-      }
-    } catch (e) {
-      db[table] = []
-    }
-    if (!Array.isArray(db[table])) db[table] = []
-  }
   return db
+}
+
+// 懒加载单个表（首次访问时才从存储/文件读取）
+function ensureTable(table) {
+  if (db[table]) return
+  const cfg = STORAGE_MAP[table]
+  if (!cfg) { db[table] = []; return }
+  try {
+    if (cfg.type === 'storage') {
+      const raw = wx.getStorageSync(cfg.key)
+      if (cfg.field) {
+        db[table] = (raw && raw[cfg.field]) || []
+      } else {
+        db[table] = raw || []
+      }
+    } else if (cfg.type === 'file') {
+      const fs = wx.getFileSystemManager()
+      const content = fs.readFileSync(cfg.path, 'utf-8')
+      db[table] = JSON.parse(content)
+    }
+  } catch (e) {
+    db[table] = []
+  }
+  if (!Array.isArray(db[table])) db[table] = []
 }
 
 // 保存单个表到对应存储目标
@@ -206,7 +210,7 @@ function normalizeRow(table, row) {
 // ============ CRUD 接口 ============
 
 function query(table, where = {}, options = {}) {
-  init()
+  init(); ensureTable(table)
   const { page = 1, pageSize = 20, orderBy } = options
   let rows = (db[table] || []).filter(r => matchWhere(r, where))
 
@@ -227,13 +231,13 @@ function query(table, where = {}, options = {}) {
 }
 
 function getById(table, id) {
-  init()
+  init(); ensureTable(table)
   const row = (db[table] || []).find(r => r.id === id || r._id === id)
   return row ? normalizeRow(table, row) : null
 }
 
 function add(table, data) {
-  init()
+  init(); ensureTable(table)
   const now = Date.now()
   const id = data._id || data.id || uuid()
   const record = { ...data, id, _id: id, created_at: now, updated_at: now }
@@ -244,7 +248,7 @@ function add(table, data) {
 }
 
 function update(table, id, data) {
-  init()
+  init(); ensureTable(table)
   const arr = db[table] || []
   const idx = arr.findIndex(r => r.id === id || r._id === id)
   if (idx === -1) return { updated: 0 }
@@ -254,7 +258,7 @@ function update(table, id, data) {
 }
 
 function remove(table, id) {
-  init()
+  init(); ensureTable(table)
   const before = (db[table] || []).length
   db[table] = (db[table] || []).filter(r => r.id !== id && r._id !== id)
   const after = db[table].length
@@ -263,7 +267,7 @@ function remove(table, id) {
 }
 
 function count(table, where = {}) {
-  init()
+  init(); ensureTable(table)
   return (db[table] || []).filter(r => matchWhere(r, where)).length
 }
 
@@ -271,6 +275,7 @@ function count(table, where = {}) {
 
 function getRawData() {
   init()
+  TABLES.forEach(t => ensureTable(t))
   return JSON.parse(JSON.stringify(db))
 }
 
@@ -303,6 +308,7 @@ function callFn(name, data = {}) {
 // --- 排课生成 ---
 function generateSchedule(data) {
   const { pattern_ids, end_date, preview_only = false } = data
+  ensureTable('weekly_patterns'); ensureTable('lessons')
   if (!pattern_ids || !pattern_ids.length || !end_date) {
     throw new Error('参数缺失：需要 pattern_ids 和 end_date')
   }
@@ -320,20 +326,25 @@ function generateSchedule(data) {
   const generated = [], skipped = [], conflicts = []
 
   for (const pattern of patterns) {
+    const cycleType = pattern.cycle_type || 'weekly'
     const startDate = new Date(Math.max(
       new Date(pattern.valid_from || todayStr).getTime(),
       today.getTime()
     ))
-    const endDate = new Date(end_date)
+    const endDate = new Date(pattern.valid_until || end_date)
     endDate.setHours(23, 59, 59, 999)
+    const finalEndDate = new Date(end_date)
+    finalEndDate.setHours(23, 59, 59, 999)
+    const actualEndDate = finalEndDate < endDate ? finalEndDate : endDate
     const current = new Date(startDate)
     current.setHours(0, 0, 0, 0)
 
-    while (current <= endDate) {
+    while (current <= actualEndDate) {
       const dateStr = formatDate(current)
       const dow = getDayOfWeek(dateStr)
 
-      if (dow === pattern.day_of_week) {
+      const shouldGenerate = cycleType === 'daily' ? true : (dow === pattern.day_of_week)
+      if (shouldGenerate) {
         const holiday = getHoliday(dateStr)
         if (holiday && holiday.is_off_day === false) {
           skipped.push({ date: dateStr, reason: '调休工作日', pattern: pattern.course_name })
@@ -413,6 +424,7 @@ function generateSchedule(data) {
 // --- 冲突检测 ---
 function checkSlotConflict(data) {
   const { date, start_ts, end_ts, exclude_lesson_id } = data
+  ensureTable('lessons')
   if (!date || !start_ts || !end_ts) throw new Error('参数缺失')
 
   let rows = db.lessons.filter(l =>
@@ -440,10 +452,13 @@ function checkSlotConflict(data) {
 function completeLesson(data) {
   const { lesson_id, attended_student_ids = [] } = data
 
+  ensureTable('lessons'); ensureTable('packages')
+
   const lessonRow = db.lessons.find(l => l.id === lesson_id)
   if (!lessonRow) throw new Error('课程不存在')
   const lesson = normalizeRow('lessons', lessonRow)
   if (lesson.lesson_status === 'completed') throw new Error('该课程已完成')
+  if (lesson.lesson_status === 'pending_feedback') throw new Error('该课程已消课')
   if (lesson.lesson_status === 'cancelled') throw new Error('该课程已取消')
 
   const students = [...lesson.students]
@@ -487,13 +502,14 @@ function completeLesson(data) {
     }
   }
 
-  update('lessons', lesson_id, { lesson_status: 'completed', students })
+  update('lessons', lesson_id, { lesson_status: 'pending_feedback', students })
   return { consumptions }
 }
 
 // --- 学生请假 ---
 function requestLeave(data) {
   const { lesson_id, student_id, reason } = data
+  ensureTable('lessons')
   if (!lesson_id || !student_id) throw new Error('缺少必要参数')
 
   const lessonRow = db.lessons.find(l => l.id === lesson_id)
@@ -519,6 +535,7 @@ function requestLeave(data) {
 // --- 补课重排 ---
 function rescheduleLesson(data) {
   const { original_lesson_id, student_id, new_date, new_start_time, new_end_time, target_lesson_id } = data
+  ensureTable('lessons'); ensureTable('students')
   if (!student_id || (!new_date && !target_lesson_id)) throw new Error('缺少必要参数')
 
   const now = Date.now()
@@ -577,6 +594,7 @@ function rescheduleLesson(data) {
 // --- 保存反馈 ---
 function saveFeedback(data) {
   const { lesson_id, student_id, content, performance, homework, teacher_comment, photos } = data
+  ensureTable('lessons'); ensureTable('feedbacks')
   if (!lesson_id || !student_id) throw new Error('缺少必要参数')
 
   const lessonRow = db.lessons.find(l => l.id === lesson_id)
@@ -613,6 +631,7 @@ function saveFeedback(data) {
 // --- 生成绑定码 ---
 function generateBindCode(data) {
   const { student_id } = data
+  ensureTable('students')
   if (!student_id) throw new Error('缺少学生ID')
 
   const studentRow = db.students.find(s => s.id === student_id)
@@ -641,6 +660,7 @@ function generateBindCode(data) {
 // --- 家长绑定 ---
 function bindStudent(data) {
   const { code, relationship } = data
+  ensureTable('students')
   if (!code) throw new Error('缺少绑定码')
 
   const now = Date.now()

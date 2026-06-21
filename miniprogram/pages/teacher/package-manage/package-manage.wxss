@@ -151,6 +151,18 @@
   color: var(--color-primary);
 }
 
+.dialog-create-link {
+  font-size: var(--font-base);
+  color: var(--color-primary);
+  font-weight: 500;
+}
+
+.add-dialog {
+  padding: 32rpx;
+  padding-bottom: calc(32rpx + env(safe-area-inset-bottom));
+  padding-bottom: calc(32rpx + constant(safe-area-inset-bottom));
+}
+
 .dialog-actions {
   display: flex;
   gap: 24rpx;

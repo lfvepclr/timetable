@@ -13,6 +13,7 @@ Page({
     selectedDate: '',
     weekLessons: [],   // 本周所有课程
     daySegments: [],   // 当日折叠后的课程段
+    dayLessonCounts: [], // 每天课节数（对应 weekDates）
     activeDayIndex: 0,
     loading: true
   },
@@ -35,13 +36,8 @@ Page({
       tabBar.updateTabs()
     }
 
-    // 有缓存时先渲染，后台静默刷新
-    const cached = app.getPageCache('teacher_schedule')
-    if (cached && cached.weekStart === this.data.currentWeek.start) {
-      this.setData({ weekLessons: cached.weekLessons, loading: false })
-      this.updateDayView()
-      this.loadWeekLessons(true)
-    } else {
+    // 每次返回页面都重新加载数据
+    if (this.data.currentWeek) {
       this.loadWeekLessons()
     }
   },
@@ -110,6 +106,7 @@ Page({
 
       this.setData({ weekLessons: lessons, loading: false })
       this.updateDayView()
+      this.updateLessonCounts(lessons)
       app.setPageCache('teacher_schedule', { weekLessons: lessons, weekStart: start })
     } catch (err) {
       console.error('加载课表失败:', err)
@@ -123,6 +120,14 @@ Page({
     const dayLessons = this.data.weekLessons.filter(l => l.date === date)
     const segments = buildFoldedSchedule(dayLessons)
     this.setData({ daySegments: segments })
+  },
+
+  // 计算每天课节数
+  updateLessonCounts(lessons) {
+    const counts = this.data.weekDates.map(date =>
+      lessons.filter(l => l.date === date).length
+    )
+    this.setData({ dayLessonCounts: counts })
   },
 
   // 点击课程

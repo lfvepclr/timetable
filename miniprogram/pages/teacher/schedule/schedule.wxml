@@ -7,7 +7,7 @@
       <text>‹</text>
     </view>
     <view class="week-label" bindtap="goToday">
-      <text>{{currentWeek.start}} ~ {{currentWeek.end}}</text>
+      <text>{{h.dateMD(currentWeek.start)}} ~ {{h.dateMD(currentWeek.end)}}</text>
     </view>
     <view class="nav-btn" bindtap="nextWeek" hover-class="nav-hover">
       <text>›</text>
@@ -15,16 +15,15 @@
   </view>
 
   <!-- 日期选择条 -->
-  <scroll-view class="date-bar" scroll-x enhanced show-scrollbar="{{false}}">
-    <view class="date-bar-inner">
-      <block wx:for="{{weekDates}}" wx:key="*this">
-        <view class="date-cell {{activeDayIndex === index ? 'active' : ''}}" data-index="{{index}}" bindtap="selectDate" hover-class="cell-hover">
-          <text class="cell-weekday">{{h.weekdayInitial(index)}}</text>
-          <text class="cell-date">{{item}}</text>
-        </view>
-      </block>
-    </view>
-  </scroll-view>
+  <view class="date-bar">
+    <block wx:for="{{weekDates}}" wx:key="*this">
+      <view class="date-cell {{activeDayIndex === index ? 'active' : ''}}" data-index="{{index}}" bindtap="selectDate" hover-class="cell-hover">
+        <text class="cell-weekday">{{h.weekdayInitial(index)}}</text>
+        <text class="cell-date">{{h.dateMD(item)}}</text>
+        <text wx:if="{{dayLessonCounts[index] > 0}}" class="cell-count {{activeDayIndex === index ? 'active' : ''}}">{{dayLessonCounts[index]}}节</text>
+      </view>
+    </block>
+  </view>
 
   <!-- 操作按钮 -->
   <view class="action-bar">
@@ -32,7 +31,7 @@
       <text>+ 手动排课</text>
     </view>
     <view class="action-btn outline" bindtap="goToPattern" hover-class="btn-hover">
-      <text>周模式</text>
+      <text>周期排课</text>
     </view>
   </view>
 

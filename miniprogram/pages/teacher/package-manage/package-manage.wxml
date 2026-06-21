@@ -33,11 +33,12 @@
       <view class="dialog-body">
         <view class="dialog-row">
           <text class="dialog-label">课程</text>
-          <picker mode="selector" range="{{courses}}" range-key="name" bindchange="onCourseChange">
-            <view class="dialog-picker">
-              {{courses.length > 0 ? (courses[0].name || '请选择') : '请先创建课程'}}
-            </view>
-          </picker>
+          <block wx:if="{{courses.length > 0}}">
+            <picker mode="selector" range="{{courses}}" range-key="name" bindchange="onCourseChange">
+              <view class="dialog-picker">{{newPkg.course_name || '请选择'}}</view>
+            </picker>
+          </block>
+          <view wx:else class="dialog-create-link" bindtap="goToCreateCourse">去创建课程 ›</view>
         </view>
         <view class="dialog-row">
           <text class="dialog-label">课时数</text>

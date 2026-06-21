@@ -18,6 +18,10 @@
 .empty-hint { font-size: 26rpx; color: #9CA3AF; margin-top: 12rpx; }
 .save-btn { position: fixed; left: 24rpx; right: 24rpx; bottom: calc(24rpx + env(safe-area-inset-bottom)); background: #5B7CF9; color: #FFFFFF; text-align: center; padding: 28rpx 0; border-radius: 999rpx; font-size: 32rpx; font-weight: 500; box-shadow: 0 8rpx 24rpx rgba(91,124,249,0.4); }
 .btn-hover { opacity: 0.85; }
+.cycle-type-row { display: flex; gap: 16rpx; }
+.cycle-chip { flex: 1; text-align: center; padding: 20rpx 0; background: #F7F8FA; border-radius: 12rpx; font-size: 28rpx; color: #6B7280; border: 2rpx solid transparent; }
+.cycle-chip.active { background: #EAF2FB; color: #5B7CF9; border-color: #5B7CF9; font-weight: 500; }
+.estimated-count { margin-top: 16rpx; padding: 16rpx 24rpx; background: #F0F4F8; border-radius: 12rpx; font-size: 26rpx; color: #5B7CF9; }
 .dialog-mask { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); display: flex; align-items: flex-end; z-index: 1000; }
 .picker-dialog { width: 100%; background: #FFFFFF; border-radius: 32rpx 32rpx 0 0; padding: 40rpx 32rpx; padding-bottom: calc(40rpx + env(safe-area-inset-bottom)); max-height: 80vh; }
 .dialog-title { font-size: 34rpx; font-weight: 600; color: #1F2937; text-align: center; margin-bottom: 24rpx; }

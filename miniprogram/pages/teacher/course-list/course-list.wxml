@@ -1,0 +1,37 @@
+<!-- pages/teacher/course-list/course-list.wxml -->
+<wxs src="/wxs/helpers.wxs" module="h" />
+<view class="page-container">
+  <block wx:if="{{courses.length > 0}}">
+    <view class="course-card" wx:for="{{courses}}" wx:key="_id">
+      <view class="card-main" data-id="{{item._id}}" bindtap="goToEdit" hover-class="card-hover">
+        <view class="card-color" style="background: {{item.color}};"></view>
+        <view class="card-info">
+          <view class="info-top">
+            <text class="course-name">{{item.name}}</text>
+            <text class="course-type-badge">{{item.typeLabel}}</text>
+          </view>
+          <text class="course-meta">默认 {{item.default_duration}} 分钟 · {{item.active ? '启用中' : '已停用'}}</text>
+        </view>
+        <text class="card-arrow">›</text>
+      </view>
+      <view class="card-actions">
+        <view class="action-btn-mini {{item.active ? '' : 'activate'}}" data-id="{{item._id}}" bindtap="toggleActive">
+          <text>{{item.active ? '停用' : '启用'}}</text>
+        </view>
+        <view class="action-btn-mini danger" data-id="{{item._id}}" bindtap="deleteCourse">
+          <text>删除</text>
+        </view>
+      </view>
+    </view>
+  </block>
+
+  <view wx:elif="{{!loading}}" class="empty-state">
+    <t-empty icon="info-circle-filled" description="暂无课程">
+      <t-button theme="primary" size="small" bind:tap="goToCreate" slot="footer">去创建</t-button>
+    </t-empty>
+  </view>
+
+  <view class="fab-btn" bindtap="goToCreate" hover-class="fab-hover">
+    <text class="fab-text">+</text>
+  </view>
+</view>

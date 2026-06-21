@@ -17,6 +17,7 @@ Page({
     lessonStatusTheme: {
       scheduled: 'primary',
       completed: 'success',
+      pending_feedback: 'warning',
       cancelled: 'default',
       attended: 'success',
       on_leave: 'warning'
@@ -24,6 +25,7 @@ Page({
     lessonStatusText: {
       scheduled: '待上课',
       completed: '已完成',
+      pending_feedback: '待反馈',
       cancelled: '已取消',
       attended: '已出勤',
       on_leave: '请假'

@@ -14,7 +14,8 @@
           <view class="pattern-info">
             <text class="pattern-name">{{item.name}}</text>
             <view class="pattern-meta">
-              <text>{{h.weekdayText(item.day_of_week)}}</text>
+              <text>{{h.cycleTypeText(item.cycle_type)}}</text>
+              <text wx:if="{{item.cycle_type !== 'daily'}}">{{h.weekdayText(item.day_of_week)}}</text>
               <text>{{item.start_time}}-{{item.end_time}}</text>
               <text>{{h.join(item.student_names, '、')}}</text>
             </view>

@@ -61,10 +61,12 @@ Page({
 
   showAddDialog() {
     const today = formatDate(new Date())
+    const courses = this.data.courses
     this.setData({
       showAdd: true,
       newPkg: {
-        course_id: this.data.courses.length > 0 ? this.data.courses[0]._id : '',
+        course_id: courses.length > 0 ? courses[0]._id : '',
+        course_name: courses.length > 0 ? courses[0].name : '',
         total_lessons: 10,
         purchase_date: today
       }
@@ -75,13 +77,27 @@ Page({
     this.setData({ showAdd: false })
   },
 
+  goToCreateCourse() {
+    this.setData({ showAdd: false })
+    wx.navigateTo({ url: '../course-edit/course-edit' })
+  },
+
+  onShow() {
+    if (this.data.studentId) {
+      this.loadCourses()
+    }
+  },
+
   onPopupVisibleChange(e) {
     this.setData({ showAdd: e.detail.visible })
   },
 
   onCourseChange(e) {
     const idx = e.detail.value
-    this.setData({ 'newPkg.course_id': this.data.courses[idx]._id })
+    const course = this.data.courses[idx]
+    if (course) {
+      this.setData({ 'newPkg.course_id': course._id, 'newPkg.course_name': course.name })
+    }
   },
 
   onTotalChange(e) {

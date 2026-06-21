@@ -1,7 +1,7 @@
-// pages/teacher/pattern-edit/pattern-edit.js - 周模式编辑
+// pages/teacher/pattern-edit/pattern-edit.js - 周期排课编辑
 const { _, query, add, update, getById } = require('../../../utils/api')
-const { WEEKDAYS, COURSE_COLORS, DURATION_OPTIONS, COURSE_TYPE_CONFIG } = require('../../../utils/constants')
-const { formatDate } = require('../../../utils/date')
+const { WEEKDAYS, COURSE_COLORS, DURATION_OPTIONS, COURSE_TYPE_CONFIG, TIME_SLOTS } = require('../../../utils/constants')
+const { formatDate, addDays } = require('../../../utils/date')
 
 Page({
   data: {
@@ -13,6 +13,7 @@ Page({
       course_name: '',
       course_type: '1v1',
       color: '#5B7CF9',
+      cycle_type: 'weekly',
       day_of_week: 6,
       start_time: '10:00',
       end_time: '12:00',
@@ -28,6 +29,9 @@ Page({
     weekdays: WEEKDAYS,
     colors: COURSE_COLORS,
     durations: DURATION_OPTIONS,
+    timeSlots: TIME_SLOTS,
+    startTimeIndex: 4,
+    estimatedCount: 0,
     showStudentPicker: false,
     selectedStudents: {},
     saving: false
@@ -35,7 +39,14 @@ Page({
 
   async onLoad(options) {
     const today = formatDate(new Date())
-    this.setData({ 'form.valid_from': today })
+    const defaultEnd = formatDate(addDays(new Date(), 90))
+    const startTimeIdx = TIME_SLOTS.indexOf('10:00')
+    this.setData({
+      'form.valid_from': today,
+      'form.valid_until': defaultEnd,
+      startTimeIndex: startTimeIdx >= 0 ? startTimeIdx : 4
+    })
+    this.calculateEstimatedCount()
 
     await this.loadCourses()
     await this.loadStudents()
@@ -44,6 +55,11 @@ Page({
       this.setData({ isEdit: true, patternId: options.id })
       this.loadPattern(options.id)
     }
+  },
+
+  onShow() {
+    // 从课程编辑页返回时刷新课程列表
+    this.loadCourses()
   },
 
   async loadCourses() {
@@ -66,9 +82,19 @@ Page({
       if (pattern) {
         const selectedStudents = {}
         ;(pattern.student_ids || []).forEach(sid => { selectedStudents[sid] = true })
-        this.setData({ form: { ...this.data.form, ...pattern }, selectedStudents })
+        const startTimeIdx = TIME_SLOTS.indexOf(pattern.start_time || '10:00')
+        this.setData({
+          form: { ...this.data.form, ...pattern, cycle_type: pattern.cycle_type || 'weekly' },
+          selectedStudents,
+          startTimeIndex: startTimeIdx >= 0 ? startTimeIdx : 4
+        })
+        this.calculateEstimatedCount()
       }
     } catch (err) { console.error(err) }
+  },
+
+  goToCreateCourse() {
+    wx.navigateTo({ url: '../course-edit/course-edit' })
   },
 
   onInput(e) {
@@ -94,6 +120,13 @@ Page({
   onDayChange(e) {
     const index = e.detail.value
     this.setData({ 'form.day_of_week': this.data.weekdays[index].value })
+    this.calculateEstimatedCount()
+  },
+
+  onCycleTypeChange(e) {
+    const type = e.currentTarget.dataset.type
+    this.setData({ 'form.cycle_type': type })
+    this.calculateEstimatedCount()
   },
 
   onDurationChange(e) {
@@ -104,7 +137,9 @@ Page({
   },
 
   onStartTimeChange(e) {
-    this.setData({ 'form.start_time': e.detail.value })
+    const index = e.detail.value
+    const time = this.data.timeSlots[index]
+    this.setData({ startTimeIndex: index, 'form.start_time': time })
     this.updateEndTime()
   },
 
@@ -123,6 +158,36 @@ Page({
   onDateChange(e) {
     const field = e.currentTarget.dataset.field
     this.setData({ [`form.${field}`]: e.detail.value })
+    this.calculateEstimatedCount()
+  },
+
+  calculateEstimatedCount() {
+    const { cycle_type, day_of_week, valid_from, valid_until } = this.data.form
+    if (!valid_from || !valid_until) {
+      this.setData({ estimatedCount: 0 })
+      return
+    }
+    const start = new Date(valid_from)
+    const end = new Date(valid_until)
+    if (start > end) {
+      this.setData({ estimatedCount: 0 })
+      return
+    }
+    let count = 0
+    const current = new Date(start)
+    current.setHours(0, 0, 0, 0)
+    end.setHours(23, 59, 59, 999)
+    while (current <= end) {
+      if (cycle_type === 'daily') {
+        count++
+      } else {
+        const dow = current.getDay()
+        const dayOfWeek = dow === 0 ? 7 : dow
+        if (dayOfWeek === day_of_week) count++
+      }
+      current.setDate(current.getDate() + 1)
+    }
+    this.setData({ estimatedCount: count })
   },
 
   onColorChange(e) {
@@ -164,9 +229,9 @@ Page({
   },
 
   async save() {
-    const { name, course_id, day_of_week, start_time, student_ids, valid_from, valid_until } = this.data.form
+    const { name, course_id, cycle_type, day_of_week, start_time, student_ids, valid_from, valid_until } = this.data.form
     if (!course_id) { wx.showToast({ title: '请选择课程', icon: 'none' }); return }
-    if (!day_of_week) { wx.showToast({ title: '请选择周几', icon: 'none' }); return }
+    if (cycle_type === 'weekly' && !day_of_week) { wx.showToast({ title: '请选择周几', icon: 'none' }); return }
     if (student_ids.length === 0) { wx.showToast({ title: '请选择学生', icon: 'none' }); return }
     if (!valid_from) { wx.showToast({ title: '请设生效起始日', icon: 'none' }); return }
 
@@ -176,8 +241,8 @@ Page({
     try {
       const data = { ...this.data.form, status: 'active', updated_at: Date.now() }
       if (!data.name) {
-        const weekdayLabel = this.data.weekdays.find(w => w.value === day_of_week)?.label
-        data.name = `${data.course_name}·${weekdayLabel}·${start_time}`
+        const cycleLabel = cycle_type === 'daily' ? '每天' : (this.data.weekdays.find(w => w.value === day_of_week)?.label || '')
+        data.name = `${data.course_name}·${cycleLabel}·${start_time}`
       }
 
       if (this.data.isEdit) {

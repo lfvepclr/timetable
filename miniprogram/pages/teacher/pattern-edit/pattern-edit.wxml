@@ -3,13 +3,24 @@
 <view class="page-container">
   <view class="form-card">
     <view class="form-item">
-      <text class="form-label">课程</text>
+      <view class="label-row">
+        <text class="form-label">课程</text>
+        <text class="add-link" bindtap="goToCreateCourse">+ 新建</text>
+      </view>
       <picker mode="selector" range="{{courses}}" range-key="name" bindchange="onCourseChange">
         <view class="picker-value {{form.course_name ? '' : 'placeholder'}}">{{form.course_name || '请选择课程'}}</view>
       </picker>
     </view>
 
     <view class="form-item">
+      <text class="form-label">周期类型</text>
+      <view class="cycle-type-row">
+        <view class="cycle-chip {{form.cycle_type === 'daily' ? 'active' : ''}}" data-type="daily" bindtap="onCycleTypeChange">天循环</view>
+        <view class="cycle-chip {{form.cycle_type === 'weekly' ? 'active' : ''}}" data-type="weekly" bindtap="onCycleTypeChange">周循环</view>
+      </view>
+    </view>
+
+    <view class="form-item" wx:if="{{form.cycle_type === 'weekly'}}">
       <text class="form-label">周几</text>
       <picker mode="selector" range="{{weekdays}}" range-key="label" bindchange="onDayChange">
         <view class="picker-value">{{weekdays[form.day_of_week - 1].label}}</view>
@@ -19,7 +30,7 @@
     <view class="form-row">
       <view class="form-item half">
         <text class="form-label">开始时间</text>
-        <picker mode="time" value="{{form.start_time}}" bindchange="onStartTimeChange">
+        <picker mode="selector" range="{{timeSlots}}" value="{{startTimeIndex}}" bindchange="onStartTimeChange">
           <view class="picker-value">{{form.start_time}}</view>
         </picker>
       </view>
@@ -47,17 +58,21 @@
 
     <view class="form-row">
       <view class="form-item half">
-        <text class="form-label">生效起始</text>
+        <text class="form-label">开始日期</text>
         <picker mode="date" value="{{form.valid_from}}" bindchange="onDateChange" data-field="valid_from">
           <view class="picker-value {{form.valid_from ? '' : 'placeholder'}}">{{form.valid_from || '选择日期'}}</view>
         </picker>
       </view>
       <view class="form-item half">
-        <text class="form-label">生效截止</text>
+        <text class="form-label">截止日期</text>
         <picker mode="date" value="{{form.valid_until}}" bindchange="onDateChange" data-field="valid_until">
-          <view class="picker-value {{form.valid_until ? '' : 'placeholder'}}">{{form.valid_until || '选填'}}</view>
+          <view class="picker-value {{form.valid_until ? '' : 'placeholder'}}">{{form.valid_until || '选择日期'}}</view>
         </picker>
       </view>
+    </view>
+
+    <view class="estimated-count" wx:if="{{estimatedCount > 0}}">
+      <text>预计 {{estimatedCount}} 节课</text>
     </view>
   </view>
 

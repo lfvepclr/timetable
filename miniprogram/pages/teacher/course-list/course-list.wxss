@@ -1,0 +1,20 @@
+/* pages/teacher/course-list/course-list.wxss */
+.page-container { padding: 24rpx; padding-bottom: 160rpx; min-height: 100vh; background: #F8F9FB; }
+.course-card { background: #FFFFFF; border-radius: 16rpx; margin-bottom: 20rpx; overflow: hidden; box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.04); }
+.card-main { display: flex; align-items: center; padding: 28rpx 24rpx; }
+.card-hover { background: #F7F8FA; }
+.card-color { width: 12rpx; height: 60rpx; border-radius: 6rpx; margin-right: 20rpx; flex-shrink: 0; }
+.card-info { flex: 1; }
+.info-top { display: flex; align-items: center; gap: 12rpx; }
+.course-name { font-size: 32rpx; font-weight: 600; color: #1F2937; }
+.course-type-badge { font-size: 22rpx; color: #6B7280; background: #F0F4F8; padding: 4rpx 14rpx; border-radius: 999rpx; }
+.course-meta { font-size: 24rpx; color: #9CA3AF; margin-top: 8rpx; display: block; }
+.card-arrow { font-size: 40rpx; color: #D1D5DB; flex-shrink: 0; }
+.card-actions { display: flex; border-top: 2rpx solid #F3F4F6; }
+.action-btn-mini { flex: 1; text-align: center; padding: 20rpx 0; font-size: 26rpx; color: #6B7280; }
+.action-btn-mini.activate { color: #10B981; }
+.action-btn-mini.danger { color: #EF4444; border-left: 2rpx solid #F3F4F6; }
+.empty-state { padding-top: 120rpx; }
+.fab-btn { position: fixed; right: 40rpx; bottom: calc(60rpx + env(safe-area-inset-bottom)); width: 100rpx; height: 100rpx; background: #5B7CF9; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 8rpx 24rpx rgba(91,124,249,0.4); }
+.fab-hover { opacity: 0.85; }
+.fab-text { font-size: 52rpx; color: #FFFFFF; line-height: 1; }

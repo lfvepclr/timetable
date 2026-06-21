@@ -24,7 +24,7 @@
       <view class="action-icon icon-green">
         <t-icon name="calendar" size="40rpx" color="#10B981" />
       </view>
-      <text class="action-text">批量生成</text>
+      <text class="action-text">周期排课</text>
     </view>
     <view class="action-item" hover-class="action-hover" bind:tap="goToSchedule">
       <view class="action-icon icon-amber">

@@ -46,6 +46,13 @@ var dateDay = function (dateStr) {
   return parts[2] || ''
 }
 
+var dateMD = function (dateStr) {
+  if (!dateStr) return ''
+  var parts = dateStr.split('-')
+  if (parts.length < 3) return dateStr
+  return parts[1] + '-' + parts[2]
+}
+
 var statusTheme = function (status, type) {
   if (type === 'package') {
     return status === 'active' ? 'primary' : 'default'
@@ -53,6 +60,7 @@ var statusTheme = function (status, type) {
   var map = {
     scheduled: 'primary',
     completed: 'success',
+    pending_feedback: 'warning',
     cancelled: 'default',
     attended: 'success',
     on_leave: 'warning',
@@ -68,6 +76,7 @@ var statusText = function (status, type) {
   var map = {
     scheduled: '待上课',
     completed: '已完成',
+    pending_feedback: '待反馈',
     cancelled: '已取消',
     attended: '已出勤',
     on_leave: '请假',
@@ -85,6 +94,12 @@ var packageLabel = function (consumed, total) {
   return (consumed || 0) + '/' + (total || 0) + ' 节'
 }
 
+var cycleTypeText = function (cycleType) {
+  if (cycleType === 'daily') return '天循环'
+  if (cycleType === 'weekly') return '周循环'
+  return '周循环'
+}
+
 module.exports = {
   firstChar: firstChar,
   weekdayText: weekdayText,
@@ -94,8 +109,10 @@ module.exports = {
   join: join,
   weekdayInitial: weekdayInitial,
   dateDay: dateDay,
+  dateMD: dateMD,
   statusTheme: statusTheme,
   statusText: statusText,
   packagePercent: packagePercent,
-  packageLabel: packageLabel
+  packageLabel: packageLabel,
+  cycleTypeText: cycleTypeText
 }

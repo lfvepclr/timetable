@@ -33,6 +33,11 @@ Page({
     app.switchRole('parent')
   },
 
+  // 课程管理
+  goToCourseList() {
+    wx.navigateTo({ url: '../course-list/course-list' })
+  },
+
   // 假期管理
   goToHolidayManage() {
     wx.navigateTo({ url: '../holiday-manage/holiday-manage' })

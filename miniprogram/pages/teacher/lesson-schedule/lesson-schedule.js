@@ -1,7 +1,7 @@
 // pages/teacher/lesson-schedule/lesson-schedule.js - 手动排课/补课
 const { _, query, add, callFn } = require('../../../utils/api')
 const { formatDate, getDayOfWeek, getWeekdayLabel, getTimestamp } = require('../../../utils/date')
-const { COURSE_TYPE_CONFIG, DURATION_OPTIONS, TIME_RANGE } = require('../../../utils/constants')
+const { COURSE_TYPE_CONFIG, DURATION_OPTIONS, TIME_RANGE, TIME_SLOTS } = require('../../../utils/constants')
 
 Page({
   data: {
@@ -15,8 +15,10 @@ Page({
     selectedStudentIds: [],
     date: '',
     startTime: '08:00',
+    startTimeIndex: 0,
     duration: 120,
     durationOptions: DURATION_OPTIONS,
+    timeSlots: TIME_SLOTS,
     loading: false,
     minDate: '',
     maxDate: ''
@@ -31,7 +33,8 @@ Page({
       maxDate,
       mode: options.mode || 'manual',
       makeupLessonId: options.lesson_id || '',
-      makeupStudentId: options.student_id || ''
+      makeupStudentId: options.student_id || '',
+      startTimeIndex: TIME_SLOTS.indexOf('08:00')
     })
 
     if (this.data.mode === 'makeup') {
@@ -40,6 +43,10 @@ Page({
 
     this.loadCourses()
     this.loadStudents()
+  },
+
+  onShow() {
+    this.loadCourses()
   },
 
   async loadCourses() {
@@ -68,6 +75,10 @@ Page({
     }
   },
 
+  goToCreateCourse() {
+    wx.navigateTo({ url: '../course-edit/course-edit' })
+  },
+
   selectCourse(e) {
     const id = e.currentTarget.dataset.id
     const course = this.data.courses.find(c => c._id === id)
@@ -85,7 +96,9 @@ Page({
   },
 
   onTimeChange(e) {
-    this.setData({ startTime: e.detail.value })
+    const index = e.detail.value
+    const time = this.data.timeSlots[index]
+    this.setData({ startTimeIndex: index, startTime: time })
   },
 
   onDurationChange(e) {
@@ -176,6 +189,7 @@ Page({
         course_name: course.name,
         course_type: course.type,
         course_color: course.color,
+        color: course.color,
         students: this.data.selectedStudentIds.map(sid => {
           const s = this.data.students.find(st => st._id === sid)
           return {

@@ -12,6 +12,7 @@
       <view class="info-row">
         <text class="info-label">时间</text>
         <text class="info-value">{{lesson.date}} {{lesson.weekday}} {{lesson.start_time}}-{{lesson.end_time}}</text>
+        <text class="edit-link" bindtap="showEditTimeDialog" wx:if="{{lesson.lesson_status === 'scheduled'}}">修改</text>
       </view>
       <view class="info-row">
         <text class="info-label">时长</text>
@@ -28,39 +29,78 @@
   <view class="section">
     <view class="section-title">参课学生（{{lesson.students.length}}）</view>
     <block wx:for="{{lesson.students}}" wx:key="student_id">
-      <t-cell title="{{item.student_name}}" hover>
-        <view slot="left-icon" class="cell-avatar" style="background: {{h.avatarColor(index)}};">
-          <text class="cell-avatar-text">{{h.firstChar(item.student_name)}}</text>
+      <view class="student-row">
+        <view class="student-left">
+          <view class="student-avatar" style="background: {{h.avatarColor(index)}};">
+            <text class="student-avatar-text">{{h.firstChar(item.student_name)}}</text>
+          </view>
+          <view class="student-info">
+            <text class="student-name">{{item.student_name}}</text>
+            <t-tag theme="{{h.statusTheme(item.status, 'lesson')}}" variant="light" size="small">{{h.statusText(item.status, 'lesson')}}</t-tag>
+          </view>
         </view>
-        <view slot="note">
-          <t-tag theme="{{h.statusTheme(item.status, 'lesson')}}" variant="light" size="small">{{h.statusText(item.status, 'lesson')}}</t-tag>
-        </view>
-        <view slot="right-icon" class="student-actions">
+        <view class="student-actions">
           <t-button wx:if="{{item.status === 'scheduled'}}" theme="warning" variant="text" size="small" data-sid="{{item.student_id}}" bind:tap="showLeaveDialog">请假</t-button>
           <t-button wx:if="{{item.status === 'on_leave'}}" theme="primary" variant="text" size="small" data-sid="{{item.student_id}}" bind:tap="goToReschedule">补课</t-button>
           <t-button wx:if="{{item.status === 'attended'}}" theme="primary" variant="text" size="small" data-sid="{{item.student_id}}" bind:tap="goToFeedback">反馈</t-button>
         </view>
-      </t-cell>
+      </view>
     </block>
   </view>
 
   <!-- 底部操作 -->
   <view class="bottom-actions" wx:if="{{lesson.lesson_status === 'scheduled'}}">
-    <t-button theme="primary" size="large" block bind:tap="showCompleteDialog">标记下课</t-button>
+    <t-button theme="primary" size="large" block bind:tap="showCompleteDialog">消课</t-button>
+  </view>
+  <view class="bottom-actions" wx:elif="{{lesson.lesson_status === 'pending_feedback'}}">
+    <t-button theme="primary" size="large" block bind:tap="goToFeedbackPage">去反馈</t-button>
   </view>
 </view>
 
-<!-- 完成课程弹窗 -->
+<!-- 消课弹窗 -->
 <t-popup visible="{{showComplete}}" bind:visible-change="onCompletePopupChange" placement="center">
   <view class="complete-dialog">
-    <view class="dialog-title">确认下课</view>
-    <view class="dialog-desc">勾选出勤学生，将消耗对应课时</view>
+    <view class="dialog-title">确认消课</view>
+    <view class="dialog-desc">勾选出勤学生，将消耗对应课时（请假学生不扣减）</view>
     <t-checkbox-group value="{{attendedIds}}" bind:change="onAttendChange">
       <t-checkbox wx:for="{{lesson.students}}" wx:for-item="student" wx:key="student_id" label="{{student.student_name}}" value="{{student.student_id}}" />
     </t-checkbox-group>
     <view class="dialog-actions">
       <t-button theme="default" bind:tap="hideCompleteDialog">取消</t-button>
-      <t-button theme="primary" bind:tap="confirmComplete">确认下课</t-button>
+      <t-button theme="primary" bind:tap="confirmComplete">确认消课</t-button>
+    </view>
+  </view>
+</t-popup>
+
+<!-- 修改时间弹窗 -->
+<t-popup visible="{{showEditTime}}" bind:visible-change="onEditTimePopupChange" placement="bottom">
+  <view class="edit-time-dialog">
+    <view class="dialog-title">修改时间</view>
+    <view class="edit-row">
+      <text class="edit-label">日期</text>
+      <picker mode="date" value="{{editDate}}" bindchange="onEditDateChange">
+        <view class="edit-picker">{{editDate}}</view>
+      </picker>
+    </view>
+    <view class="edit-row">
+      <text class="edit-label">开始</text>
+      <picker mode="selector" range="{{timeSlots}}" value="{{editStartTimeIndex}}" bindchange="onEditStartTimeChange">
+        <view class="edit-picker">{{timeSlots[editStartTimeIndex]}}</view>
+      </picker>
+    </view>
+    <view class="edit-row">
+      <text class="edit-label">时长</text>
+      <picker mode="selector" range="{{durations}}" range-key="label" value="{{editDurationIndex}}" bindchange="onEditDurationChange">
+        <view class="edit-picker">{{durations[editDurationIndex].label}}</view>
+      </picker>
+    </view>
+    <view class="edit-row">
+      <text class="edit-label">结束</text>
+      <view class="edit-picker disabled">{{editEndTime}}</view>
+    </view>
+    <view class="dialog-actions">
+      <t-button theme="default" bind:tap="hideEditTimeDialog">取消</t-button>
+      <t-button theme="primary" bind:tap="saveEditTime">保存</t-button>
     </view>
   </view>
 </t-popup>
