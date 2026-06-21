@@ -43,7 +43,7 @@
     </view>
     <block wx:if="{{!loading}}">
       <time-fold wx:if="{{daySegments.length > 0}}" segments="{{daySegments}}" bind:lessontap="onLessonTap" />
-      <empty-state wx:else text="当日无课" />
+      <t-empty wx:else icon="info-circle-filled" description="当日无课" />
     </block>
     <view wx:else class="loading-text">加载中...</view>
   </view>

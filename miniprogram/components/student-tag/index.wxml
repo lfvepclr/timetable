@@ -1,5 +1,0 @@
-<!-- components/student-tag/index.wxml -->
-<view class="student-tag {{selected ? 'selected' : ''}} {{status === 'on_leave' ? 'on-leave' : ''}}" bindtap="onTap" hover-class="tag-hover">
-  <text>{{name}}</text>
-  <text wx:if="{{status === 'on_leave'}}" class="leave-mark">假</text>
-</view>

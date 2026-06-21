@@ -54,7 +54,7 @@
 
 .add-hover {
   background: #F7F8FA;
-  border-color: #4A90D9;
+  border-color: #5B7CF9;
 }
 
 .add-icon {

@@ -1,67 +1,102 @@
 <!-- pages/teacher/index/index.wxml -->
-<view class="page-container">
-  <!-- 今日概览头部 -->
-  <view class="today-header">
-    <view class="header-bg"></view>
-    <view class="header-content">
-      <view class="header-top">
-        <view class="date-block">
-          <text class="date-text">{{today}}</text>
-          <text class="weekday-text">{{weekday}}</text>
-        </view>
-        <view class="today-count">
-          <text class="count-num">{{todayLessons.length}}</text>
-          <text class="count-label">节课</text>
-        </view>
-      </view>
-      <!-- 快捷操作 -->
-      <view class="quick-actions">
-        <view class="action-item" bindtap="goToManualSchedule" hover-class="action-hover">
-          <view class="action-icon icon-schedule"></view>
-          <text>手动排课</text>
-        </view>
-        <view class="action-item" bindtap="goToPatternGenerate" hover-class="action-hover">
-          <view class="action-icon icon-pattern"></view>
-          <text>批量生成</text>
-        </view>
-        <view class="action-item" bindtap="goToSchedule" hover-class="action-hover">
-          <view class="action-icon icon-calendar"></view>
-          <text>查看课表</text>
-        </view>
-      </view>
+<view class="page">
+  <!-- 日期概览条 -->
+  <view class="overview-bar">
+    <view class="date-info">
+      <text class="date-main">{{today}}</text>
+      <text class="date-week">{{weekday}}</text>
+    </view>
+    <view class="lesson-count">
+      <text class="count-num">{{todayLessons.length}}</text>
+      <text class="count-unit">节课</text>
     </view>
   </view>
 
-  <!-- 今日课程（时间折叠） -->
-  <view class="section">
-    <view class="section-title">
-      <text>今日课程</text>
+  <!-- 快捷操作 -->
+  <view class="quick-actions">
+    <view class="action-item" hover-class="action-hover" bind:tap="goToManualSchedule">
+      <view class="action-icon icon-blue">
+        <t-icon name="edit" size="40rpx" color="#5B7CF9" />
+      </view>
+      <text class="action-text">手动排课</text>
     </view>
-    <block wx:if="{{!loading}}">
-      <time-fold wx:if="{{segments.length > 0}}" segments="{{segments}}" bind:lessontap="onLessonTap" />
-      <empty-state wx:else text="今日无课，休息一下吧" actionText="去排课" bind:action="goToSchedule" />
+    <view class="action-item" hover-class="action-hover" bind:tap="goToPatternGenerate">
+      <view class="action-icon icon-green">
+        <t-icon name="calendar" size="40rpx" color="#10B981" />
+      </view>
+      <text class="action-text">批量生成</text>
+    </view>
+    <view class="action-item" hover-class="action-hover" bind:tap="goToSchedule">
+      <view class="action-icon icon-amber">
+        <t-icon name="view-list" size="40rpx" color="#F59E0B" />
+      </view>
+      <text class="action-text">查看课表</text>
+    </view>
+  </view>
+
+  <!-- 今日课程 -->
+  <view class="section">
+    <view class="section-header">
+      <text class="section-title">今日课程</text>
+      <t-tag theme="primary" variant="light" size="small">{{todayLessons.length}} 节</t-tag>
+    </view>
+
+    <!-- 骨架屏（首次加载无缓存时） -->
+    <block wx:if="{{loading && !hasCache}}">
+      <view class="skeleton-card" wx:for="{{[1, 2]}}" wx:key="*this">
+        <view class="skeleton-row">
+          <view class="skeleton-bar w-30"></view>
+          <view class="skeleton-bar w-40"></view>
+          <view class="skeleton-bar w-20"></view>
+        </view>
+        <view class="skeleton-row">
+          <view class="skeleton-bar w-50"></view>
+        </view>
+      </view>
     </block>
-    <view wx:else class="loading-text">加载中...</view>
+
+    <!-- 课程列表 -->
+    <block wx:elif="{{segments.length > 0}}">
+      <time-fold segments="{{segments}}" bind:lessontap="onLessonTap" />
+    </block>
+
+    <!-- 空状态 -->
+    <t-empty wx:elif="{{!loading}}" icon="info-circle-filled" description="今日无课，休息一下吧">
+      <t-button theme="primary" size="small" bind:tap="goToSchedule" slot="footer">去排课</t-button>
+    </t-empty>
   </view>
 
   <!-- 近期课程 -->
   <view class="section" wx:if="{{upcomingLessons.length > 0}}">
-    <view class="section-title">
-      <text>近期课程</text>
-      <text class="more-link" bindtap="goToSchedule">全部 ></text>
+    <view class="section-header">
+      <text class="section-title">近期课程</text>
+      <view class="more-link" bind:tap="goToSchedule">
+        <text>全部</text>
+        <t-icon name="chevron-right" size="32rpx" color="#6B7280" />
+      </view>
     </view>
     <block wx:for="{{upcomingLessons}}" wx:key="date">
-      <view class="upcoming-day">
-        <view class="upcoming-date">
-          <text class="date-label">{{item.label}}</text>
-          <text class="date-full">{{item.date}}</text>
-        </view>
-        <view class="upcoming-lessons">
-          <block wx:for="{{item.lessons}}" wx:for-item="lesson" wx:key="_id">
-            <lesson-card lesson="{{lesson}}" compact="{{true}}" bind:tap="onLessonTap" data-lesson="{{lesson}}" />
-          </block>
-        </view>
+      <view class="upcoming-date-row">
+        <text class="date-label">{{item.label}}</text>
+        <text class="date-full">{{item.date}}</text>
       </view>
+      <t-cell-group>
+        <t-cell
+          wx:for="{{item.lessons}}"
+          wx:for-item="lesson"
+          wx:key="_id"
+          title="{{lesson.course_name}}"
+          note="{{lesson.start_time}}-{{lesson.end_time}} · {{lesson.students[0].student_name}}{{lesson.students.length > 1 ? ' 等' : ''}}"
+          hover
+          arrow
+          data-lesson="{{lesson}}"
+          bind:tap="onLessonTap"
+        >
+          <view slot="right-icon">
+            <t-tag theme="{{lessonStatusTheme[lesson.lesson_status] || 'default'}}" variant="light" size="small">{{lessonStatusText[lesson.lesson_status] || '待上课'}}</t-tag>
+          </view>
+        </t-cell>
+      </t-cell-group>
     </block>
   </view>
 

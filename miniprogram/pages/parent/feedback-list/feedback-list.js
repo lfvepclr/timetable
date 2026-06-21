@@ -1,7 +1,7 @@
 // pages/parent/feedback-list/feedback-list.js - 家长反馈列表
 const app = getApp()
 const { guardRole } = require('../../../utils/auth')
-const { _, query, getById } = require('../../../utils/db')
+const { _, query, getById } = require('../../../utils/api')
 
 Page({
   data: {
@@ -11,11 +11,15 @@ Page({
     hasMore: true
   },
 
+  onLoad() {
+  },
+
   onShow() {
     guardRole('parent')
-    if (typeof this.getTabBar === 'function' && this.getTabBar()) {
-      this.getTabBar().updateSelected(2)
-      this.getTabBar().updateTabs()
+    const tabBar = this.selectComponent('#tabBar')
+    if (tabBar) {
+      tabBar.updateSelected(2)
+      tabBar.updateTabs()
     }
     this.setData({ feedbacks: [], page: 1, hasMore: true })
     this.loadFeedbacks()
@@ -26,13 +30,13 @@ Page({
 
     try {
       const openid = app.globalData.openid || wx.getStorageSync('openid')
-      const bindings = await query('bindings', { parent_openid: openid, status: 'active' })
-      if (bindings.length === 0) {
+      const students = await query('students', { 'parents.openid': openid, 'parents.status': 'active' })
+      if (students.length === 0) {
         this.setData({ loading: false })
         return
       }
 
-      const studentId = bindings[0].student_id
+      const studentId = students[0]._id
       const feedbacks = await query('feedbacks', { student_id: studentId }, {
         orderBy: ['created_at', 'desc'],
         page: this.data.page,

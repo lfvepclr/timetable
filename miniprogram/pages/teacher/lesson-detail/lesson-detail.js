@@ -1,6 +1,6 @@
 // pages/teacher/lesson-detail/lesson-detail.js - 课程详情
-const { db, _, getById, update, query } = require('../../../utils/db')
-const { callFn } = require('../../../utils/cloud')
+const app = getApp()
+const { _, getById, update, query, callFn } = require('../../../utils/api')
 const { formatDuration, diffMinutes, getWeekdayLabel } = require('../../../utils/date')
 
 Page({
@@ -46,6 +46,14 @@ Page({
     this.setData({ showComplete: false })
   },
 
+  onCompletePopupChange(e) {
+    this.setData({ showComplete: e.detail.visible })
+  },
+
+  onAttendChange(e) {
+    this.setData({ attendedIds: e.detail })
+  },
+
   // 切换出勤状态
   toggleAttend(e) {
     const sid = e.currentTarget.dataset.sid
@@ -58,6 +66,8 @@ Page({
     }
     this.setData({ attendedIds: ids })
   },
+
+  // 保留旧方法作为兼容，实际使用 onAttendChange
 
   // 确认完成课程
   async confirmComplete() {
@@ -85,6 +95,10 @@ Page({
 
   hideLeaveDialog() {
     this.setData({ showLeaveDialog: false })
+  },
+
+  onLeavePopupChange(e) {
+    this.setData({ showLeaveDialog: e.detail.visible })
   },
 
   onLeaveReasonInput(e) {

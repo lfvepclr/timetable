@@ -18,6 +18,7 @@
 .info-header {
   display: flex;
   align-items: center;
+  flex-wrap: nowrap;
 }
 
 .student-avatar {
@@ -37,6 +38,7 @@
 
 .info-main {
   flex: 1;
+  min-width: 0;
 }
 
 .student-name {

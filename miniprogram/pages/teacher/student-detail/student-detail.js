@@ -1,5 +1,6 @@
 // pages/teacher/student-detail/student-detail.js - 学生详情
-const { db, _, getById, query, update } = require('../../../utils/db')
+const app = getApp()
+const { _, getById, query, update } = require('../../../utils/api')
 const { formatDate, friendlyDate, getWeekdayLabel, formatDuration } = require('../../../utils/date')
 
 Page({

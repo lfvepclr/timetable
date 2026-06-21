@@ -1,6 +1,4 @@
 {
-  "usingComponents": {
-    "student-tag": "/components/student-tag/index"
-  },
+  "usingComponents": {},
   "navigationBarTitleText": "手动排课"
 }

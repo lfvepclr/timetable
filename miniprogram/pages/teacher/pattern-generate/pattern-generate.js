@@ -1,6 +1,5 @@
 // pages/teacher/pattern-generate/pattern-generate.js - 批量生成排课
-const { db, _, query } = require('../../../utils/db')
-const { callFn } = require('../../../utils/cloud')
+const { _, query, callFn } = require('../../../utils/api')
 const { formatDate, addDays } = require('../../../utils/date')
 
 Page({

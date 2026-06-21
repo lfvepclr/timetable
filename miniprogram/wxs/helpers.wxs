@@ -14,7 +14,7 @@ var weekdayShort = function (dayOfWeek) {
 }
 
 var avatarColor = function (index) {
-  var colors = ['#4A90D9', '#52C4A0', '#FF9F5A', '#A78BFA']
+  var colors = ['#5B7CF9', '#52C4A0', '#FF9F5A', '#A78BFA']
   return colors[index % 4]
 }
 
@@ -46,6 +46,45 @@ var dateDay = function (dateStr) {
   return parts[2] || ''
 }
 
+var statusTheme = function (status, type) {
+  if (type === 'package') {
+    return status === 'active' ? 'primary' : 'default'
+  }
+  var map = {
+    scheduled: 'primary',
+    completed: 'success',
+    cancelled: 'default',
+    attended: 'success',
+    on_leave: 'warning',
+    active: 'primary'
+  }
+  return map[status] || 'default'
+}
+
+var statusText = function (status, type) {
+  if (type === 'package') {
+    return status === 'active' ? '使用中' : '已用完'
+  }
+  var map = {
+    scheduled: '待上课',
+    completed: '已完成',
+    cancelled: '已取消',
+    attended: '已出勤',
+    on_leave: '请假',
+    active: '使用中'
+  }
+  return map[status] || status
+}
+
+var packagePercent = function (consumed, total) {
+  if (!total || total <= 0) return 0
+  return Math.round((consumed / total) * 100)
+}
+
+var packageLabel = function (consumed, total) {
+  return (consumed || 0) + '/' + (total || 0) + ' 节'
+}
+
 module.exports = {
   firstChar: firstChar,
   weekdayText: weekdayText,
@@ -54,5 +93,9 @@ module.exports = {
   includes: includes,
   join: join,
   weekdayInitial: weekdayInitial,
-  dateDay: dateDay
+  dateDay: dateDay,
+  statusTheme: statusTheme,
+  statusText: statusText,
+  packagePercent: packagePercent,
+  packageLabel: packageLabel
 }

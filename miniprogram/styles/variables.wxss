@@ -2,34 +2,34 @@
 
 page {
   /* 品牌色 */
-  --color-primary: #4A90D9;
-  --color-primary-light: #6BA8E8;
-  --color-primary-dark: #3A7BC0;
-  --color-primary-bg: #EAF2FB;
+  --color-primary: #5B7CF9;
+  --color-primary-light: #8BA4FB;
+  --color-primary-dark: #4C6AEF;
+  --color-primary-bg: #EEF2FF;
 
   /* 功能色 */
-  --color-success: #52C4A0;
-  --color-success-bg: #E8F7F1;
-  --color-warning: #FF9F5A;
-  --color-warning-bg: #FFF3E8;
-  --color-danger: #F56C6C;
-  --color-danger-bg: #FDEAEA;
-  --color-info: #909399;
-  --color-info-bg: #F4F4F5;
+  --color-success: #10B981;
+  --color-success-bg: #ECFDF5;
+  --color-warning: #F59E0B;
+  --color-warning-bg: #FEF3C7;
+  --color-danger: #EF4444;
+  --color-danger-bg: #FEE2E2;
+  --color-info: #6B7280;
+  --color-info-bg: #F3F4F6;
 
   /* 中性色 */
-  --color-bg: #F7F8FA;
+  --color-bg: #F8F9FB;
   --color-card: #FFFFFF;
-  --color-text-primary: #1F2937;
-  --color-text-regular: #4B5563;
+  --color-text-primary: #111827;
+  --color-text-regular: #374151;
   --color-text-secondary: #6B7280;
   --color-text-placeholder: #9CA3AF;
   --color-border: #E5E7EB;
-  --color-border-light: #F0F1F3;
-  --color-divider: #F0F1F3;
+  --color-border-light: #F3F4F6;
+  --color-divider: #F3F4F6;
 
   /* 课程预设色 */
-  --course-1: #4A90D9;
+  --course-1: #5B7CF9;
   --course-2: #52C4A0;
   --course-3: #FF9F5A;
   --course-4: #A78BFA;

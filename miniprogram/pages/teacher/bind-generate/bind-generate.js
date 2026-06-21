@@ -1,6 +1,6 @@
 // pages/teacher/bind-generate/bind-generate.js - 生成绑定码
-const { getById, query } = require('../../../utils/db')
-const { callFn, getTempFileURLs } = require('../../../utils/cloud')
+const app = getApp()
+const { getById, query, callFn, getTempFileURLs } = require('../../../utils/api')
 
 Page({
   data: {
@@ -36,10 +36,8 @@ Page({
 
   async loadBindings() {
     try {
-      const bindings = await query('bindings', {
-        student_id: this.data.studentId,
-        status: 'active'
-      })
+      const student = await getById('students', this.data.studentId)
+      const bindings = (student && student.parents || []).filter(p => p.status === 'active')
       this.setData({ bindings })
     } catch (err) {
       console.error('加载绑定列表失败:', err)

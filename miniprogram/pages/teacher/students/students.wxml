@@ -3,65 +3,41 @@
 <view class="page-container">
   <!-- 搜索栏 -->
   <view class="search-bar">
-    <view class="search-input-wrap">
-      <text class="search-icon">🔍</text>
-      <input class="search-input" placeholder="搜索学生姓名/年级" value="{{keyword}}" bindinput="onSearch" bindconfirm="onSearchConfirm" confirm-type="search" />
-    </view>
+    <t-search value="{{keyword}}" placeholder="搜索学生姓名/年级" bind:change="onSearch" bind:submit="onSearchConfirm" />
   </view>
 
   <!-- 学生列表 -->
   <view class="student-list" wx:if="{{!loading}}">
     <block wx:for="{{students}}" wx:key="_id">
-      <view class="student-card" data-id="{{item._id}}" bindtap="goToDetail" hover-class="card-hover">
-        <view class="avatar" style="background: {{h.avatarColor(index)}};">
-          <text>{{h.firstChar(item.name)}}</text>
+      <t-cell title="{{item.name}}" note="{{item.grade || ''}} {{item.school || ''}}" description="{{item.pkgSummary}}" arrow hover data-id="{{item._id}}" bind:tap="goToDetail">
+        <view slot="left-icon" class="cell-avatar" style="background: {{h.avatarColor(index)}};">
+          <text class="cell-avatar-text">{{h.firstChar(item.name)}}</text>
         </view>
-        <view class="student-info">
-          <view class="info-top">
-            <text class="student-name">{{item.name}}</text>
-            <text class="student-grade" wx:if="{{item.grade}}">{{item.grade}}</text>
-          </view>
-          <text class="student-school" wx:if="{{item.school}}">{{item.school}}</text>
-          <text class="student-notes" wx:if="{{item.notes}}">{{item.notes}}</text>
-        </view>
-        <text class="arrow">›</text>
-      </view>
+      </t-cell>
     </block>
-    <empty-state wx:if="{{students.length === 0}}" text="暂无学生" actionText="添加学生" bind:action="showAddDialog" />
+    <t-empty wx:if="{{students.length === 0}}" icon="info-circle-filled" description="暂无学生">
+      <t-button theme="primary" size="small" bind:tap="showAddDialog" slot="footer">添加学生</t-button>
+    </t-empty>
   </view>
   <view wx:else class="loading-text">加载中...</view>
 
   <!-- 添加按钮 -->
-  <view class="fab-btn" bindtap="showAddDialog" hover-class="fab-hover">
-    <text class="fab-icon">+</text>
-  </view>
+  <t-fab icon="add" bind:click="showAddDialog" style="bottom: 160rpx" />
 
   <!-- 添加学生弹窗 -->
-  <view wx:if="{{showAdd}}" class="dialog-mask" bindtap="hideAddDialog">
-    <view class="add-dialog" catchtap="">
+  <t-popup visible="{{showAdd}}" bind:visible-change="onPopupVisibleChange" placement="center">
+    <view class="add-dialog">
       <view class="dialog-title">添加学生</view>
-      <view class="form-item">
-        <text class="form-label">姓名 *</text>
-        <input class="form-input" placeholder="请输入学生姓名" value="{{newStudent.name}}" data-field="name" bindinput="onInputChange" />
-      </view>
-      <view class="form-item">
-        <text class="form-label">年级</text>
-        <input class="form-input" placeholder="如：六年级" value="{{newStudent.grade}}" data-field="grade" bindinput="onInputChange" />
-      </view>
-      <view class="form-item">
-        <text class="form-label">学校</text>
-        <input class="form-input" placeholder="选填" value="{{newStudent.school}}" data-field="school" bindinput="onInputChange" />
-      </view>
-      <view class="form-item">
-        <text class="form-label">备注</text>
-        <textarea class="form-textarea" placeholder="选填，如学习情况" value="{{newStudent.notes}}" data-field="notes" bindinput="onInputChange" />
-      </view>
+      <t-input label="姓名" placeholder="请输入学生姓名" value="{{newStudent.name}}" data-field="name" bind:change="onInputChange" />
+      <t-input label="年级" placeholder="如：六年级" value="{{newStudent.grade}}" data-field="grade" bind:change="onInputChange" />
+      <t-input label="学校" placeholder="选填" value="{{newStudent.school}}" data-field="school" bind:change="onInputChange" />
+      <t-textarea label="备注" placeholder="选填，如学习情况" value="{{newStudent.notes}}" data-field="notes" bind:change="onInputChange" />
       <view class="dialog-actions">
-        <view class="dialog-btn cancel" bindtap="hideAddDialog">取消</view>
-        <view class="dialog-btn confirm" bindtap="saveStudent">保存</view>
+        <t-button theme="default" bind:tap="hideAddDialog">取消</t-button>
+        <t-button theme="primary" bind:tap="saveStudent">保存</t-button>
       </view>
     </view>
-  </view>
+  </t-popup>
 
   <custom-tab-bar id="tabBar" />
 </view>

@@ -1,7 +1,6 @@
 // pages/teacher/feedback-card/feedback-card.js - Canvas反馈卡片生成
 const app = getApp()
-const { getById, update } = require('../../../utils/db')
-const { callFn, uploadFile, getTempFileURLs } = require('../../../utils/cloud')
+const { getById, update, callFn, uploadFile, getTempFileURLs } = require('../../../utils/api')
 const canvasDraw = require('../utils/canvas-draw')
 
 Page({
@@ -147,13 +146,13 @@ Page({
 
       wx.showToast({ title: '已保存到相册', icon: 'success' })
 
-      // 上传到云存储
-      const cloudPath = `cards/${this.feedbackId}.png`
-      await uploadFile(this.data.cardTempPath, cloudPath)
+      // 上传到服务端
+      const key = `media/cards/${this.feedbackId}.png`
+      await uploadFile(this.data.cardTempPath, key)
 
       // 更新反馈记录
       await update('feedbacks', this.feedbackId, {
-        card_image_url: `cloud://timetable-prod.7465-timetable-prod-1304717900/${cloudPath}`
+        card_image_url: key
       })
     } catch (err) {
       console.error('保存失败:', err)
@@ -187,8 +186,13 @@ Page({
         extra_data: {
           content: this.data.feedback.content.substring(0, 20)
         }
+      }).then(res => {
+        if (res && res.sent > 0) {
+          wx.showToast({ title: '已通知家长', icon: 'success' })
+        } else {
+          wx.showToast({ title: '本地模式不支持推送通知', icon: 'none' })
+        }
       })
-      wx.showToast({ title: '已通知家长', icon: 'success' })
     } catch (err) {
       console.error('通知失败:', err)
       wx.showToast({ title: '通知失败', icon: 'none' })

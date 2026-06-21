@@ -1,7 +1,4 @@
 {
-  "usingComponents": {
-    "status-badge": "/components/status-badge/index",
-    "student-tag": "/components/student-tag/index"
-  },
+  "usingComponents": {},
   "navigationBarTitleText": "课程详情"
 }

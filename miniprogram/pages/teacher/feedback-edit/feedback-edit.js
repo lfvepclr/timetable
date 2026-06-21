@@ -1,6 +1,6 @@
 // pages/teacher/feedback-edit/feedback-edit.js - 写课后反馈
-const { getById, query, update } = require('../../../utils/db')
-const { callFn, uploadFile } = require('../../../utils/cloud')
+const app = getApp()
+const { getById, query, update, callFn, uploadFile } = require('../../../utils/api')
 const { formatDate } = require('../../../utils/date')
 
 Page({
@@ -91,12 +91,12 @@ Page({
       // 上传照片
       const photoFileIds = []
       for (const photo of this.data.photos) {
-        if (photo.startsWith('cloud://')) {
+        if (photo.startsWith('http://') || photo.startsWith('https://') || photo.startsWith('media/')) {
           photoFileIds.push(photo)
         } else {
-          const cloudPath = `feedbacks/${this.data.lessonId}/${Date.now()}_${Math.random().toString(36).slice(6)}.jpg`
-          const fileID = await uploadFile(photo, cloudPath)
-          photoFileIds.push(fileID)
+          const key = `media/feedbacks/${this.data.lessonId}/${Date.now()}_${Math.random().toString(36).slice(6)}.jpg`
+          const fileKey = await uploadFile(photo, key)
+          photoFileIds.push(fileKey)
         }
       }
 

@@ -1,7 +1,8 @@
 <!-- pages/teacher/package-manage/package-manage.wxml -->
+<wxs src="/wxs/helpers.wxs" module="h" />
 <view class="page">
   <view wx:if="{{packages.length === 0 && !loading}}">
-    <empty-state text="暂无课程包，点击右下角添加" />
+    <t-empty icon="info-circle-filled" description="暂无课程包，点击右下角添加" />
   </view>
 
   <view class="pkg-list" wx:else>
@@ -15,7 +16,7 @@
         </view>
         <text class="pkg-date">购买：{{item.purchase_date}}</text>
       </view>
-      <package-bar consumed="{{item.consumed_lessons}}" total="{{item.total_lessons}}" />
+      <t-progress percentage="{{h.packagePercent(item.consumed_lessons, item.total_lessons)}}" label="{{h.packageLabel(item.consumed_lessons, item.total_lessons)}}" />
       <view class="pkg-footer">
         <text class="pkg-remaining">剩余 {{item.remaining}} / {{item.total_lessons}} 节</text>
         <text class="pkg-consumed">已消耗 {{item.consumed_lessons}} 节</text>
@@ -23,40 +24,38 @@
     </view>
   </view>
 
-  <!-- 添加按钮 -->
-  <view class="fab" bindtap="showAddDialog">
-    <text class="fab-icon">+</text>
-  </view>
+  <t-fab icon="add" bind:click="showAddDialog" style="bottom: 160rpx" />
 
   <!-- 添加弹窗 -->
-  <view class="mask" wx:if="{{showAdd}}" bindtap="hideAddDialog"></view>
-  <view class="dialog" wx:if="{{showAdd}}">
-    <view class="dialog-title">添加课程包</view>
-    <view class="dialog-body">
-      <view class="dialog-row">
-        <text class="dialog-label">课程</text>
-        <picker mode="selector" range="{{courses}}" range-key="name" bindchange="onCourseChange">
-          <view class="dialog-picker">
-            {{courses.length > 0 ? (courses[0].name || '请选择') : '请先创建课程'}}
-          </view>
-        </picker>
+  <t-popup visible="{{showAdd}}" bind:visible-change="onPopupVisibleChange" placement="bottom">
+    <view class="add-dialog">
+      <view class="dialog-title">添加课程包</view>
+      <view class="dialog-body">
+        <view class="dialog-row">
+          <text class="dialog-label">课程</text>
+          <picker mode="selector" range="{{courses}}" range-key="name" bindchange="onCourseChange">
+            <view class="dialog-picker">
+              {{courses.length > 0 ? (courses[0].name || '请选择') : '请先创建课程'}}
+            </view>
+          </picker>
+        </view>
+        <view class="dialog-row">
+          <text class="dialog-label">课时数</text>
+          <picker mode="selector" range="{{[10, 20, 30]}}" bindchange="onTotalChange">
+            <view class="dialog-picker">{{newPkg.total_lessons}} 节</view>
+          </picker>
+        </view>
+        <view class="dialog-row">
+          <text class="dialog-label">购买日期</text>
+          <picker mode="date" value="{{newPkg.purchase_date}}" bindchange="onDateChange">
+            <view class="dialog-picker">{{newPkg.purchase_date}}</view>
+          </picker>
+        </view>
       </view>
-      <view class="dialog-row">
-        <text class="dialog-label">课时数</text>
-        <picker mode="selector" range="{{[10, 20, 30]}}" bindchange="onTotalChange">
-          <view class="dialog-picker">{{newPkg.total_lessons}} 节</view>
-        </picker>
-      </view>
-      <view class="dialog-row">
-        <text class="dialog-label">购买日期</text>
-        <picker mode="date" value="{{newPkg.purchase_date}}" bindchange="onDateChange">
-          <view class="dialog-picker">{{newPkg.purchase_date}}</view>
-        </picker>
+      <view class="dialog-actions">
+        <t-button theme="default" bind:tap="hideAddDialog">取消</t-button>
+        <t-button theme="primary" bind:tap="savePackage">确认添加</t-button>
       </view>
     </view>
-    <view class="dialog-actions">
-      <button class="btn-cancel" bindtap="hideAddDialog">取消</button>
-      <button class="btn-confirm" bindtap="savePackage">确认添加</button>
-    </view>
-  </view>
+  </t-popup>
 </view>

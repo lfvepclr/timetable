@@ -123,12 +123,12 @@
   bottom: 180rpx;
   width: 100rpx;
   height: 100rpx;
-  background: #4A90D9;
+  background: #5B7CF9;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 8rpx 24rpx rgba(74, 144, 217, 0.4);
+  box-shadow: 0 8rpx 24rpx rgba(91, 124, 249, 0.4);
   z-index: 100;
 }
 
@@ -220,7 +220,7 @@
 }
 
 .dialog-btn.confirm {
-  background: #4A90D9;
+  background: #5B7CF9;
   color: #FFFFFF;
   font-weight: 500;
 }

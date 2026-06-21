@@ -63,7 +63,7 @@
 
   <!-- 分享按钮 -->
   <view class="share-bar">
-    <button class="btn-share" open-type="share">分享给好友</button>
+    <t-button class="btn-share" theme="primary" size="large" block open-type="share">分享给好友</t-button>
   </view>
 </view>
 

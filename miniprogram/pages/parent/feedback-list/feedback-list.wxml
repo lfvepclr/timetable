@@ -3,7 +3,7 @@
   <view wx:if="{{loading}}" class="loading">加载中...</view>
 
   <view wx:if="{{!loading && feedbacks.length === 0}}">
-    <empty-state text="暂无反馈记录" />
+    <t-empty icon="info-circle-filled" description="暂无反馈记录" />
   </view>
 
   <view class="feedback-list" wx:if="{{!loading && feedbacks.length > 0}}">

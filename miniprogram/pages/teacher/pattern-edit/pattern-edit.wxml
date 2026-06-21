@@ -70,7 +70,7 @@
       </view>
       <view class="selected-students" wx:if="{{form.student_names.length > 0}}">
         <block wx:for="{{form.student_names}}" wx:key="*this">
-          <student-tag name="{{item}}" />
+          <t-tag theme="primary" variant="light" size="small">{{item}}</t-tag>
         </block>
       </view>
       <view class="empty-hint" wx:else>暂未选择学生</view>

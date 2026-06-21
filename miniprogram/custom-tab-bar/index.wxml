@@ -1,19 +1,4 @@
 <!-- custom-tab-bar/index.wxml -->
-<view class="tab-bar">
-  <view
-    wx:for="{{tabs}}"
-    wx:key="index"
-    class="tab-item {{selected === index ? 'active' : ''}}"
-    data-index="{{index}}"
-    bindtap="switchTab"
-    hover-class="tab-item-hover"
-  >
-    <!-- SVG 图标 -->
-    <view class="tab-icon-wrap">
-      <view class="tab-icon {{selected === index ? 'tab-icon-active' : ''}}">
-        <view class="icon-svg" style="background-image: url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22{{selected === index ? '%234A90D9' : '%239CA3AF'}}%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22><path d=%22{{iconPaths[item.iconSvg + (selected === index ? 'Active' : '')] || iconPaths[item.iconSvg]}}%22/></svg>');"></view>
-      </view>
-    </view>
-    <text class="tab-text {{selected === index ? 'tab-text-active' : ''}}">{{item.text}}</text>
-  </view>
-</view>
+<t-tab-bar value="{{selected}}" bind:change="switchTab" class="custom-tab-bar" t-class="tab-bar-root" safe-area-inset-bottom>
+  <t-tab-bar-item wx:for="{{tabs}}" wx:key="index" value="{{index}}" icon="{{item.icon}}">{{item.text}}</t-tab-bar-item>
+</t-tab-bar>

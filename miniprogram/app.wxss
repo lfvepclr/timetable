@@ -1,5 +1,26 @@
 /* app.wxss - 全局样式 */
 
+/* TDesign 主题变量覆盖 */
+page {
+  --td-brand-color: #5B7CF9;
+  --td-brand-color-light: #EEF2FF;
+  --td-brand-color-focus: #DBE4FE;
+  --td-brand-color-disabled: #B4C4FC;
+  --td-brand-color-hover: #4C6AEF;
+  --td-brand-color-active: #3D5AE0;
+  --td-success-color: #10B981;
+  --td-warning-color: #F59E0B;
+  --td-error-color: #EF4444;
+  --td-bg-color-page: #F8F9FB;
+  --td-bg-color-container: #FFFFFF;
+  --td-text-color-primary: #111827;
+  --td-text-color-secondary: #6B7280;
+  --td-text-color-placeholder: #9CA3AF;
+  --td-border-color: #E5E7EB;
+  --td-radius-default: 16rpx;
+  --td-radius-large: 24rpx;
+}
+
 /* 引入公共变量和混入 */
 @import "styles/variables.wxss";
 @import "styles/mixins.wxss";
@@ -63,4 +84,22 @@ button::after {
 /* 安全区域 */
 .safe-bottom {
   padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* 通用圆形头像（用于 t-cell left-icon slot） */
+.cell-avatar {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-right: 16rpx;
+}
+
+.cell-avatar-text {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #FFFFFF;
 }

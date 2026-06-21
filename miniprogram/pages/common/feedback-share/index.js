@@ -1,6 +1,6 @@
 // pages/common/feedback-share/index.js - 反馈分享落地页
-const { getById } = require('../../../utils/db')
-const { getTempFileURLs } = require('../../../utils/cloud')
+const app = getApp()
+const { getById, getTempFileURLs } = require('../../../utils/api')
 
 Page({
   data: {

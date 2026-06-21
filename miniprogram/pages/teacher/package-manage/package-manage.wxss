@@ -89,7 +89,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 8rpx 24rpx rgba(74, 144, 217, 0.4);
+  box-shadow: 0 8rpx 24rpx rgba(91, 124, 249, 0.4);
 }
 
 .fab-icon {

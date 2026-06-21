@@ -65,7 +65,7 @@
   color: #4B5563;
 }
 .mini-btn.warn { background: #FFF3E8; color: #FF9F5A; }
-.mini-btn.primary { background: #EAF2FB; color: #4A90D9; }
+.mini-btn.primary { background: #EEF2FF; color: #5B7CF9; }
 
 .bottom-actions {
   position: fixed;
@@ -82,7 +82,7 @@
   border-radius: 999rpx;
   font-size: 32rpx;
 }
-.action-btn.primary { background: #4A90D9; color: #FFFFFF; font-weight: 500; }
+.action-btn.primary { background: #5B7CF9; color: #FFFFFF; font-weight: 500; }
 .btn-hover { opacity: 0.85; }
 
 /* 弹窗 */
@@ -112,7 +112,7 @@
   margin-bottom: 12rpx;
 }
 
-.attend-row.checked { background: #EAF2FB; }
+.attend-row.checked { background: #EEF2FF; }
 
 .check-box {
   width: 40rpx; height: 40rpx;
@@ -121,7 +121,7 @@
   margin-right: 20rpx;
   display: flex; align-items: center; justify-content: center;
 }
-.check-box.checked { background: #4A90D9; border-color: #4A90D9; color: #FFFFFF; font-size: 24rpx; }
+.check-box.checked { background: #5B7CF9; border-color: #5B7CF9; color: #FFFFFF; font-size: 24rpx; }
 
 .attend-name { font-size: 30rpx; color: #1F2937; flex: 1; }
 .attend-status { font-size: 24rpx; color: #FF9F5A; }
@@ -133,4 +133,4 @@
 .dialog-actions { display: flex; gap: 16rpx; margin-top: 32rpx; }
 .dialog-btn { flex: 1; text-align: center; padding: 24rpx 0; border-radius: 999rpx; font-size: 30rpx; }
 .dialog-btn.cancel { background: #F0F4F8; color: #6B7280; }
-.dialog-btn.confirm { background: #4A90D9; color: #FFFFFF; font-weight: 500; }
+.dialog-btn.confirm { background: #5B7CF9; color: #FFFFFF; font-weight: 500; }

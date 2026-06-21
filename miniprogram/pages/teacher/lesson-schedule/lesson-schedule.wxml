@@ -55,8 +55,8 @@
   </view>
 
   <view class="bottom-bar">
-    <button class="btn-schedule" bindtap="handleSchedule" loading="{{loading}}" disabled="{{loading}}">
+    <t-button class="btn-schedule" theme="primary" size="large" block bind:tap="handleSchedule" loading="{{loading}}" disabled="{{loading}}">
       {{mode === 'makeup' ? '确认补课' : '确认排课'}}
-    </button>
+    </t-button>
   </view>
 </view>

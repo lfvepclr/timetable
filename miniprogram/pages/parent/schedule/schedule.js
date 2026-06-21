@@ -1,7 +1,7 @@
 // pages/parent/schedule/schedule.js - 家长课表（只读）
 const app = getApp()
 const { guardRole } = require('../../../utils/auth')
-const { db, _, query, getById } = require('../../../utils/db')
+const { _, query, getById } = require('../../../utils/api')
 const { formatDate, getWeekRange, getWeekdayLabel, isToday } = require('../../../utils/date')
 const { buildFoldedSchedule, groupByDate } = require('../../../utils/schedule')
 
@@ -16,11 +16,15 @@ Page({
     weekOffset: 0
   },
 
+  onLoad() {
+  },
+
   onShow() {
     guardRole('parent')
-    if (typeof this.getTabBar === 'function' && this.getTabBar()) {
-      this.getTabBar().updateSelected(1)
-      this.getTabBar().updateTabs()
+    const tabBar = this.selectComponent('#tabBar')
+    if (tabBar) {
+      tabBar.updateSelected(1)
+      tabBar.updateTabs()
     }
     this.initWeek()
     this.loadStudent()
@@ -40,13 +44,13 @@ Page({
   async loadStudent() {
     try {
       const openid = app.globalData.openid || wx.getStorageSync('openid')
-      const bindings = await query('bindings', { parent_openid: openid, status: 'active' })
-      if (bindings.length === 0) {
+      const students = await query('students', { 'parents.openid': openid, 'parents.status': 'active' })
+      if (students.length === 0) {
         this.setData({ loading: false })
         return
       }
-      const student = await getById('students', bindings[0].student_id)
-      this.setData({ student, studentId: bindings[0].student_id })
+      const student = students[0]
+      this.setData({ student, studentId: student._id })
       this.loadWeekLessons()
     } catch (err) {
       console.error('加载学生失败:', err)
@@ -106,5 +110,7 @@ Page({
 
   onLessonTap(e) {
     // 家长端课表只读，不跳转
+    const lesson = e.detail.lesson
+    console.log('家长点击课程（只读）:', lesson && lesson._id)
   }
 })

@@ -25,7 +25,9 @@
         </view>
       </view>
     </block>
-    <empty-state wx:else text="暂无排课模板" actionText="去创建" bind:action="goToCreatePattern" />
+    <t-empty wx:else icon="info-circle-filled" description="暂无排课模板">
+      <t-button theme="primary" size="small" bind:tap="goToCreatePattern" slot="footer">去创建</t-button>
+    </t-empty>
   </view>
 
   <!-- 截止日期 -->

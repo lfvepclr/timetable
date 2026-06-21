@@ -7,28 +7,28 @@
         <text class="setting-label">反馈通知</text>
         <text class="setting-desc">反馈发送后通知家长</text>
       </view>
-      <switch checked="{{settings.feedbackNotify}}" data-key="feedbackNotify" bindchange="onSwitchChange" color="#4A90D9" />
+      <t-switch value="{{settings.feedbackNotify}}" data-key="feedbackNotify" bind:change="onSwitchChange" />
     </view>
     <view class="setting-item">
       <view class="setting-info">
         <text class="setting-label">排课变更</text>
         <text class="setting-desc">排课调整后通知家长</text>
       </view>
-      <switch checked="{{settings.scheduleChangeNotify}}" data-key="scheduleChangeNotify" bindchange="onSwitchChange" color="#4A90D9" />
+      <t-switch value="{{settings.scheduleChangeNotify}}" data-key="scheduleChangeNotify" bind:change="onSwitchChange" />
     </view>
     <view class="setting-item">
       <view class="setting-info">
         <text class="setting-label">上课提醒</text>
         <text class="setting-desc">上课前提醒家长</text>
       </view>
-      <switch checked="{{settings.classReminder}}" data-key="classReminder" bindchange="onSwitchChange" color="#4A90D9" />
+      <t-switch value="{{settings.classReminder}}" data-key="classReminder" bind:change="onSwitchChange" />
     </view>
     <view class="setting-item">
       <view class="setting-info">
         <text class="setting-label">请假通知</text>
         <text class="setting-desc">学生请假后通知家长</text>
       </view>
-      <switch checked="{{settings.leaveNotice}}" data-key="leaveNotice" bindchange="onSwitchChange" color="#4A90D9" />
+      <t-switch value="{{settings.leaveNotice}}" data-key="leaveNotice" bind:change="onSwitchChange" />
     </view>
   </view>
 
@@ -37,5 +37,5 @@
     <text class="tip-text">订阅消息为一次性消耗，每次开启需在弹窗中确认。建议在发送反馈或调整排课前重新开启。</text>
   </view>
 
-  <button class="btn-subscribe-all" bindtap="subscribeAll">一键开启全部通知</button>
+  <t-button class="btn-subscribe-all" theme="primary" size="large" block bind:tap="subscribeAll">一键开启全部通知</t-button>
 </view>

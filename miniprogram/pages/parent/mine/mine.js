@@ -1,7 +1,7 @@
 // pages/parent/mine/mine.js - 家长我的页面
 const app = getApp()
 const { guardRole, getCapabilities } = require('../../../utils/auth')
-const { query, getById } = require('../../../utils/db')
+const { query, getById } = require('../../../utils/api')
 const { requestSubscribe } = require('../../../utils/subscribe')
 
 Page({
@@ -16,11 +16,15 @@ Page({
     canSwitchTeacher: true
   },
 
+  onLoad() {
+  },
+
   onShow() {
     guardRole('parent')
-    if (typeof this.getTabBar === 'function' && this.getTabBar()) {
-      this.getTabBar().updateSelected(3)
-      this.getTabBar().updateTabs()
+    const tabBar = this.selectComponent('#tabBar')
+    if (tabBar) {
+      tabBar.updateSelected(3)
+      tabBar.updateTabs()
     }
     const caps = getCapabilities()
     this.setData({
@@ -37,11 +41,11 @@ Page({
   async loadData() {
     try {
       const openid = app.globalData.openid || wx.getStorageSync('openid')
-      const bindings = await query('bindings', { parent_openid: openid, status: 'active' })
-      if (bindings.length === 0) return
+      const students = await query('students', { 'parents.openid': openid, 'parents.status': 'active' })
+      if (students.length === 0) return
 
-      const student = await getById('students', bindings[0].student_id)
-      const packages = await query('packages', { student_id: bindings[0].student_id, status: 'active' })
+      const student = students[0]
+      const packages = await query('packages', { student_id: student._id, status: 'active' })
       this.setData({ student, packages })
 
       const settings = wx.getStorageSync('parentSettings')

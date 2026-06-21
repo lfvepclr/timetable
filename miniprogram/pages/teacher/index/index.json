@@ -1,9 +1,6 @@
 {
   "usingComponents": {
-    "lesson-card": "/components/lesson-card/index",
     "time-fold": "/components/time-fold/index",
-    "empty-state": "/components/empty-state/index",
-    "status-badge": "/components/status-badge/index",
     "custom-tab-bar": "/custom-tab-bar/index"
   },
   "enablePullDownRefresh": true,

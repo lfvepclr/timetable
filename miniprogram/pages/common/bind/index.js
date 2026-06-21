@@ -1,6 +1,6 @@
 // pages/common/bind/index.js - 绑定中转页
 const app = getApp()
-const { callFn } = require('../../../utils/cloud')
+const { callFn } = require('../../../utils/api')
 
 Page({
   data: {
@@ -25,11 +25,24 @@ Page({
     }
 
     if (code) {
+      // 有绑定码，执行绑定流程
       this.setData({ code })
       this.tryBind(code)
     } else {
-      // 没有code，检查是否已登录
-      this.checkRole()
+      // 没有 code，尝试用缓存角色直接跳转（避免先显示绑定页）
+      const cachedRole = wx.getStorageSync('role')
+      const cachedCaps = wx.getStorageSync('capabilities') || {}
+
+      if (cachedRole === 'parent' && cachedCaps.parent) {
+        wx.reLaunch({ url: '/pages/parent/index/index' })
+        return
+      }
+      if (cachedRole === 'teacher' && cachedCaps.teacher) {
+        wx.reLaunch({ url: '/pages/teacher/index/index' })
+        return
+      }
+      // 没有缓存，等待登录完成再跳转
+      app.getRole(() => this.checkRole())
     }
   },
 
@@ -44,7 +57,7 @@ Page({
     } else if (caps.parent) {
       wx.reLaunch({ url: '/pages/parent/index/index' })
     } else {
-      this.setData({ loading: false, errorMsg: '请通过老师分享的链接进入' })
+      this.setData({ loading: false, errorMsg: '无法连接服务器，请确认服务端已启动' })
     }
   },
 

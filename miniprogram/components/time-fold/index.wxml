@@ -1,4 +1,5 @@
 <!-- components/time-fold/index.wxml -->
+<wxs src="/wxs/helpers.wxs" module="h" />
 <view class="time-fold-container">
   <block wx:for="{{segments}}" wx:key="index">
     <!-- 课程段 -->
@@ -8,12 +9,12 @@
 
     <!-- 折叠条（>30分钟空闲） -->
     <view wx:elif="{{item.type === 'fold'}}" class="segment-fold {{expandedFolds[index] ? 'expanded' : ''}}" data-index="{{index}}" bindtap="toggleFold" hover-class="fold-hover">
-      <view class="fold-line"></view>
-      <view class="fold-label">
-        <text class="fold-icon">{{expandedFolds[index] ? '▲' : '▽'}}</text>
-        <text class="fold-text">{{item.label}}</text>
-      </view>
-      <view class="fold-line"></view>
+      <t-divider t-class="fold-divider" align="center" dashed>
+        <view slot="content" class="fold-label">
+          <t-icon name="{{expandedFolds[index] ? 'chevron-up' : 'chevron-down'}}" size="24rpx" color="#9CA3AF" />
+          <text class="fold-text">{{item.label}}</text>
+        </view>
+      </t-divider>
     </view>
 
     <!-- 小间隔（≤30分钟） -->
@@ -22,6 +23,6 @@
 
   <!-- 空状态 -->
   <view wx:if="{{segments.length === 0}}" class="fold-empty">
-    <text class="empty-text">今日无课</text>
+    <t-empty icon="info-circle-filled" description="今日无课" />
   </view>
 </view>

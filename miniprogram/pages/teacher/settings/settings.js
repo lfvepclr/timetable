@@ -1,4 +1,5 @@
 // pages/teacher/settings/settings.js - 通知设置
+const app = getApp()
 const { SUBSCRIBE_TEMPLATES } = require('../../../utils/constants')
 const { requestSubscribe } = require('../../../utils/subscribe')
 

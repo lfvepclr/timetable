@@ -17,7 +17,7 @@
       <view class="pkg-item" wx:for="{{packages}}" wx:key="_id" bindtap="goToPackage">
         <view class="pkg-info">
           <text class="pkg-name">{{item.course_name}}</text>
-          <package-bar consumed="{{item.consumed_lessons}}" total="{{item.total_lessons}}" />
+          <t-progress percentage="{{h.packagePercent(item.consumed_lessons, item.total_lessons)}}" label="{{h.packageLabel(item.consumed_lessons, item.total_lessons)}}" />
         </view>
         <text class="pkg-remaining">{{item.remaining}}节</text>
       </view>
@@ -32,21 +32,21 @@
         <text class="setting-label">反馈通知</text>
         <text class="setting-desc">老师发布反馈后通知</text>
       </view>
-      <switch checked="{{settings.feedbackNotify}}" data-key="feedbackNotify" bindchange="onSwitchChange" color="#4A90D9" />
+      <t-switch value="{{settings.feedbackNotify}}" data-key="feedbackNotify" bind:change="onSwitchChange" />
     </view>
     <view class="setting-item">
       <view class="setting-info">
         <text class="setting-label">排课变更</text>
         <text class="setting-desc">课程时间调整后通知</text>
       </view>
-      <switch checked="{{settings.scheduleChangeNotify}}" data-key="scheduleChangeNotify" bindchange="onSwitchChange" color="#4A90D9" />
+      <t-switch value="{{settings.scheduleChangeNotify}}" data-key="scheduleChangeNotify" bind:change="onSwitchChange" />
     </view>
     <view class="setting-item">
       <view class="setting-info">
         <text class="setting-label">上课提醒</text>
         <text class="setting-desc">上课前提醒</text>
       </view>
-      <switch checked="{{settings.classReminder}}" data-key="classReminder" bindchange="onSwitchChange" color="#4A90D9" />
+      <t-switch value="{{settings.classReminder}}" data-key="classReminder" bind:change="onSwitchChange" />
     </view>
   </view>
 

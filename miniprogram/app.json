@@ -42,12 +42,33 @@
     "navigationBarBackgroundColor": "#FFFFFF",
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "排课助手",
-    "backgroundColor": "#F7F8FA",
+    "backgroundColor": "#F8F9FB",
     "backgroundTextStyle": "dark",
     "enablePullDownRefresh": false
   },
-  "cloud": true,
   "sitemapLocation": "sitemap.json",
   "lazyCodeLoading": "requiredComponents",
-  "style": "v2"
+  "style": "v2",
+  "useExtendedLib": {},
+  "usingComponents": {
+    "t-badge": "tdesign-miniprogram/badge/badge",
+    "t-button": "tdesign-miniprogram/button/button",
+    "t-cell": "tdesign-miniprogram/cell/cell",
+    "t-cell-group": "tdesign-miniprogram/cell-group/cell-group",
+    "t-checkbox": "tdesign-miniprogram/checkbox/checkbox",
+    "t-checkbox-group": "tdesign-miniprogram/checkbox-group/checkbox-group",
+    "t-divider": "tdesign-miniprogram/divider/divider",
+    "t-empty": "tdesign-miniprogram/empty/empty",
+    "t-fab": "tdesign-miniprogram/fab/fab",
+    "t-icon": "tdesign-miniprogram/icon/icon",
+    "t-input": "tdesign-miniprogram/input/input",
+    "t-popup": "tdesign-miniprogram/popup/popup",
+    "t-progress": "tdesign-miniprogram/progress/progress",
+    "t-search": "tdesign-miniprogram/search/search",
+    "t-switch": "tdesign-miniprogram/switch/switch",
+    "t-tab-bar": "tdesign-miniprogram/tab-bar/tab-bar",
+    "t-tab-bar-item": "tdesign-miniprogram/tab-bar-item/tab-bar-item",
+    "t-tag": "tdesign-miniprogram/tag/tag",
+    "t-textarea": "tdesign-miniprogram/textarea/textarea"
+  }
 }

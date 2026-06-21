@@ -1,6 +1,6 @@
 // pages/parent/package/package.js - 家长课时详情
 const app = getApp()
-const { _, query, getById } = require('../../../utils/db')
+const { _, query, getById } = require('../../../utils/api')
 
 Page({
   data: {
@@ -15,14 +15,14 @@ Page({
   async loadPackages() {
     try {
       const openid = app.globalData.openid || wx.getStorageSync('openid')
-      const bindings = await query('bindings', { parent_openid: openid, status: 'active' })
-      if (bindings.length === 0) {
+      const students = await query('students', { 'parents.openid': openid, 'parents.status': 'active' })
+      if (students.length === 0) {
         this.setData({ loading: false })
         return
       }
 
       const packages = await query('packages', {
-        student_id: bindings[0].student_id
+        student_id: students[0]._id
       }, {
         orderBy: ['purchase_date', 'desc']
       })

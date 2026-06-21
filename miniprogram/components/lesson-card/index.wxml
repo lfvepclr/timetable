@@ -1,7 +1,8 @@
 <!-- components/lesson-card/index.wxml -->
+<wxs src="/wxs/helpers.wxs" module="h" />
 <view class="lesson-card {{compact ? 'compact' : ''}}" bindtap="onTap" hover-class="card-hover">
   <!-- 左侧课程色条 -->
-  <view class="course-bar" style="background: {{lesson.color || '#4A90D9'}};"></view>
+  <view class="course-bar" style="background: {{lesson.color || '#5B7CF9'}};"></view>
 
   <view class="card-body">
     <!-- 顶部：时间 + 课程名 -->
@@ -15,17 +16,16 @@
         <text class="course-name text-ellipsis">{{lesson.course_name}}</text>
         <text class="course-type">{{lesson.course_type}}</text>
       </view>
-      <status-badge status="{{lesson.lesson_status}}" />
+      <t-tag theme="{{h.statusTheme(lesson.lesson_status, 'lesson')}}" variant="light" size="small">{{h.statusText(lesson.lesson_status, 'lesson')}}</t-tag>
     </view>
 
     <!-- 底部：学生列表 -->
     <view class="card-footer" wx:if="{{!compact}}">
       <view class="students-row">
         <block wx:for="{{lesson.students}}" wx:key="student_id">
-          <view class="student-chip {{item.status === 'on_leave' ? 'on-leave' : ''}}">
-            <text>{{item.student_name}}</text>
-            <text wx:if="{{item.status === 'on_leave'}}" class="leave-tag">假</text>
-          </view>
+          <t-tag size="small" variant="light" theme="{{item.status === 'on_leave' ? 'warning' : 'default'}}">
+            {{item.student_name}}
+          </t-tag>
         </block>
       </view>
       <view class="date-label" wx:if="{{showDate}}">
@@ -36,7 +36,7 @@
     <!-- 紧凑模式：学生名一行 -->
     <view class="compact-students" wx:if="{{compact}}">
       <text class="text-ellipsis">{{lesson.students[0].student_name}}</text>
-      <text wx:if="{{lesson.students.length > 1}}" class="more-count">+{{lesson.students.length - 1}}</text>
+      <t-badge wx:if="{{lesson.students.length > 1}}" count="+{{lesson.students.length - 1}}" shape="circle" />
     </view>
   </view>
 </view>

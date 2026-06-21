@@ -1,113 +1,102 @@
 /* pages/teacher/index/index.wxss */
-.page-container {
-  padding: 0 24rpx 120rpx;
+.page {
+  padding: 0 24rpx 160rpx;
+  background: #F8F9FB;
+  min-height: 100vh;
+  box-sizing: border-box;
 }
 
-/* 头部 */
-.today-header {
-  position: relative;
-  margin-bottom: 32rpx;
-  border-radius: 20rpx;
-  overflow: hidden;
-}
-
-.header-bg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 200rpx;
-  background: linear-gradient(135deg, #4A90D9, #6BA8E8);
-  border-radius: 20rpx;
-}
-
-.header-content {
-  position: relative;
-  padding: 40rpx 32rpx 32rpx;
-}
-
-.header-top {
+/* 日期概览条 */
+.overview-bar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 32rpx;
+  padding: 24rpx 32rpx;
+  background: #FFFFFF;
+  border-radius: 20rpx;
+  margin-top: 16rpx;
+  margin-bottom: 20rpx;
 }
 
-.date-block {
-  display: flex;
-  flex-direction: column;
-}
-
-.date-text {
-  font-size: 40rpx;
-  font-weight: 600;
-  color: #FFFFFF;
-}
-
-.weekday-text {
-  font-size: 26rpx;
-  color: rgba(255, 255, 255, 0.8);
-  margin-top: 4rpx;
-}
-
-.today-count {
+.date-info {
   display: flex;
   align-items: baseline;
-  background: rgba(255, 255, 255, 0.2);
-  padding: 12rpx 28rpx;
-  border-radius: 999rpx;
+}
+
+.date-main {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: #111827;
+}
+
+.date-week {
+  font-size: 26rpx;
+  color: #6B7280;
+  margin-left: 12rpx;
+}
+
+.lesson-count {
+  display: flex;
+  align-items: baseline;
 }
 
 .count-num {
-  font-size: 44rpx;
+  font-size: 40rpx;
   font-weight: 700;
-  color: #FFFFFF;
+  color: #5B7CF9;
 }
 
-.count-label {
+.count-unit {
   font-size: 24rpx;
-  color: rgba(255, 255, 255, 0.9);
+  color: #6B7280;
   margin-left: 4rpx;
 }
 
 /* 快捷操作 */
 .quick-actions {
   display: flex;
-  justify-content: space-around;
-  background: #FFFFFF;
-  border-radius: 16rpx;
-  padding: 28rpx 0;
-  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.06);
+  justify-content: space-between;
+  margin-bottom: 32rpx;
 }
 
 .action-item {
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  cursor: pointer;
+  padding: 24rpx 0;
 }
 
 .action-hover {
-  opacity: 0.7;
+  opacity: 0.6;
 }
 
 .action-icon {
-  width: 64rpx;
-  height: 64rpx;
-  border-radius: 16rpx;
-  margin-bottom: 8rpx;
+  width: 88rpx;
+  height: 88rpx;
+  border-radius: 24rpx;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-bottom: 12rpx;
 }
 
-.icon-schedule { background: #EAF2FB; }
-.icon-pattern { background: #E8F7F1; }
-.icon-calendar { background: #FFF3E8; }
+.icon-blue {
+  background: #EEF2FF;
+}
 
-.action-item text {
-  font-size: 22rpx;
-  color: #4B5563;
+.icon-green {
+  background: #ECFDF5;
+}
+
+.icon-amber {
+  background: #FEF3C7;
+}
+
+.action-text {
+  font-size: 24rpx;
+  color: #374151;
+  font-weight: 500;
 }
 
 /* 区块 */
@@ -115,44 +104,75 @@
   margin-bottom: 32rpx;
 }
 
-.section-title {
+.section-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 20rpx;
-  font-size: 30rpx;
-  font-weight: 600;
-  color: #1F2937;
+  padding: 0 4rpx;
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: 700;
+  color: #111827;
 }
 
 .more-link {
-  font-size: 24rpx;
-  color: #9CA3AF;
-  font-weight: 400;
-}
-
-.loading-text {
-  text-align: center;
-  color: #9CA3AF;
-  padding: 40rpx;
+  display: flex;
+  align-items: center;
   font-size: 26rpx;
+  color: #6B7280;
 }
 
-/* 近期课程 */
-.upcoming-day {
-  margin-bottom: 24rpx;
+/* 骨架屏 */
+.skeleton-card {
+  background: #FFFFFF;
+  border-radius: 16rpx;
+  padding: 28rpx;
+  margin-bottom: 20rpx;
 }
 
-.upcoming-date {
+.skeleton-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16rpx;
+}
+
+.skeleton-row:last-child {
+  margin-bottom: 0;
+}
+
+.skeleton-bar {
+  height: 28rpx;
+  border-radius: 8rpx;
+  background: #F0F0F2;
+  margin-right: 16rpx;
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
+}
+
+.w-30 { width: 30%; }
+.w-40 { width: 40%; }
+.w-50 { width: 50%; }
+.w-20 { width: 20%; }
+
+@keyframes skeleton-pulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+/* 近期课程日期行 */
+.upcoming-date-row {
   display: flex;
   align-items: baseline;
-  margin-bottom: 12rpx;
+  margin: 24rpx 0 12rpx;
+  padding: 0 8rpx;
 }
 
 .date-label {
   font-size: 28rpx;
-  font-weight: 500;
-  color: #4A90D9;
+  font-weight: 600;
+  color: #5B7CF9;
   margin-right: 12rpx;
 }
 

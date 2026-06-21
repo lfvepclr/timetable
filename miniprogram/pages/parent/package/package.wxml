@@ -1,9 +1,10 @@
 <!-- pages/parent/package/package.wxml -->
+<wxs src="/wxs/helpers.wxs" module="h" />
 <view class="page">
   <view wx:if="{{loading}}" class="loading">加载中...</view>
 
   <view wx:if="{{!loading && packages.length === 0}}">
-    <empty-state text="暂无课程包" />
+    <t-empty icon="info-circle-filled" description="暂无课程包" />
   </view>
 
   <view class="pkg-list" wx:if="{{!loading && packages.length > 0}}">
@@ -14,7 +15,7 @@
           {{item.status === 'active' ? '使用中' : '已用完'}}
         </text>
       </view>
-      <package-bar consumed="{{item.consumed_lessons}}" total="{{item.total_lessons}}" />
+      <t-progress percentage="{{h.packagePercent(item.consumed_lessons, item.total_lessons)}}" label="{{h.packageLabel(item.consumed_lessons, item.total_lessons)}}" />
       <view class="pkg-stats">
         <view class="stat-item">
           <text class="stat-num">{{item.total_lessons}}</text>

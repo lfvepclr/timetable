@@ -1,5 +1,5 @@
 // pages/teacher/package-manage/package-manage.js - 课程包管理
-const { db, _, query, add, update } = require('../../../utils/db')
+const { _, query, add, update, getById } = require('../../../utils/api')
 const { formatDate } = require('../../../utils/date')
 const { PACKAGE_OPTIONS, PACKAGE_STATUS } = require('../../../utils/constants')
 
@@ -29,7 +29,6 @@ Page({
 
   async loadStudent() {
     try {
-      const { getById } = require('../../../utils/db')
       const student = await getById('students', this.data.studentId)
       this.setData({ student })
       wx.setNavigationBarTitle({ title: `${student.name}的课程包` })
@@ -74,6 +73,10 @@ Page({
 
   hideAddDialog() {
     this.setData({ showAdd: false })
+  },
+
+  onPopupVisibleChange(e) {
+    this.setData({ showAdd: e.detail.visible })
   },
 
   onCourseChange(e) {

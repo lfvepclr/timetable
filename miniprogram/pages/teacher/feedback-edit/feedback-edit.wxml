@@ -2,7 +2,7 @@
 <view class="page">
   <!-- 课程信息 -->
   <view class="lesson-info" wx:if="{{lesson}}">
-    <view class="lesson-bar" style="background: {{lesson.course_color || '#4A90D9'}};"></view>
+    <view class="lesson-bar" style="background: {{lesson.course_color || '#5B7CF9'}};"></view>
     <view class="lesson-detail">
       <text class="lesson-name">{{lesson.course_name}}</text>
       <text class="lesson-time">{{lesson.date}} {{lesson.start_time}}-{{lesson.end_time}}</text>
@@ -15,14 +15,14 @@
       <text class="title-text">今日所学</text>
       <text class="title-required">*</text>
     </view>
-    <textarea
-      class="form-textarea"
+    <t-textarea
       value="{{feedback.content}}"
       data-field="content"
-      bindinput="onInput"
+      bind:change="onInput"
       placeholder="请输入本节课的教学内容..."
       maxlength="500"
-      auto-height
+      indicator
+      autosize
     />
   </view>
 
@@ -30,14 +30,14 @@
     <view class="form-title">
       <text class="title-text">课堂表现</text>
     </view>
-    <textarea
-      class="form-textarea"
+    <t-textarea
       value="{{feedback.performance}}"
       data-field="performance"
-      bindinput="onInput"
+      bind:change="onInput"
       placeholder="学生的学习状态、理解程度、互动表现..."
       maxlength="500"
-      auto-height
+      indicator
+      autosize
     />
   </view>
 
@@ -45,14 +45,14 @@
     <view class="form-title">
       <text class="title-text">课后作业</text>
     </view>
-    <textarea
-      class="form-textarea"
+    <t-textarea
       value="{{feedback.homework}}"
       data-field="homework"
-      bindinput="onInput"
+      bind:change="onInput"
       placeholder="布置的课后练习和作业内容..."
       maxlength="500"
-      auto-height
+      indicator
+      autosize
     />
   </view>
 
@@ -60,14 +60,14 @@
     <view class="form-title">
       <text class="title-text">老师评语</text>
     </view>
-    <textarea
-      class="form-textarea"
+    <t-textarea
       value="{{feedback.teacher_comment}}"
       data-field="teacher_comment"
-      bindinput="onInput"
+      bind:change="onInput"
       placeholder="对学生的鼓励和建议..."
       maxlength="500"
-      auto-height
+      indicator
+      autosize
     />
   </view>
 
@@ -82,8 +82,8 @@
 
   <!-- 底部操作 -->
   <view class="bottom-bar">
-    <button class="btn-save" bindtap="handleSave" loading="{{saving}}" disabled="{{saving}}">
+    <t-button theme="primary" size="large" block bind:tap="handleSave" loading="{{saving}}" disabled="{{saving}}">
       保存并生成卡片
-    </button>
+    </t-button>
   </view>
 </view>

@@ -67,7 +67,7 @@ const PATTERN_STATUS = {
 
 // 课程预设颜色
 const COURSE_COLORS = [
-  '#4A90D9', '#52C4A0', '#FF9F5A', '#A78BFA',
+  '#5B7CF9', '#52C4A0', '#FF9F5A', '#A78BFA',
   '#F56C6C', '#36CFC9', '#FFD666', '#FF85C0'
 ]
 

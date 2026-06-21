@@ -112,8 +112,8 @@ function drawFeedbackCard(canvas, ctx, dpr, data, images) {
 
   // 2. 顶部品牌色渐变区域
   const headerGradient = ctx.createLinearGradient(0, 0, W, 0)
-  headerGradient.addColorStop(0, '#4A90D9')
-  headerGradient.addColorStop(1, '#6BA8E8')
+  headerGradient.addColorStop(0, '#5B7CF9')
+  headerGradient.addColorStop(1, '#8BA4FB')
   ctx.fillStyle = headerGradient
   roundRect(ctx, padding, 24, W - padding * 2, 120, 16)
   ctx.fill()
@@ -149,7 +149,7 @@ function drawFeedbackCard(canvas, ctx, dpr, data, images) {
     if (!section.content) return
 
     // 区块标题
-    ctx.fillStyle = '#4A90D9'
+    ctx.fillStyle = '#5B7CF9'
     ctx.font = 'bold 15px sans-serif'
     ctx.fillText(section.title, padding, y)
     y += 24

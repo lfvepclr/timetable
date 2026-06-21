@@ -1,6 +1,4 @@
 {
-  "usingComponents": {
-    "empty-state": "/components/empty-state/index"
-  },
+  "usingComponents": {},
   "navigationBarTitleText": "批量生成排课"
 }

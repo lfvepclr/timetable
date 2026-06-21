@@ -1,6 +1,6 @@
 // pages/parent/feedback-detail/feedback-detail.js - 反馈详情精美呈现
-const { getById } = require('../../../utils/db')
-const { getTempFileURLs } = require('../../../utils/cloud')
+const app = getApp()
+const { getById, getTempFileURLs } = require('../../../utils/api')
 
 Page({
   data: {

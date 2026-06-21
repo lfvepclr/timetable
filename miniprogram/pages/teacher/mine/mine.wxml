@@ -26,7 +26,7 @@
       <view class="menu-icon" style="background: var(--color-primary-bg); color: var(--color-primary);">
         <text class="icon-text">同</text>
       </view>
-      <text class="menu-label">同步法定节假日</text>
+      <text class="menu-label">法定节假日（已内置）</text>
       <text class="menu-arrow">›</text>
     </view>
   </view>
@@ -55,7 +55,21 @@
       <view class="menu-icon" style="background: var(--color-danger-bg); color: var(--color-danger);">
         <text class="icon-text">清</text>
       </view>
-      <text class="menu-label">清除缓存</text>
+      <text class="menu-label">清除数据</text>
+      <text class="menu-arrow">›</text>
+    </view>
+    <view class="menu-item" bindtap="exportData" hover-class="menu-hover">
+      <view class="menu-icon" style="background: var(--color-primary-bg); color: var(--color-primary);">
+        <text class="icon-text">出</text>
+      </view>
+      <text class="menu-label">导出数据</text>
+      <text class="menu-arrow">›</text>
+    </view>
+    <view class="menu-item" bindtap="importData" hover-class="menu-hover">
+      <view class="menu-icon" style="background: var(--color-success-bg); color: var(--color-success);">
+        <text class="icon-text">入</text>
+      </view>
+      <text class="menu-label">导入数据</text>
       <text class="menu-arrow">›</text>
     </view>
     <view class="menu-item" bindtap="showAbout" hover-class="menu-hover">

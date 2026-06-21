@@ -1,44 +1,36 @@
 // pages/teacher/holiday-manage/holiday-manage.js - 假期管理
-const { db, _, query, add, update, remove } = require('../../../utils/db')
-const { formatDate } = require('../../../utils/date')
+// 节假日数据已内置为静态代码，此页面展示法定假日 + 自定义假日（localStorage）
+const { HOLIDAYS_2025, getHoliday } = require('../../../utils/holidays')
 
 Page({
   data: {
     year: new Date().getFullYear(),
     holidays: [],
-    vacations: [],
     loading: true,
     showAdd: false,
-    newHoliday: { date: '', name: '', is_off_day: true },
-    showVacation: false,
-    newVacation: { type: 'summer', start_date: '', end_date: '', year: new Date().getFullYear() }
+    newHoliday: { date: '', name: '', is_off_day: true }
   },
 
   onLoad() {
     this.loadHolidays()
-    this.loadVacations()
   },
 
   async loadHolidays() {
     this.setData({ loading: true })
     try {
-      const holidays = await query('holidays', { year: this.data.year }, {
-        orderBy: ['date', 'asc'],
-        pageSize: 100
-      })
-      this.setData({ holidays, loading: false })
+      // 内置节假日（按年份过滤）
+      const builtin = HOLIDAYS_2025.filter(h => h.date.startsWith(String(this.data.year)))
+
+      // 自定义节假日（从 localStorage 读取）
+      const customKey = `custom_holidays_${this.data.year}`
+      const custom = wx.getStorageSync(customKey) || []
+
+      // 合并并排序
+      const all = [...builtin, ...custom].sort((a, b) => a.date.localeCompare(b.date))
+      this.setData({ holidays: all, loading: false })
     } catch (err) {
       console.error('加载节假日失败:', err)
       this.setData({ loading: false })
-    }
-  },
-
-  async loadVacations() {
-    try {
-      const vacations = await query('vacations', { year: this.data.year })
-      this.setData({ vacations })
-    } catch (err) {
-      console.error('加载假期段失败:', err)
     }
   },
 
@@ -47,7 +39,6 @@ Page({
     const years = [this.data.year - 1, this.data.year, this.data.year + 1]
     this.setData({ year: years[idx] })
     this.loadHolidays()
-    this.loadVacations()
   },
 
   // 添加节假日
@@ -59,6 +50,10 @@ Page({
     this.setData({ showAdd: false })
   },
 
+  onPopupVisibleChange(e) {
+    this.setData({ showAdd: e.detail.visible })
+  },
+
   onHolidayDateChange(e) {
     this.setData({ 'newHoliday.date': e.detail.value })
   },
@@ -68,7 +63,8 @@ Page({
   },
 
   onHolidayTypeChange(e) {
-    this.setData({ 'newHoliday.is_off_day': e.detail.value })
+    const value = e.detail.value !== undefined ? e.detail.value : e.detail
+    this.setData({ 'newHoliday.is_off_day': value })
   },
 
   async saveHoliday() {
@@ -78,25 +74,20 @@ Page({
       return
     }
 
-    wx.showLoading({ title: '保存中...' })
-    try {
-      const date = new Date(h.date)
-      await add('holidays', {
-        date: h.date,
-        name: h.name,
-        is_off_day: h.is_off_day,
-        year: date.getFullYear(),
-        source: 'manual',
-        created_at: Date.now()
-      })
-      wx.hideLoading()
-      wx.showToast({ title: '已添加', icon: 'success' })
-      this.setData({ showAdd: false })
-      this.loadHolidays()
-    } catch (err) {
-      wx.hideLoading()
-      wx.showToast({ title: '添加失败', icon: 'none' })
-    }
+    // 保存到 localStorage
+    const customKey = `custom_holidays_${this.data.year}`
+    const custom = wx.getStorageSync(customKey) || []
+    custom.push({
+      date: h.date,
+      name: h.name,
+      is_off_day: h.is_off_day,
+      source: 'manual'
+    })
+    wx.setStorageSync(customKey, custom)
+
+    wx.showToast({ title: '已添加', icon: 'success' })
+    this.setData({ showAdd: false })
+    this.loadHolidays()
   },
 
   // 删除节假日
@@ -110,63 +101,17 @@ Page({
 
     wx.showModal({
       title: '确认删除',
-      content: '确定删除此节假日记录？',
-      success: async (res) => {
+      content: '确定删除此自定义节假日？',
+      success: (res) => {
         if (res.confirm) {
-          try {
-            await remove('holidays', id)
-            wx.showToast({ title: '已删除', icon: 'success' })
-            this.loadHolidays()
-          } catch (err) {
-            wx.showToast({ title: '删除失败', icon: 'none' })
-          }
+          const customKey = `custom_holidays_${this.data.year}`
+          let custom = wx.getStorageSync(customKey) || []
+          custom = custom.filter(h => h.date !== id)
+          wx.setStorageSync(customKey, custom)
+          wx.showToast({ title: '已删除', icon: 'success' })
+          this.loadHolidays()
         }
       }
     })
-  },
-
-  // 假期段管理
-  showAddVacation() {
-    this.setData({ showVacation: true, newVacation: { type: 'summer', start_date: '', end_date: '', year: this.data.year } })
-  },
-
-  hideAddVacation() {
-    this.setData({ showVacation: false })
-  },
-
-  onVacationTypeChange(e) {
-    const types = ['summer', 'winter']
-    this.setData({ 'newVacation.type': types[e.detail.value] })
-  },
-
-  onVacationStartChange(e) {
-    this.setData({ 'newVacation.start_date': e.detail.value })
-  },
-
-  onVacationEndChange(e) {
-    this.setData({ 'newVacation.end_date': e.detail.value })
-  },
-
-  async saveVacation() {
-    const v = this.data.newVacation
-    if (!v.start_date || !v.end_date) {
-      wx.showToast({ title: '请选择日期', icon: 'none' })
-      return
-    }
-
-    wx.showLoading({ title: '保存中...' })
-    try {
-      await add('vacations', {
-        ...v,
-        created_at: Date.now()
-      })
-      wx.hideLoading()
-      wx.showToast({ title: '已添加', icon: 'success' })
-      this.setData({ showVacation: false })
-      this.loadVacations()
-    } catch (err) {
-      wx.hideLoading()
-      wx.showToast({ title: '添加失败', icon: 'none' })
-    }
   }
 })

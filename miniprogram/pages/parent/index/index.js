@@ -1,7 +1,7 @@
 // pages/parent/index/index.js - 家长首页
 const app = getApp()
 const { guardRole } = require('../../../utils/auth')
-const { db, _, query, getById } = require('../../../utils/db')
+const { _, query, getById } = require('../../../utils/api')
 const { formatDate, friendlyDate, getWeekdayLabel } = require('../../../utils/date')
 const { subscribeClassReminder } = require('../../../utils/subscribe')
 
@@ -14,11 +14,15 @@ Page({
     loading: true
   },
 
+  onLoad() {
+  },
+
   onShow() {
     guardRole('parent')
-    if (typeof this.getTabBar === 'function' && this.getTabBar()) {
-      this.getTabBar().updateSelected(0)
-      this.getTabBar().updateTabs()
+    const tabBar = this.selectComponent('#tabBar')
+    if (tabBar) {
+      tabBar.updateSelected(0)
+      tabBar.updateTabs()
     }
     this.loadData()
   },
@@ -28,19 +32,15 @@ Page({
       const openid = app.globalData.openid || wx.getStorageSync('openid')
       if (!openid) return
 
-      // 获取绑定的学生
-      const bindings = await query('bindings', { parent_openid: openid, status: 'active' })
-      if (bindings.length === 0) {
+      // 获取绑定的学生（parents JSON 列查询）
+      const students = await query('students', { 'parents.openid': openid, 'parents.status': 'active' })
+      if (students.length === 0) {
         this.setData({ loading: false })
         return
       }
 
-      const studentId = bindings[0].student_id
-      const student = await getById('students', studentId)
-      if (!student) {
-        this.setData({ loading: false })
-        return
-      }
+      const student = students[0]
+      const studentId = student._id
 
       this.setData({ student })
       wx.setNavigationBarTitle({ title: `${student.name}的课表` })

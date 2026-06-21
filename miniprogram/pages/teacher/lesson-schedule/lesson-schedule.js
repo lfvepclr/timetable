@@ -1,6 +1,5 @@
 // pages/teacher/lesson-schedule/lesson-schedule.js - 手动排课/补课
-const { db, _, query, add } = require('../../../utils/db')
-const { callFn } = require('../../../utils/cloud')
+const { _, query, add, callFn } = require('../../../utils/api')
 const { formatDate, getDayOfWeek, getWeekdayLabel, getTimestamp } = require('../../../utils/date')
 const { COURSE_TYPE_CONFIG, DURATION_OPTIONS, TIME_RANGE } = require('../../../utils/constants')
 
@@ -153,12 +152,12 @@ Page({
         exclude_lesson_id: this.data.makeupLessonId
       })
 
-      if (conflictResult && conflictResult.hasConflict) {
+      if (conflictResult && !conflictResult.available && conflictResult.conflict) {
         wx.hideLoading()
         this.setData({ loading: false })
         wx.showModal({
           title: '时段冲突',
-          content: `与 ${conflictResult.conflicts[0].course_name || '其他课程'} 时间重叠`,
+          content: `与 ${conflictResult.conflict.course_name || '其他课程'} 时间重叠`,
           showCancel: false
         })
         return

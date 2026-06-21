@@ -1,6 +1,7 @@
 // pages/teacher/schedule/schedule.js - 老师课表视图
+const app = getApp()
 const { guardRole } = require('../../../utils/auth')
-const { db, _, query } = require('../../../utils/db')
+const { _, query } = require('../../../utils/api')
 const { formatDate, getWeekRange, getDayOfWeek, getWeekdayLabel, addDays } = require('../../../utils/date')
 const { buildFoldedSchedule, groupByDate } = require('../../../utils/schedule')
 
@@ -33,7 +34,16 @@ Page({
       tabBar.updateSelected(1)
       tabBar.updateTabs()
     }
-    this.loadWeekLessons()
+
+    // 有缓存时先渲染，后台静默刷新
+    const cached = app.getPageCache('teacher_schedule')
+    if (cached && cached.weekStart === this.data.currentWeek.start) {
+      this.setData({ weekLessons: cached.weekLessons, loading: false })
+      this.updateDayView()
+      this.loadWeekLessons(true)
+    } else {
+      this.loadWeekLessons()
+    }
   },
 
   // 切换视图模式
@@ -84,13 +94,14 @@ Page({
   },
 
   // 加载本周课程
-  async loadWeekLessons() {
-    this.setData({ loading: true })
+  async loadWeekLessons(silent = false) {
+    if (!silent) {
+      this.setData({ loading: true })
+    }
     try {
       const { start, end } = this.data.currentWeek
       const lessons = await query('lessons', {
-        date: _.gte(start),
-        date: _.lte(end),
+        date: _.gte(start).and(_.lte(end)),
         lesson_status: _.neq('cancelled')
       }, {
         orderBy: ['date', 'asc'],
@@ -99,6 +110,7 @@ Page({
 
       this.setData({ weekLessons: lessons, loading: false })
       this.updateDayView()
+      app.setPageCache('teacher_schedule', { weekLessons: lessons, weekStart: start })
     } catch (err) {
       console.error('加载课表失败:', err)
       this.setData({ loading: false })

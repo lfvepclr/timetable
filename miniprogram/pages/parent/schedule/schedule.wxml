@@ -5,7 +5,7 @@
   <view class="week-nav">
     <view class="nav-btn" bindtap="prevWeek">‹</view>
     <view class="week-dates">
-      <view 
+      <view
         class="date-item {{selectedDate === item ? 'selected' : ''}} {{item === today ? 'today' : ''}}"
         wx:for="{{weekDates}}" wx:key="*this"
         data-date="{{item}}" bindtap="onSelectDate"
@@ -20,19 +20,10 @@
   <!-- 课程列表 -->
   <view class="lesson-area">
     <view wx:if="{{loading}}" class="loading">加载中...</view>
-    
+
     <block wx:if="{{!loading}}">
-      <view wx:if="{{selectedLessons.length === 0}}">
-        <empty-state text="今天没有课程" />
-      </view>
-      
-      <view wx:else>
-        <view wx:for="{{segments}}" wx:key="index">
-          <time-fold wx:if="{{item.type === 'fold'}}" duration="{{item.duration}}" label="{{item.label}}" />
-          <view wx:elif="{{item.type === 'gap'}}" class="gap"></view>
-          <lesson-card wx:else lesson="{{item.lesson}}" readonly="{{true}}" bindtap="onLessonTap" />
-        </view>
-      </view>
+      <time-fold wx:if="{{segments.length > 0}}" segments="{{segments}}" bind:lessontap="onLessonTap" />
+      <t-empty wx:else icon="info-circle-filled" description="今天没有课程" />
     </block>
   </view>
 

@@ -56,7 +56,7 @@
 
   <view class="footer">
     <text class="footer-text">排课助手 — 课后反馈</text>
-    <button class="btn-share" open-type="share">分享</button>
+    <t-button class="btn-share" theme="primary" size="small" open-type="share">分享</t-button>
   </view>
 </view>
 

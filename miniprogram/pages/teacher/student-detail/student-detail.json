@@ -1,8 +1,4 @@
 {
-  "usingComponents": {
-    "package-bar": "/components/package-bar/index",
-    "status-badge": "/components/status-badge/index",
-    "empty-state": "/components/empty-state/index"
-  },
+  "usingComponents": {},
   "navigationBarTitleText": "学生详情"
 }

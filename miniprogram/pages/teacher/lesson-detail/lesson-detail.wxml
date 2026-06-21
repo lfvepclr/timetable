@@ -3,11 +3,11 @@
 <view class="page-container" wx:if="{{!loading && lesson}}">
   <!-- 课程信息卡片 -->
   <view class="info-card">
-    <view class="course-bar" style="background: {{lesson.color || '#4A90D9'}};"></view>
+    <view class="course-bar" style="background: {{lesson.color || '#5B7CF9'}};"></view>
     <view class="info-body">
       <view class="info-header">
         <text class="course-name">{{lesson.course_name}}</text>
-        <status-badge status="{{lesson.lesson_status}}" />
+        <t-tag theme="{{h.statusTheme(lesson.lesson_status, 'lesson')}}" variant="light" size="small">{{h.statusText(lesson.lesson_status, 'lesson')}}</t-tag>
       </view>
       <view class="info-row">
         <text class="info-label">时间</text>
@@ -28,68 +28,51 @@
   <view class="section">
     <view class="section-title">参课学生（{{lesson.students.length}}）</view>
     <block wx:for="{{lesson.students}}" wx:key="student_id">
-      <view class="student-row">
-        <view class="student-left">
-          <view class="student-avatar" style="background: {{h.avatarColor(index)}};">
-            <text>{{h.firstChar(item.student_name)}}</text>
-          </view>
-          <view class="student-detail">
-            <text class="s-name">{{item.student_name}}</text>
-            <status-badge status="{{item.status}}" type="student" />
-          </view>
+      <t-cell title="{{item.student_name}}" hover>
+        <view slot="left-icon" class="cell-avatar" style="background: {{h.avatarColor(index)}};">
+          <text class="cell-avatar-text">{{h.firstChar(item.student_name)}}</text>
         </view>
-        <view class="student-actions">
-          <!-- 待上课：可请假 -->
-          <view wx:if="{{item.status === 'scheduled'}}" class="mini-btn warn" data-sid="{{item.student_id}}" bindtap="showLeaveDialog">请假</view>
-          <!-- 已请假：可补课 -->
-          <view wx:if="{{item.status === 'on_leave'}}" class="mini-btn" data-sid="{{item.student_id}}" bindtap="goToReschedule">补课</view>
-          <!-- 已完成：可写反馈 -->
-          <view wx:if="{{item.status === 'attended'}}" class="mini-btn primary" data-sid="{{item.student_id}}" bindtap="goToFeedback">反馈</view>
+        <view slot="note">
+          <t-tag theme="{{h.statusTheme(item.status, 'lesson')}}" variant="light" size="small">{{h.statusText(item.status, 'lesson')}}</t-tag>
         </view>
-      </view>
+        <view slot="right-icon" class="student-actions">
+          <t-button wx:if="{{item.status === 'scheduled'}}" theme="warning" variant="text" size="small" data-sid="{{item.student_id}}" bind:tap="showLeaveDialog">请假</t-button>
+          <t-button wx:if="{{item.status === 'on_leave'}}" theme="primary" variant="text" size="small" data-sid="{{item.student_id}}" bind:tap="goToReschedule">补课</t-button>
+          <t-button wx:if="{{item.status === 'attended'}}" theme="primary" variant="text" size="small" data-sid="{{item.student_id}}" bind:tap="goToFeedback">反馈</t-button>
+        </view>
+      </t-cell>
     </block>
   </view>
 
   <!-- 底部操作 -->
   <view class="bottom-actions" wx:if="{{lesson.lesson_status === 'scheduled'}}">
-    <view class="action-btn primary" bindtap="showCompleteDialog" hover-class="btn-hover">
-      <text>标记下课</text>
-    </view>
+    <t-button theme="primary" size="large" block bind:tap="showCompleteDialog">标记下课</t-button>
   </view>
 </view>
 
 <!-- 完成课程弹窗 -->
-<view wx:if="{{showComplete}}" class="dialog-mask" bindtap="hideCompleteDialog">
-  <view class="complete-dialog" catchtap="">
+<t-popup visible="{{showComplete}}" bind:visible-change="onCompletePopupChange" placement="center">
+  <view class="complete-dialog">
     <view class="dialog-title">确认下课</view>
     <view class="dialog-desc">勾选出勤学生，将消耗对应课时</view>
-    <block wx:for="{{lesson.students}}" wx:key="student_id">
-      <view class="attend-row {{h.includes(attendedIds, item.student_id) ? 'checked' : ''}}" data-sid="{{item.student_id}}" bindtap="toggleAttend">
-        <view class="check-box {{h.includes(attendedIds, item.student_id) ? 'checked' : ''}}">
-          <text wx:if="{{h.includes(attendedIds, item.student_id)}}">✓</text>
-        </view>
-        <text class="attend-name">{{item.student_name}}</text>
-        <text class="attend-status" wx:if="{{item.status === 'on_leave'}}">已请假</text>
-      </view>
-    </block>
+    <t-checkbox-group value="{{attendedIds}}" bind:change="onAttendChange">
+      <t-checkbox wx:for="{{lesson.students}}" wx:for-item="student" wx:key="student_id" label="{{student.student_name}}" value="{{student.student_id}}" />
+    </t-checkbox-group>
     <view class="dialog-actions">
-      <view class="dialog-btn cancel" bindtap="hideCompleteDialog">取消</view>
-      <view class="dialog-btn confirm" bindtap="confirmComplete">确认下课</view>
+      <t-button theme="default" bind:tap="hideCompleteDialog">取消</t-button>
+      <t-button theme="primary" bind:tap="confirmComplete">确认下课</t-button>
     </view>
   </view>
-</view>
+</t-popup>
 
 <!-- 请假弹窗 -->
-<view wx:if="{{showLeaveDialog}}" class="dialog-mask" bindtap="hideLeaveDialog">
-  <view class="leave-dialog" catchtap="">
+<t-popup visible="{{showLeaveDialog}}" bind:visible-change="onLeavePopupChange" placement="center">
+  <view class="leave-dialog">
     <view class="dialog-title">学生请假</view>
-    <view class="form-item">
-      <text class="form-label">请假原因（选填）</text>
-      <textarea class="form-textarea" placeholder="如：生病、临时有事" value="{{leaveReason}}" bindinput="onLeaveReasonInput" />
-    </view>
+    <t-textarea label="请假原因（选填）" placeholder="如：生病、临时有事" value="{{leaveReason}}" bind:change="onLeaveReasonInput" />
     <view class="dialog-actions">
-      <view class="dialog-btn cancel" bindtap="hideLeaveDialog">取消</view>
-      <view class="dialog-btn confirm" bindtap="confirmLeave">确认请假</view>
+      <t-button theme="default" bind:tap="hideLeaveDialog">取消</t-button>
+      <t-button theme="primary" bind:tap="confirmLeave">确认请假</t-button>
     </view>
   </view>
-</view>
+</t-popup>

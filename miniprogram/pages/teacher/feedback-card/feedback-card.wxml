@@ -20,18 +20,18 @@
 
     <!-- 操作按钮 -->
     <view class="actions" wx:if="{{cardReady}}">
-      <button class="action-btn btn-save" bindtap="saveToAlbum" loading="{{saving}}" disabled="{{saving}}">
+      <t-button class="action-btn" theme="default" bind:tap="saveToAlbum" loading="{{saving}}" disabled="{{saving}}">
         <text class="btn-icon">↓</text>
         <text>保存相册</text>
-      </button>
-      <button class="action-btn btn-share" open-type="share">
+      </t-button>
+      <t-button class="action-btn" theme="primary" open-type="share">
         <text class="btn-icon">↗</text>
         <text>分享家长</text>
-      </button>
-      <button class="action-btn btn-notify" bindtap="notifyParent" loading="{{notifying}}" disabled="{{notifying}}">
+      </t-button>
+      <t-button class="action-btn" theme="warning" bind:tap="notifyParent" loading="{{notifying}}" disabled="{{notifying}}">
         <text class="btn-icon">🔔</text>
         <text>通知家长</text>
-      </button>
+      </t-button>
     </view>
   </block>
 </view>

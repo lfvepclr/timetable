@@ -1,65 +1,8 @@
 /* custom-tab-bar/index.wxss */
-.tab-bar {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  display: flex;
-  align-items: center;
-  height: 100rpx;
-  background: #FFFFFF;
+.tab-bar-root {
+  --td-tab-bar-active-color: var(--td-brand-color);
+  --td-tab-bar-inactive-color: #9CA3AF;
+  --td-tab-bar-bg-color: #FFFFFF;
+  --td-tab-bar-height: 100rpx;
   box-shadow: 0 -2rpx 12rpx rgba(0, 0, 0, 0.06);
-  padding-bottom: env(safe-area-inset-bottom);
-  z-index: 999;
-}
-
-.tab-item {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  position: relative;
-}
-
-.tab-item-hover {
-  opacity: 0.7;
-}
-
-.tab-icon-wrap {
-  width: 48rpx;
-  height: 48rpx;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 4rpx;
-}
-
-.tab-icon {
-  width: 44rpx;
-  height: 44rpx;
-}
-
-.icon-svg {
-  width: 44rpx;
-  height: 44rpx;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-}
-
-.tab-text {
-  font-size: 20rpx;
-  color: #9CA3AF;
-  line-height: 1.2;
-}
-
-.tab-text-active {
-  color: #4A90D9;
-  font-weight: 500;
-}
-
-.tab-item.active .tab-icon-active {
-  transform: scale(1.05);
 }

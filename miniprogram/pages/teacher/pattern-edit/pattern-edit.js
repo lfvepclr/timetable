@@ -1,5 +1,5 @@
 // pages/teacher/pattern-edit/pattern-edit.js - 周模式编辑
-const { db, _, query, add, update, getById } = require('../../../utils/db')
+const { _, query, add, update, getById } = require('../../../utils/api')
 const { WEEKDAYS, COURSE_COLORS, DURATION_OPTIONS, COURSE_TYPE_CONFIG } = require('../../../utils/constants')
 const { formatDate } = require('../../../utils/date')
 
@@ -12,7 +12,7 @@ Page({
       course_id: '',
       course_name: '',
       course_type: '1v1',
-      color: '#4A90D9',
+      color: '#5B7CF9',
       day_of_week: 6,
       start_time: '10:00',
       end_time: '12:00',
@@ -84,7 +84,7 @@ Page({
         'form.course_id': course._id,
         'form.course_name': course.name,
         'form.course_type': course.type,
-        'form.color': course.color || '#4A90D9',
+        'form.color': course.color || '#5B7CF9',
         'form.duration': course.default_duration || 120
       })
       this.updateEndTime()
